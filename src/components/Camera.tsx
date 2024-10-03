@@ -1,13 +1,17 @@
-// import { useRef } from "react";
-// import { Canvas, useThree } from "@react-three/fiber";
-// import { PerspectiveCamera } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
-// function CustomCamera() {
-//     const cameraRef = useRef();
-//     const { setDefaultCamera } = useThree();
+function JitteredCamera() {
+  useFrame((state) => {
+    const { x, y, z } = state.camera.position;
+    state.camera.position.set(
+      Math.round(x * 10) / 10,
+      Math.round(y * 10) / 10,
+      Math.round(z * 10) / 10
+    );
+    state.camera.updateProjectionMatrix();
+  });
 
-//     // Set this camera as the default one
-//     setDefaultCamera(cameraRef.current);
+  return null;
+}
 
-//     return <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 0, 5]} />;
-//   }
+export default JitteredCamera;

@@ -1,30 +1,26 @@
+import { useBox } from "@react-three/cannon";
 import * as THREE from "three";
-import { createRoot } from "react-dom/client";
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
-import { MeshBasicMaterial } from "three";
 
-function Box(props: ThreeElements["mesh"]) {
-  const meshRef = useRef<THREE.Mesh>(null!);
-  const [hovered, setHover] = useState(false);
-  const [active, setActive] = useState(false);
+interface Box {
+  position: [x: number, y: number, z: number];
+  mass: number;
+}
 
-  //rotation
-  // useFrame((state, delta) => (meshRef.current.rotation.x += delta));
+// Box with physics
+function PhysicsBox(props: any) {
+  // Create a physics-enabled box
+  const [ref] = useBox<THREE.Mesh>(() => ({
+    mass: 1,
+    position: [0, 0, 0],
+    ...props,
+  }));
+
   return (
-    <mesh
-      {...props}
-      ref={meshRef}
-      scale={active ? 1.5 : 1}
-      onClick={(event) => setActive(!active)}
-      onPointerOver={(event) => setHover(true)}
-      onPointerOut={(event) => setHover(false)}
-    >
-      <boxGeometry args={[10, 10, 10]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "pink"} />
-      <meshBasicMaterial color={"red"} side={THREE.BackSide} wireframe />
+    <mesh ref={ref}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color="orange" />
     </mesh>
   );
 }
 
-export default Box;
+export default PhysicsBox;
