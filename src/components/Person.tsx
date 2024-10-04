@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { usePlayerControls } from "../utils/helpers";
 import * as THREE from "three";
-
+import Arms from "./Arms";
 // Define the type for props
 interface BaseCharacterProps {
   controls?: boolean;
@@ -19,11 +19,16 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const sideVector = new THREE.Vector3();
   const speed = new THREE.Vector3();
   const SPEED = 5;
+  let lastTime = 0;
+  const fps = 30;
 
   const { camera } = useThree();
+  camera.near = 0.01; // Move near plane closer
+  camera.updateProjectionMatrix(); // Make sure to update the matrix after the change
 
   // Define the ref with a specific type of THREE.Mesh
   const ref = useRef<THREE.Mesh>(null!);
+  const armsRef = useRef<THREE.Mesh>(null);
 
   const [sphereRef, api] = useSphere(() => ({
     mass: 1,
@@ -45,37 +50,67 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   }, [api.velocity]);
 
   // Frame-based movement logic
-  useFrame(() => {
-    // Update the camera position
-    sphereRef.current?.getWorldPosition(camera.position);
+  useFrame((state) => {
+    const delta = state.clock.getElapsedTime() - lastTime;
+    if (delta > 1 / fps) {
+      lastTime = state.clock.getElapsedTime();
+      // Run your frame logic here
 
-    // Calculate movement direction based on controls
-    frontVector.set(0, 0, Number(backward) - Number(forward));
-    sideVector.set(Number(left) - Number(right), 0, 0);
+      const spherePos = new THREE.Vector3();
+      // Update the camera position
+      sphereRef.current?.getWorldPosition(spherePos);
+      armsRef.current?.getWorldPosition(camera.position);
 
-    // Combine direction vectors
-    direction
-      .subVectors(frontVector, sideVector)
-      .normalize()
-      .multiplyScalar(SPEED)
-      .applyEuler(camera.rotation);
-    speed.fromArray(velocity.current);
+      //update cam to follow player
+      camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
 
-    // Set velocity based on the direction
-    api.velocity.set(direction.x, velocity.current[1], direction.z);
+      if (armsRef.current !== null) {
+        const cameraDirection = new THREE.Vector3();
 
-    // Jump logic
-    if (jump && Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05) {
-      api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+        camera.getWorldDirection(cameraDirection);
+
+        // armsRef.current.position.set(
+        //   camera.position.x,
+        //   camera.position.y - 1.8,
+        //   camera.position.z
+        // );
+        // Position arms slightly in front of the camera
+        // armsRef.current.position.copy(camera.position);
+        // armsRef.current.position.add(cameraDirection.multiplyScalar(1));
+        // armsRef.current.position.y -= 0.2;
+
+        // Copy the camera's rotation to the arms
+        armsRef.current.rotation.copy(camera.rotation);
+      }
+      // Calculate movement direction based on controls
+      frontVector.set(0, 0, Number(backward) - Number(forward));
+      sideVector.set(Number(left) - Number(right), 0, 0);
+
+      // Combine direction vectors
+      direction
+        .subVectors(frontVector, sideVector)
+        .normalize()
+        .multiplyScalar(SPEED)
+        .applyEuler(camera.rotation);
+      speed.fromArray(velocity.current);
+
+      // Set velocity based on the direction
+      api.velocity.set(direction.x, velocity.current[1], direction.z);
+
+      // Jump logic
+      if (jump && Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05) {
+        api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+      }
     }
   });
 
   return (
     <group>
       {/* Ensure the ref is typed correctly for the mesh */}
-      <mesh castShadow position={props.position} ref={ref}>
+      <mesh castShadow position={props.position} ref={armsRef}>
         {/* <sphereGeometry args={props.args} /> */}
         <meshStandardMaterial color="#FFFF00" />
+        <Arms scale={[1, 1, 1]} />
       </mesh>
     </group>
   );

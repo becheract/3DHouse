@@ -19,6 +19,7 @@ function PhysicsBox(props: any) {
     <mesh ref={ref}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color="orange" />
+      {props.children}
     </mesh>
   );
 }

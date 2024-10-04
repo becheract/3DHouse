@@ -5,15 +5,44 @@ Command: npx gltfjsx@6.5.2 Bookcase.glb
 
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { NearestFilter, LinearMipMapLinearFilter, Texture } from "three";
+import React, { useEffect } from "react";
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials } = useGLTF("Bookcase/Bookcase.glb");
+  const { scene, nodes, materials } = useGLTF("Bookcase/Bookcase.glb");
+
+  useEffect(() => {
+    // Traverse through the scene to find meshes and apply filters
+    scene.traverse((child) => {
+      // Type guard to ensure 'child' is a Mesh
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        const material = mesh.material;
+
+        // Ensure the material is a THREE.Material
+        if (material && (material as THREE.MeshStandardMaterial).map) {
+          const texture: Texture = (material as THREE.MeshStandardMaterial)
+            .map as Texture;
+
+          // Apply NearestFilter for a pixelated, PS1-style look
+          texture.magFilter = NearestFilter;
+          texture.minFilter = LinearMipMapLinearFilter; // Or NearestFilter for more blockiness
+
+          // Enable mipmaps for smoother downscaling (optional)
+          texture.generateMipmaps = true;
+          texture.needsUpdate = true;
+        }
+      }
+    });
+  }, [scene]);
+
   return (
     <group {...props} dispose={null}>
       <mesh
         geometry={(nodes.Bookcase_01 as THREE.Mesh).geometry}
         material={materials.Bookcase_01}
         position={[-15.342, 0.513, 2.852]}
+        receiveShadow
       />
     </group>
   );

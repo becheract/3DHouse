@@ -7,7 +7,7 @@ import React from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-export function Model(props: JSX.IntrinsicElements["group"]) {
+export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Dresser/Dresser.glb");
   return (
     <group {...props} dispose={null}>

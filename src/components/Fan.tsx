@@ -21,6 +21,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
+        receiveShadow
         geometry={(nodes.Ceiling_Fan as THREE.Mesh).geometry}
         material={materials.Ceiling_Fan}
         position={[-16.621, 0.679, -3.858]}
@@ -29,6 +30,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         ref={ref}
+        receiveShadow
         geometry={(nodes.Ceiling_Fan_Blades as THREE.Mesh).geometry}
         material={materials.Ceiling_Fan}
         position={[-16.621, 0.51, -3.858]}

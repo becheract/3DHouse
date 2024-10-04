@@ -1,16 +1,14 @@
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
-import {
-  OrbitControls,
-  PerspectiveCamera,
-  PointerLockControls,
-} from "@react-three/drei";
+import { PointerLockControls } from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense } from "react";
 import "./main.css";
 import { Physics } from "@react-three/cannon";
 import Person from "./components/Person";
+import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
+
 function App() {
   extend(THREE);
 
@@ -34,19 +32,33 @@ function App() {
   }
 
   return (
-    <Canvas>
-      <Suspense fallback={null}>
-        <Physics gravity={[0, -9.8, 0]}>
-          {/* Lights */}
-          <ambientLight intensity={1} />
-          <pointLight position={[1, 1, 1]} />
-          <PointerLockControls />
-          {/* Box Component */}
-          <Room position={[0, 0, 0]} />
-          <Person controls position={[0, 2, 0]} args={[1.5]} color="yellow" />
-        </Physics>
-      </Suspense>
-    </Canvas>
+    <>
+      <Canvas shadows id={"canvas"}>
+        <EffectComposer>
+          {/* <Scanline density={0.9999} /> */}
+          {/* <Noise opacity={0.1} /> */}
+          <Suspense fallback={null}>
+            <Physics gravity={[0, -9.8, 0]}>
+              {/* Lights */}
+              <ambientLight intensity={1} castShadow />
+              {/* <spotLight penumbra={1} position={[1, 4, 1]} castShadow /> */}
+
+              {/* <pointLight position={[1, 4, 1]} intensity={20} /> */}
+              <PointerLockControls />
+              {/* Box Component */}
+              <Room position={[0, 0, 0]} />
+              <Person
+                controls
+                position={[0, 2, 0]}
+                args={[0.5]}
+                color="yellow"
+              />
+            </Physics>
+          </Suspense>
+        </EffectComposer>
+      </Canvas>
+      <div className="dot" />
+    </>
   );
 }
 
