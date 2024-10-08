@@ -26,6 +26,6 @@ body {
   border: 2px solid white;
 }
 
-#canvas {
+canvas {
   image-rendering: pixelated;
 }

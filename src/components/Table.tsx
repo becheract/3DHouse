@@ -4,17 +4,28 @@ Command: npx gltfjsx@6.5.2 table.glb
 */
 
 import React from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Table/table.glb");
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={(nodes.Mesh_Table_Rectangle_01 as THREE.Mesh).geometry}
-        material={materials["MasterMaterial.003"]}
-      />
+      <group
+        position={[-12.719, -0.822, 12.96]}
+        rotation={[Math.PI, 0, Math.PI]}
+      >
+        <mesh
+          geometry={(nodes.Cube093 as THREE.Mesh).geometry}
+          material={materials.Wood_05}
+        >
+          {" "}
+        </mesh>
+        <mesh
+          geometry={(nodes.Cube093_1 as THREE.Mesh).geometry}
+          material={materials.Wood_02}
+        />
+      </group>
     </group>
   );
 }

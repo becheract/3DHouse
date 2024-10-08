@@ -1,16 +1,26 @@
 export const vertexShader = `
-  varying vec3 vPosition;
-  
-  void main() {
-    vPosition = position; // Pass the position to the fragment shader
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
+// vertex shader
+varying vec2 vUv;
+varying float vAffine;
+
+float dist = length(mvPosition);
+float affine = dist + (pos.w * 8.0) / dist * 0.5;
+vUv = vUv * affine;
+vAffine = affine;
+
+vec2 resolution = vec2(320, 240);
+vec4 pos = projectionMatrix * mvPosition;
+
+pos.xyz /= pos.w;
+pos.xy = floor(resolution * pos.xy) / resolution;
+pos.xyz *= pos.w;
 `;
 
 export const fragmentShader = `
-  varying vec3 vPosition;
-  
-  void main() {
-    gl_FragColor = vec4(vPosition * 0.5 + 0.5, 1.0); // Color based on vertex position
-  }
+// fragment shader
+varying vec2 vUv;
+varying float vAffine;
+
+vec2 uv = vUv / vAffine;
+vec4 color = texture2D(map, uv);
 `;

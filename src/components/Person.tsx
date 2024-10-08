@@ -49,39 +49,35 @@ const BaseCharacter = (props: BaseCharacterProps) => {
     return () => unsubscribe();
   }, [api.velocity]);
 
-  // Frame-based movement logic
   useFrame((state) => {
     const delta = state.clock.getElapsedTime() - lastTime;
     if (delta > 1 / fps) {
       lastTime = state.clock.getElapsedTime();
-      // Run your frame logic here
 
       const spherePos = new THREE.Vector3();
       // Update the camera position
       sphereRef.current?.getWorldPosition(spherePos);
-      armsRef.current?.getWorldPosition(camera.position);
 
-      //update cam to follow player
+      // Update the camera to follow the player
       camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
 
       if (armsRef.current !== null) {
+        // Get the direction the camera is facing
         const cameraDirection = new THREE.Vector3();
-
         camera.getWorldDirection(cameraDirection);
 
-        // armsRef.current.position.set(
-        //   camera.position.x,
-        //   camera.position.y - 1.8,
-        //   camera.position.z
-        // );
-        // Position arms slightly in front of the camera
-        // armsRef.current.position.copy(camera.position);
-        // armsRef.current.position.add(cameraDirection.multiplyScalar(1));
-        // armsRef.current.position.y -= 0.2;
+        // Offset the arms in front of the camera
+        const armsOffset = cameraDirection.clone().multiplyScalar(0.4); // Forward offset
+        armsOffset.y -= 1.5; // Slight downward offset for arms
+
+        // Position the arms relative to the camera
+        armsRef.current.position.copy(camera.position);
+        armsRef.current.position.add(armsOffset);
 
         // Copy the camera's rotation to the arms
         armsRef.current.rotation.copy(camera.rotation);
       }
+
       // Calculate movement direction based on controls
       frontVector.set(0, 0, Number(backward) - Number(forward));
       sideVector.set(Number(left) - Number(right), 0, 0);
@@ -92,6 +88,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         .normalize()
         .multiplyScalar(SPEED)
         .applyEuler(camera.rotation);
+
       speed.fromArray(velocity.current);
 
       // Set velocity based on the direction
@@ -110,7 +107,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
       <mesh castShadow position={props.position} ref={armsRef}>
         {/* <sphereGeometry args={props.args} /> */}
         <meshStandardMaterial color="#FFFF00" />
-        <Arms scale={[1, 1, 1]} />
+        <Arms scale={[1, 1, 1]} rotation={[0, 3.1, 0]} />
       </mesh>
     </group>
   );

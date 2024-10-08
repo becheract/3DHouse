@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
-import { PointerLockControls } from "@react-three/drei";
+import { PointerLockControls, Sky, BakeShadows } from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense } from "react";
 import "./main.css";
@@ -34,6 +34,13 @@ function App() {
   return (
     <>
       <Canvas shadows id={"canvas"}>
+        <Sky
+          distance={450000}
+          sunPosition={[0, 1, 0]}
+          inclination={0}
+          azimuth={0.25}
+        />
+
         <EffectComposer>
           {/* <Scanline density={0.9999} /> */}
           {/* <Noise opacity={0.1} /> */}
@@ -41,6 +48,7 @@ function App() {
             <Physics gravity={[0, -9.8, 0]}>
               {/* Lights */}
               <ambientLight intensity={1} castShadow />
+              <BakeShadows />
               {/* <spotLight penumbra={1} position={[1, 4, 1]} castShadow /> */}
 
               {/* <pointLight position={[1, 4, 1]} intensity={20} /> */}

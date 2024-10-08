@@ -27,7 +27,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         position={[-16.621, 0.679, -3.858]}
         rotation={[0, Math.PI / 4, 0]}
         scale={0.797}
-      />
+      ></mesh>
       <mesh
         ref={ref}
         receiveShadow
@@ -36,7 +36,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         position={[-16.621, 0.51, -3.858]}
         rotation={[-Math.PI, 0.478, -Math.PI]}
         scale={0.797}
-      />
+      ></mesh>
     </group>
   );
 }

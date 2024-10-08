@@ -2,15 +2,37 @@ import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
 import { useBox, usePlane, PlaneProps, BoxProps } from "@react-three/cannon";
+import { useGLTF, MeshWobbleMaterial } from "@react-three/drei";
+
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
+
 import Bed from "../components/Bed";
 import Fan from "../components/Fan";
 import Bookcase from "../components/Bookcase";
-import Dresser from "../components/Dresser";
-import Table from "../components/Table";
-import Chair from "../components/Chair";
+import Magazines from "./Magazines";
+import Plant from "./Plant_1";
+import Plant_2 from "../components/Plant_2";
+import Plant_3 from "../components/Plant_3";
+import Plant_4 from "../components/Plant_4";
+import Plant_5 from "../components/Plant_5";
+
+import Painting_1 from "../components/Painting_1";
+import Painting_2 from "../components/Painting_2";
+import Painting_3 from "../components/Painting_3";
+import Painting_4 from "../components/Painting_4";
+import Painting_5 from "../components/Painting_5";
+
+import Chair from "./Chair";
+import Monitor from "./Monitor";
+import Cup from "./Cup";
+import Table from "./Table";
+import Garbage from "./Garbage";
+import Bike from "./Bicycle";
+import Radio from "./Radio";
+
 import { TextureLoader, NearestFilter, LinearMipMapLinearFilter } from "three";
+import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 
 function Room(props: THREE.Mesh) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
@@ -129,15 +151,37 @@ function Room(props: THREE.Mesh) {
         rotation={[0, 0, 0]}
         scale={[1.6, 1.6, 1]}
       />
-      {/* Dresser */}
-      <Dresser position={[20, 0, 0]} rotation={[0, 0, 0]} />
-      {/*Table */}
-      <Table
-        position={[-0, 0, -3.9]}
-        rotation={[0, 4.7, 0]}
-        scale={[1.8, 1.8, 1.8]}
-      />
-      <Chair position={[15, 0.5, -5]} rotation={[0, 0, 0]} />
+      {/* Plant */}
+      <Plant position={[15, 0.2, -5]} />
+
+      <Plant_2 position={[8, 0.2, -7]} />
+      <Plant_3 position={[8, 0.2, -7]} />
+      <Plant_4 position={[8, 0.2, -7]} />
+      <Plant_5 position={[8, 0.2, -7]} />
+
+      {/* Painting */}
+      <Painting_1 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
+      <Painting_2 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
+      <Painting_3 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
+      <Painting_4 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
+      <Painting_5 position={[-7, 1.5, 4.56]} rotation={[0, 3.13, 0]} />
+
+      {/* Chair */}
+      <Chair position={[18, 2.4, 2]} />
+      {/* Monitor */}
+      <Monitor position={[10.7, 1.5, 2.2]} rotation={[0, 3.2, 0]} />
+      {/* Cup */}
+      <Cup position={[6, 1.5, -10]} />
+      {/* Table */}
+      <Table position={[13, 2, -16.7]} />
+      {/* Bike */}
+      <Bike position={[3.8, 0, -4]} scale={0.5} rotation={[0, 0, -0.2]} />
+      {/* Magazines */}
+      <Magazines position={[-14, 0, -4]} />
+      {/* Garabage */}
+      <Garbage position={[19, 1.6, -21.5]} scale={0.7} />
+      {/* Radio */}
+      <Radio position={[-12, 0, -6]} />
     </>
   );
 }
