@@ -61,22 +61,30 @@ const BaseCharacter = (props: BaseCharacterProps) => {
       // Update the camera to follow the player
       camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
 
-      if (armsRef.current !== null) {
-        // Get the direction the camera is facing
-        const cameraDirection = new THREE.Vector3();
-        camera.getWorldDirection(cameraDirection);
+      // if (armsRef.current !== null) {
+      //   // Extract the yaw rotation (around Y-axis) from the camera's rotation
+      //   const yaw = camera.rotation.y; // Get the Y rotation (yaw)
 
-        // Offset the arms in front of the camera
-        const armsOffset = cameraDirection.clone().multiplyScalar(0.4); // Forward offset
-        armsOffset.y -= 1.5; // Slight downward offset for arms
+      //   // Calculate forward direction based on yaw
+      //   const forwardDirection = new THREE.Vector3(
+      //     Math.sin(yaw), // X component
+      //     0, // Ignore Y component
+      //     Math.cos(yaw) // Z component
+      //   ).normalize();
 
-        // Position the arms relative to the camera
-        armsRef.current.position.copy(camera.position);
-        armsRef.current.position.add(armsOffset);
+      //   // Calculate the arms offset
+      //   const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
 
-        // Copy the camera's rotation to the arms
-        armsRef.current.rotation.copy(camera.rotation);
-      }
+      //   // Position the arms based on the camera's position and the arms offset
+      //   armsRef.current.position.set(
+      //     camera.position.x - 0,
+      //     camera.position.y - 1.6, // Keep a constant height for the arms
+      //     camera.position.z + 0
+      //   );
+
+      //   // Optionally, you can copy the camera's yaw rotation to the arms
+      //   armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
+      // }
 
       // Calculate movement direction based on controls
       frontVector.set(0, 0, Number(backward) - Number(forward));

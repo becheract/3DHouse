@@ -3,14 +3,16 @@ import { createRoot } from "react-dom/client";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import { PointerLockControls, Sky, BakeShadows } from "@react-three/drei";
 import Room from "./components/Room";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import "./main.css";
 import { Physics } from "@react-three/cannon";
 import Person from "./components/Person";
 import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
+import { useState } from "react";
 
 function App() {
   extend(THREE);
+  const [hover, setHover] = useState(false);
 
   if (document) {
     //create a root
@@ -30,6 +32,15 @@ function App() {
 
     return null; // No need to render anything
   }
+
+  const handleHover = (value: boolean): void => {
+    console.log("running");
+    setHover(value);
+  };
+
+  useEffect(() => {
+    console.log(hover);
+  });
 
   return (
     <>
@@ -54,7 +65,7 @@ function App() {
               {/* <pointLight position={[1, 4, 1]} intensity={20} /> */}
               <PointerLockControls />
               {/* Box Component */}
-              <Room position={[0, 0, 0]} />
+              <Room position={[0, 0, 0]} handleHover={handleHover} />
               <Person
                 controls
                 position={[0, 2, 0]}
@@ -65,6 +76,7 @@ function App() {
           </Suspense>
         </EffectComposer>
       </Canvas>
+      {hover ? <h1 className="interaction">Interact </h1> : null}
       <div className="dot" />
     </>
   );

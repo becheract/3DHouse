@@ -17,6 +17,7 @@
     "@types/three": "^0.168.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-spring": "^9.7.4",
     "three": "^0.168.0",
     "three-gltf-loader": "^1.111.0",
     "vite-project": "file:"

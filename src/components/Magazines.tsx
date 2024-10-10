@@ -5,10 +5,27 @@ Command: npx gltfjsx@6.5.2 magazines.glb
 
 import React from "react";
 import { useGLTF } from "@react-three/drei";
+import { useEffect } from "react";
 import * as THREE from "three";
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Magazines/magazines.glb");
+
+  useEffect(() => {
+    // Loop through all materials and set NearestFilter for their textures
+    Object.values(materials).forEach((material: THREE.Material) => {
+      if (
+        material instanceof THREE.MeshBasicMaterial ||
+        material instanceof THREE.MeshStandardMaterial
+      ) {
+        if (material.map) {
+          material.map.minFilter = THREE.NearestFilter;
+          material.map.magFilter = THREE.NearestFilter;
+          material.map.needsUpdate = true;
+        }
+      }
+    });
+  }, [materials]);
   return (
     <group {...props} dispose={null}>
       <mesh

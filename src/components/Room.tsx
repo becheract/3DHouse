@@ -1,8 +1,14 @@
 import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
-import { useBox, usePlane, PlaneProps, BoxProps } from "@react-three/cannon";
-import { useGLTF, MeshWobbleMaterial } from "@react-three/drei";
+import {
+  useBox,
+  usePlane,
+  PlaneProps,
+  BoxProps,
+  useSphere,
+} from "@react-three/cannon";
+import { useGLTF, MeshWobbleMaterial, CycleRaycast } from "@react-three/drei";
 
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
@@ -30,18 +36,26 @@ import Table from "./Table";
 import Garbage from "./Garbage";
 import Bike from "./Bicycle";
 import Radio from "./Radio";
+import TV_Table from "./Tv_table";
+import Sofa from "./Sofa";
+import TV from "./Tv";
+import Vent from "./Vent";
+import Shelf from "./Shelf";
 
-import { TextureLoader, NearestFilter, LinearMipMapLinearFilter } from "three";
+import Project from "./Project";
+
 import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
+import { vertexShader } from "../../shaders/vertexShader";
+import { fragmentShader } from "../../shaders/fragmentShader";
 
-function Room(props: THREE.Mesh) {
+function Room(props: { handleHover: (value: boolean) => void }) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
   const wallTexture = useLoader(THREE.TextureLoader, wallTextureAsset);
 
   // Configure texture wrapping and repeating
   floorTexture.wrapS = THREE.RepeatWrapping;
   floorTexture.wrapT = THREE.RepeatWrapping;
-  floorTexture.repeat.set(10, 10); // Set texture repeat for a tiled floor
+  floorTexture.repeat.set(15, 15); // Set texture repeat for a tiled floor
   floorTexture.magFilter = THREE.NearestFilter;
   floorTexture.minFilter = THREE.NearestFilter;
   floorTexture.generateMipmaps = false;
@@ -55,10 +69,10 @@ function Room(props: THREE.Mesh) {
 
   useEffect(() => {
     // Set filtering for magnification (when zooming in)
-    wallTexture.magFilter = NearestFilter;
+    wallTexture.magFilter = THREE.NearestFilter;
 
     // Set filtering for minification (when zooming out)
-    wallTexture.minFilter = LinearMipMapLinearFilter;
+    wallTexture.minFilter = THREE.LinearMipMapLinearFilter;
 
     // Enable mipmaps for better minification
     wallTexture.generateMipmaps = true;
@@ -68,10 +82,10 @@ function Room(props: THREE.Mesh) {
   // Apply texture filtering on load
   useEffect(() => {
     // Set filtering for magnification (when zooming in)
-    floorTexture.magFilter = NearestFilter;
+    floorTexture.magFilter = THREE.NearestFilter;
 
     // Set filtering for minification (when zooming out)
-    floorTexture.minFilter = LinearMipMapLinearFilter;
+    floorTexture.minFilter = THREE.LinearMipMapLinearFilter;
 
     // Enable mipmaps for better minification
     floorTexture.generateMipmaps = true;
@@ -110,12 +124,20 @@ function Room(props: THREE.Mesh) {
     args: [10, 1, 10], // Thin horizontal ceiling
   }));
 
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      map: { value: floorTexture }, // Your floor texture
+      uvScale: { value: 105 }, // Adjust the scale value to zoom in or out
+    },
+    vertexShader: vertexShader, // Your vertex shader code
+    fragmentShader: fragmentShader, // Your fragment shader code
+  });
+
   return (
     <>
       {/* Static Floor */}
-      <mesh ref={floorRef} receiveShadow>
+      <mesh ref={floorRef} receiveShadow material={material}>
         <planeGeometry args={[10, 10]} />
-        <meshStandardMaterial flatShading map={floorTexture} />
       </mesh>
 
       {/* Static Left Wall */}
@@ -144,7 +166,7 @@ function Room(props: THREE.Mesh) {
       {/* Fan */}
       <Fan position={[3, 3.5, -16]} rotation={[0, 1.6, 0]} />
       {/* Bed */}
-      <Bed position={[6, 0, 5]} rotation={[0, -1.56, 0]} />
+      <Bed position={[7, 0, 8]} rotation={[0, -1.56, 0]} scale={1.3} />
       {/* Bookcase */}
       <Bookcase
         position={[21.5, 0, -7]}
@@ -152,7 +174,7 @@ function Room(props: THREE.Mesh) {
         scale={[1.6, 1.6, 1]}
       />
       {/* Plant */}
-      <Plant position={[15, 0.2, -5]} />
+      <Plant position={[8, 0.2, -5]} />
 
       <Plant_2 position={[8, 0.2, -7]} />
       <Plant_3 position={[8, 0.2, -7]} />
@@ -182,6 +204,27 @@ function Room(props: THREE.Mesh) {
       <Garbage position={[19, 1.6, -21.5]} scale={0.7} />
       {/* Radio */}
       <Radio position={[-12, 0, -6]} />
+      {/*Tv Table */}
+      <TV_Table
+        position={[-5.5, 1.2, -3.5]}
+        scale={0.5}
+        rotation={[0, 1.58, 0]}
+      />
+      {/* Sofa */}
+      <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
+      {/* TV */}
+      <TV position={[-1.3, 1.8, 16.3]} rotation={[0, 4.7, 0]} scale={0.5} />
+      {/* Fan */}
+      <Vent position={[9.5, 0.09, 1]} />
+      {/* Shelf */}
+      <Shelf position={[10, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
+      {/* projects on shelf */}
+      <Project text="hello" handleHover={props.handleHover} />
+
+      <mesh receiveShadow position={[0, 1, 8]}>
+        <boxGeometry args={[1, 1, 1]} />
+        <CustomShaderMaterial color="blue" />
+      </mesh>
     </>
   );
 }

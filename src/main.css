@@ -25,6 +25,15 @@ body {
   transform: translate3d(-50%, -50%, 0);
   border: 2px solid white;
 }
+.interaction {
+  position: absolute;
+  top: 90%;
+  left: 48%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  color: white;
+}
 
 canvas {
   image-rendering: pixelated;

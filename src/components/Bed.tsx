@@ -7,6 +7,22 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { scene, materials } = useGLTF("Bed/Bed.gltf");
 
   useEffect(() => {
+    // Loop through all materials and set NearestFilter for their textures
+    Object.values(materials).forEach((material: THREE.Material) => {
+      if (
+        material instanceof THREE.MeshBasicMaterial ||
+        material instanceof THREE.MeshStandardMaterial
+      ) {
+        if (material.map) {
+          material.map.minFilter = THREE.NearestFilter;
+          material.map.magFilter = THREE.NearestFilter;
+          material.map.needsUpdate = true;
+        }
+      }
+    });
+  }, [materials]);
+
+  useEffect(() => {
     // Traverse through the scene to find meshes and apply filters
     scene.traverse((child) => {
       // Type guard to ensure 'child' is a Mesh
