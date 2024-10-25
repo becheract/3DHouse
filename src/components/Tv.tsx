@@ -7,12 +7,17 @@ import React, { useRef, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import videoURL from "./Gameplay.mp4";
+import { vertexShader } from "../../shaders/vertexShader";
+import { fragmentShader } from "../../shaders/fragmentShader";
+
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("TV/tv.glb");
 
   const videoRef = useRef<THREE.Mesh>(null!);
+  const tv_Ref = useRef<THREE.Mesh>(null!);
 
   useEffect(() => {
+    const tvMaterial = materials.TV_06 as THREE.MeshBasicMaterial; // Cast to appropriate type
     const videoElement = document.createElement("video");
     videoElement.src = videoURL; // Replace with your video path or URL
     videoElement.crossOrigin = "anonymous";
@@ -25,6 +30,19 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     videoTexture.minFilter = THREE.NearestFilter;
     videoTexture.magFilter = THREE.NearestFilter;
     videoTexture.needsUpdate = true;
+
+    const shaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        map: { value: tvMaterial.map }, // Pass the video texture to the shader
+        uvScale: { value: 4.0 }, // You can adjust this value to scale the UVs
+      },
+      vertexShader: vertexShader, // Your custom vertex shader
+      fragmentShader: fragmentShader, // Your custom fragment shader
+    });
+
+    // if (tv_Ref.current) {
+    //   tv_Ref.current.material = shaderMaterial;
+    // }
 
     if (videoRef.current) {
       const material = videoRef.current.material;
@@ -66,6 +84,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     <group {...props} dispose={null}>
       <group position={[-26.634, -1.509, 5.387]}>
         <mesh
+          ref={tv_Ref}
           geometry={(nodes.Cube311 as THREE.Mesh).geometry}
           material={materials.TV_06}
         />

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
-import { useLoader } from "@react-three/fiber";
+import { useLoader, useFrame } from "@react-three/fiber";
 import {
   useBox,
   usePlane,
@@ -9,6 +9,7 @@ import {
   useSphere,
 } from "@react-three/cannon";
 import { useGLTF, MeshWobbleMaterial, CycleRaycast } from "@react-three/drei";
+import PixelatedEffect from "../Pixelated";
 
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
@@ -48,7 +49,12 @@ import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
 
-function Room(props: { handleHover: (value: boolean) => void }) {
+function Room(props: {
+  handleHover: (value: boolean) => void;
+  position: [number, number, number];
+  openModal: (ref: THREE.Mesh, textDescription: string) => void;
+  closeModal: () => void;
+}) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
   const wallTexture = useLoader(THREE.TextureLoader, wallTextureAsset);
 
@@ -94,7 +100,6 @@ function Room(props: { handleHover: (value: boolean) => void }) {
 
   // Static floor using usePlane
   const [floorRef] = usePlane<THREE.Mesh>(() => ({
-    type: "Static",
     rotation: [-Math.PI / 2, 0, 0], // Horizontal floor
     position: [0, 0, 0], // Centered floor
   }));
@@ -136,8 +141,9 @@ function Room(props: { handleHover: (value: boolean) => void }) {
   return (
     <>
       {/* Static Floor */}
-      <mesh ref={floorRef} receiveShadow material={material}>
+      <mesh ref={floorRef} receiveShadow>
         <planeGeometry args={[10, 10]} />
+        <meshStandardMaterial flatShading color="#FCFBF4" map={floorTexture} />
       </mesh>
 
       {/* Static Left Wall */}
@@ -189,7 +195,7 @@ function Room(props: { handleHover: (value: boolean) => void }) {
       <Painting_5 position={[-7, 1.5, 4.56]} rotation={[0, 3.13, 0]} />
 
       {/* Chair */}
-      <Chair position={[18, 2.4, 2]} />
+      <Chair position={[0, 0.5, -2]} />
       {/* Monitor */}
       <Monitor position={[10.7, 1.5, 2.2]} rotation={[0, 3.2, 0]} />
       {/* Cup */}
@@ -217,9 +223,14 @@ function Room(props: { handleHover: (value: boolean) => void }) {
       {/* Fan */}
       <Vent position={[9.5, 0.09, 1]} />
       {/* Shelf */}
-      <Shelf position={[10, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
+      <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
       {/* projects on shelf */}
-      <Project text="hello" handleHover={props.handleHover} />
+      <Project
+        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+      />
 
       <mesh receiveShadow position={[0, 1, 8]}>
         <boxGeometry args={[1, 1, 1]} />

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { PointerLockControls, Sky, BakeShadows } from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense, useEffect } from "react";
@@ -8,43 +8,41 @@ import "./main.css";
 import { Physics } from "@react-three/cannon";
 import Person from "./components/Person";
 import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import PixelatedEffect from "./Pixelated";
+import DarkWindow from "./components/darkModal";
+
+interface CurrentObject {
+  ref: THREE.Mesh;
+  textDescription: string;
+}
 
 function App() {
   extend(THREE);
   const [hover, setHover] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [currentObject, setCurrentObject] = useState<CurrentObject | null>(
+    null!
+  );
 
-  if (document) {
-    //create a root
-    // const root = createRoot(document.querySelector('canvas'))
-  }
+  // Open modal when cube is clicked
+  const openModal = (ref: THREE.Mesh, textDescription: string) => {
+    setCurrentObject({ ref: ref, textDescription: textDescription });
+    setModalOpen(true);
+  };
 
-  function JitteredCamera() {
-    useFrame((state) => {
-      const { x, y, z } = state.camera.position;
-      state.camera.position.set(
-        Math.round(x * 10) / 10, // Reducing precision by rounding
-        Math.round(y * 10) / 10,
-        Math.round(z * 10) / 10
-      );
-      state.camera.updateProjectionMatrix();
-    });
-
-    return null; // No need to render anything
-  }
+  // Close modal
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleHover = (value: boolean): void => {
-    console.log("running");
     setHover(value);
   };
 
-  useEffect(() => {
-    console.log(hover);
-  });
-
   return (
     <>
-      <Canvas shadows id={"canvas"}>
+      <Canvas shadows id={"canvas"} tabIndex={0}>
         <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
@@ -64,11 +62,17 @@ function App() {
 
               {/* <pointLight position={[1, 4, 1]} intensity={20} /> */}
               <PointerLockControls />
+
               {/* Box Component */}
-              <Room position={[0, 0, 0]} handleHover={handleHover} />
+              <Room
+                position={[0, 0, 0]}
+                handleHover={handleHover}
+                openModal={openModal}
+                closeModal={closeModal}
+              />
               <Person
                 controls
-                position={[0, 2, 0]}
+                position={[0, 0, 6]}
                 args={[0.5]}
                 color="yellow"
               />
@@ -76,6 +80,12 @@ function App() {
           </Suspense>
         </EffectComposer>
       </Canvas>
+      <DarkWindow
+        currentObject={currentObject}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
+
       {hover ? <h1 className="interaction">Interact </h1> : null}
       <div className="dot" />
     </>

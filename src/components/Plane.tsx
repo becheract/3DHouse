@@ -11,6 +11,8 @@ function Plane(props: CustomPlaneProps) {
     rotation: [-Math.PI / 2, 0, 0],
     ...props,
   }));
+
+  
   return (
     <mesh ref={ref}>
       <planeGeometry args={[100, 100]} />

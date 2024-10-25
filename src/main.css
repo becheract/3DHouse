@@ -37,4 +37,5 @@ body {
 
 canvas {
   image-rendering: pixelated;
+  outline: none;
 }
