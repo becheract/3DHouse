@@ -7,6 +7,7 @@ import Arms from "./Arms";
 // Define the type for props
 interface BaseCharacterProps {
   controls?: boolean;
+  isOpen: boolean;
   position?: [number, number, number];
   color?: string;
   args?: [number]; // Adjust this based on the shape of args (for sphereGeometry)
@@ -25,7 +26,6 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const { camera } = useThree();
   camera.near = 0.01; // Move near plane closer
   camera.updateProjectionMatrix(); // Make sure to update the matrix after the change
-
   // Define the ref with a specific type of THREE.Mesh
   const ref = useRef<THREE.Mesh>(null!);
   const armsRef = useRef<THREE.Mesh>(null);
@@ -50,61 +50,65 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   }, [api.velocity]);
 
   useFrame((state) => {
-    const delta = state.clock.getElapsedTime() - lastTime;
-    if (delta > 1 / fps) {
-      lastTime = state.clock.getElapsedTime();
+    if (props.isOpen == false) {
+      const delta = state.clock.getElapsedTime() - lastTime;
+      if (delta > 1 / fps) {
+        lastTime = state.clock.getElapsedTime();
 
-      const spherePos = new THREE.Vector3();
-      // Update the camera position
-      sphereRef.current?.getWorldPosition(spherePos);
+        const spherePos = new THREE.Vector3();
+        // Update the camera position
+        sphereRef.current?.getWorldPosition(spherePos);
 
-      // Update the camera to follow the player
-      camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
+        // Update the camera to follow the player
+        camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
+        // if (armsRef.current !== null) {
+        //   // Extract the yaw rotation (around Y-axis) from the camera's rotation
+        //   const yaw = camera.rotation.y; // Get the Y rotation (yaw)
 
-      // if (armsRef.current !== null) {
-      //   // Extract the yaw rotation (around Y-axis) from the camera's rotation
-      //   const yaw = camera.rotation.y; // Get the Y rotation (yaw)
+        //   // Calculate forward direction based on yaw
+        //   const forwardDirection = new THREE.Vector3(
+        //     Math.sin(yaw), // X component
+        //     0, // Ignore Y component
+        //     Math.cos(yaw) // Z component
+        //   ).normalize();
 
-      //   // Calculate forward direction based on yaw
-      //   const forwardDirection = new THREE.Vector3(
-      //     Math.sin(yaw), // X component
-      //     0, // Ignore Y component
-      //     Math.cos(yaw) // Z component
-      //   ).normalize();
+        //   // Calculate the arms offset
+        //   const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
 
-      //   // Calculate the arms offset
-      //   const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
+        //   // Position the arms based on the camera's position and the arms offset
+        //   armsRef.current.position.set(
+        //     camera.position.x - 0,
+        //     camera.position.y - 1.6, // Keep a constant height for the arms
+        //     camera.position.z + 0
+        //   );
 
-      //   // Position the arms based on the camera's position and the arms offset
-      //   armsRef.current.position.set(
-      //     camera.position.x - 0,
-      //     camera.position.y - 1.6, // Keep a constant height for the arms
-      //     camera.position.z + 0
-      //   );
+        //   // Optionally, you can copy the camera's yaw rotation to the arms
+        //   armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
+        // }
 
-      //   // Optionally, you can copy the camera's yaw rotation to the arms
-      //   armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
-      // }
+        // Calculate movement direction based on controls
+        frontVector.set(0, 0, Number(backward) - Number(forward));
+        sideVector.set(Number(left) - Number(right), 0, 0);
 
-      // Calculate movement direction based on controls
-      frontVector.set(0, 0, Number(backward) - Number(forward));
-      sideVector.set(Number(left) - Number(right), 0, 0);
+        // Combine direction vectors
+        direction
+          .subVectors(frontVector, sideVector)
+          .normalize()
+          .multiplyScalar(SPEED)
+          .applyEuler(camera.rotation);
 
-      // Combine direction vectors
-      direction
-        .subVectors(frontVector, sideVector)
-        .normalize()
-        .multiplyScalar(SPEED)
-        .applyEuler(camera.rotation);
+        speed.fromArray(velocity.current);
 
-      speed.fromArray(velocity.current);
+        // Set velocity based on the direction
+        api.velocity.set(direction.x, velocity.current[1], direction.z);
 
-      // Set velocity based on the direction
-      api.velocity.set(direction.x, velocity.current[1], direction.z);
-
-      // Jump logic
-      if (jump && Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05) {
-        api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+        // Jump logic
+        if (
+          jump &&
+          Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05
+        ) {
+          api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+        }
       }
     }
   });

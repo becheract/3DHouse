@@ -1,6 +1,11 @@
 // Dark Window Component (Modal)
 import React, { useState, useRef, useEffect } from "react";
-import { useGLTF, CycleRaycast, Text } from "@react-three/drei";
+import {
+  useGLTF,
+  CycleRaycast,
+  Text,
+  PointerLockControls,
+} from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
@@ -10,15 +15,45 @@ interface Modal {
   isOpen: boolean;
   onClose: () => void;
   currentObject: { ref: THREE.Mesh; textDescription: string } | null;
+  handleHover: (value: boolean) => void;
 }
 
-function DarkWindow({ isOpen, onClose, currentObject }: Modal) {
+interface Paragraph {
+  text: string;
+}
+
+function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
   if (!isOpen || !currentObject) return null; // Only render if open
+
+  const clonedObject = currentObject.ref.clone();
 
   useEffect(() => {
     console.log("inside interaction");
     console.log(currentObject);
   }, [currentObject]);
+
+  useEffect(() => {
+    handleHover(false);
+
+    if (document !== null) {
+      // example
+      var str = currentObject.textDescription;
+      var elem = document.getElementById("textDescription")!;
+      var timeBetween = 42;
+
+      appearChars(str, elem, timeBetween);
+    }
+  }, []);
+
+  function appearChars(str: string, elem: HTMLElement, timeBetween: number) {
+    var index = -1;
+    (function go() {
+      if (++index < str.length) {
+        elem.innerHTML = elem.innerHTML + str.charAt(index);
+        setTimeout(go, timeBetween);
+      }
+    })();
+  }
 
   return (
     <div style={styles.overlay}>
@@ -31,6 +66,7 @@ function DarkWindow({ isOpen, onClose, currentObject }: Modal) {
           border: "1px solid red",
         }} // Customize canvas size and style
       >
+        <PointerLockControls />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls
@@ -40,14 +76,10 @@ function DarkWindow({ isOpen, onClose, currentObject }: Modal) {
         />{" "}
         {/* Allow rotating the object */}
         {/* Render the current object */}
-        <primitive
-          object={currentObject.ref}
-          position={[0, -2.5, 0]}
-          scale={25}
-        />
+        <primitive object={clonedObject} position={[0, -2.5, 0]} scale={25} />
       </Canvas>
       <div style={styles.modal}>
-        <p>{currentObject.textDescription}</p>
+        <p id="textDescription"></p>
       </div>
     </div>
   );

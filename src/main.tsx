@@ -1,7 +1,12 @@
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { PointerLockControls, Sky, BakeShadows } from "@react-three/drei";
+import {
+  PointerLockControls,
+  Sky,
+  BakeShadows,
+  Stats,
+} from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense, useEffect } from "react";
 import "./main.css";
@@ -11,7 +16,7 @@ import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
 import { useState, useRef } from "react";
 import PixelatedEffect from "./Pixelated";
 import DarkWindow from "./components/darkModal";
-
+import CubeLoader from "./components/CubeLoader";
 interface CurrentObject {
   ref: THREE.Mesh;
   textDescription: string;
@@ -42,7 +47,14 @@ function App() {
 
   return (
     <>
-      <Canvas shadows id={"canvas"} tabIndex={0}>
+      <Canvas
+        dpr={[4, 138]}
+        shadows
+        id={"canvas"}
+        tabIndex={0}
+        frameloop="demand"
+      >
+        <Stats />
         <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
@@ -53,14 +65,15 @@ function App() {
         <EffectComposer>
           {/* <Scanline density={0.9999} /> */}
           {/* <Noise opacity={0.1} /> */}
-          <Suspense fallback={null}>
+          <Suspense fallback={<CubeLoader />}>
             <Physics gravity={[0, -9.8, 0]}>
               {/* Lights */}
-              <ambientLight intensity={1} castShadow />
+              {/* <directionalLight position={[0, 0, 0]} intensity={1} castShadow /> */}
+              {/* <ambientLight position={[0, 0, 0]} intensity={1} castShadow /> */}
               <BakeShadows />
-              {/* <spotLight penumbra={1} position={[1, 4, 1]} castShadow /> */}
+              {/* <spotLight penumbra={1} position={[-10, 1, 0]} castShadow /> */}
 
-              {/* <pointLight position={[1, 4, 1]} intensity={20} /> */}
+              <pointLight position={[0, 3.1, 2]} intensity={30} />
               <PointerLockControls />
 
               {/* Box Component */}
@@ -72,6 +85,7 @@ function App() {
               />
               <Person
                 controls
+                isOpen={isModalOpen}
                 position={[0, 0, 6]}
                 args={[0.5]}
                 color="yellow"
@@ -84,6 +98,7 @@ function App() {
         currentObject={currentObject}
         isOpen={isModalOpen}
         onClose={closeModal}
+        handleHover={handleHover}
       />
 
       {hover ? <h1 className="interaction">Interact </h1> : null}

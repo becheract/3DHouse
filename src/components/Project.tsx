@@ -57,9 +57,14 @@ export default function Project(props: projects) {
     }
   };
 
+
+
+  //interactions
   useFrame((state) => {
-    if (hover && meshRef.current) {
+    if (hover == true && meshRef.current) {
       meshRef.current.rotation.y += 0.01;
+
+      console.log(hover);
 
       document.addEventListener("keydown", (e) => {
         if (e.key == "f" || (e.key == "F" && meshRef.current)) {

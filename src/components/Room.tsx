@@ -13,6 +13,7 @@ import PixelatedEffect from "../Pixelated";
 
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
+import ceilTextureAsset from "../assets/ceil2.png";
 
 import Bed from "../components/Bed";
 import Fan from "../components/Fan";
@@ -57,6 +58,7 @@ function Room(props: {
 }) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
   const wallTexture = useLoader(THREE.TextureLoader, wallTextureAsset);
+  const ceilTexture = useLoader(THREE.TextureLoader, ceilTextureAsset);
 
   // Configure texture wrapping and repeating
   floorTexture.wrapS = THREE.RepeatWrapping;
@@ -72,6 +74,13 @@ function Room(props: {
   wallTexture.magFilter = THREE.NearestFilter;
   wallTexture.minFilter = THREE.NearestFilter;
   wallTexture.generateMipmaps = false;
+
+  ceilTexture.wrapS = THREE.RepeatWrapping;
+  ceilTexture.wrapT = THREE.RepeatWrapping;
+  ceilTexture.repeat.set(1, 1); // Set texture repeat for a tiled ceil
+  ceilTexture.magFilter = THREE.NearestFilter;
+  ceilTexture.minFilter = THREE.NearestFilter;
+  ceilTexture.generateMipmaps = false;
 
   useEffect(() => {
     // Set filtering for magnification (when zooming in)
@@ -126,7 +135,7 @@ function Room(props: {
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
     position: [0, 5, 0], // Ceiling
-    args: [10, 1, 10], // Thin horizontal ceiling
+    args: [20, 1, 20], // Thin horizontal ceiling
   }));
 
   const material = new THREE.ShaderMaterial({
@@ -167,10 +176,11 @@ function Room(props: {
       {/* Static Ceiling */}
       <mesh ref={ceilingRef} receiveShadow>
         <boxGeometry args={[10, 1, 10]} />
-        <meshStandardMaterial flatShading color="red" map={wallTexture} />
+        <meshStandardMaterial flatShading map={wallTexture} />
       </mesh>
+
       {/* Fan */}
-      <Fan position={[3, 3.5, -16]} rotation={[0, 1.6, 0]} />
+      <Fan position={[3, 3.5, -16]} rotation={[0, 1.6, 0]} castShadow />
       {/* Bed */}
       <Bed position={[7, 0, 8]} rotation={[0, -1.56, 0]} scale={1.3} />
       {/* Bookcase */}
@@ -180,12 +190,12 @@ function Room(props: {
         scale={[1.6, 1.6, 1]}
       />
       {/* Plant */}
-      <Plant position={[8, 0.2, -5]} />
+      <Plant_4 position={[6, 0.2, -0.7]} />
 
-      <Plant_2 position={[8, 0.2, -7]} />
-      <Plant_3 position={[8, 0.2, -7]} />
-      <Plant_4 position={[8, 0.2, -7]} />
-      <Plant_5 position={[8, 0.2, -7]} />
+      <Plant_2 position={[12.3, 1.72, -10]} />
+      <Plant_5 position={[13.8, 0.2, 0.7]} />
+
+      <Plant_5 position={[6, 0.2, -2.2]} />
 
       {/* Painting */}
       <Painting_1 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
@@ -209,7 +219,7 @@ function Room(props: {
       {/* Garabage */}
       <Garbage position={[19, 1.6, -21.5]} scale={0.7} />
       {/* Radio */}
-      <Radio position={[-12, 0, -6]} />
+      <Radio position={[2.3, 2.5, 15.1]} rotation={[0, 2, 0]} />
       {/*Tv Table */}
       <TV_Table
         position={[-5.5, 1.2, -3.5]}
@@ -221,7 +231,7 @@ function Room(props: {
       {/* TV */}
       <TV position={[-1.3, 1.8, 16.3]} rotation={[0, 4.7, 0]} scale={0.5} />
       {/* Fan */}
-      <Vent position={[9.5, 0.09, 1]} />
+      <Vent position={[9.5, 0.09, -1]} />
       {/* Shelf */}
       <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
       {/* projects on shelf */}
@@ -232,9 +242,9 @@ function Room(props: {
         closeModal={props.closeModal}
       />
 
-      <mesh receiveShadow position={[0, 1, 8]}>
+      <mesh receiveShadow castShadow position={[0, 1, 8]}>
         <boxGeometry args={[1, 1, 1]} />
-        <CustomShaderMaterial color="blue" />
+        <meshStandardMaterial color="white" />
       </mesh>
     </>
   );
