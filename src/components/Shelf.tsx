@@ -48,7 +48,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     if (shelfRef.current) {
       const geometry = shelfRef.current.geometry;
-      console.log(geometry.attributes.uv); // Check UVs in the console
+      // console.log(geometry.attributes.uv); // Check UVs in the console
     }
   }, []);
 
