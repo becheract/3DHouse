@@ -207,7 +207,13 @@ function Room(props: {
       {/* Chair */}
       <Chair position={[0, 0.5, -2]} />
       {/* Monitor */}
-      <Monitor position={[10.7, 1.5, 2.2]} rotation={[0, 3.2, 0]} />
+      <Monitor
+        position={[10, 1.5, 3.2]}
+        rotation={[0, 9.4, 0]}
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+      />
       {/* Cup */}
       <Cup position={[6, 1.5, -10]} />
       {/* Table */}

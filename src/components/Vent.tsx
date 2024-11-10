@@ -51,7 +51,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
-        // ref={ventRef}
+        ref={ventRef}
         geometry={(nodes.Ventilator as THREE.Mesh).geometry}
         material={materials.Ventilator}
         position={[-13.143, -0.063, 0.571]}

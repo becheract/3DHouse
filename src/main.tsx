@@ -45,6 +45,11 @@ function App() {
     setHover(value);
   };
 
+  useEffect(() => {
+    console.log("inside main.tsx");
+    console.log(hover);
+  }, [hover]);
+
   return (
     <>
       <Canvas

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useGLTF, CycleRaycast, Text } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
@@ -26,65 +26,58 @@ export default function Project(props: projects) {
     type: "Dynamic",
     position: [4.2, 0, 0.1],
   }));
-
-  const { camera } = useThree();
-  const distanceThreshold = 3;
+  const { camera } = useThree(); // Correctly call useThree here
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Float parameters
   const floatAmplitude = 0.1; // How high the cube will float
   const floatSpeed = 2; // Speed of the floating motion
 
-  const distanceChecker = () => {
-    if (bodyRef.current) {
-      if (hover == false) {
-        if (
-          camera.position.z <=
-          bodyRef.current.position.z + distanceThreshold
-        ) {
-          console.log("can interact with");
-
-          props.handleHover(true);
-          setHover(true);
-        } else {
-          meshRef.current.rotation.set(0, 0, 0);
-          props.handleHover(false);
-          setHover(false);
-        }
-      } else if (hover == true) {
-        props.handleHover(false);
-        setHover(false);
-      }
-    }
-  };
-
-
-
   //interactions
   useFrame((state) => {
-    if (hover == true && meshRef.current) {
+    if (hover && meshRef.current) {
       meshRef.current.rotation.y += 0.01;
 
-      console.log(hover);
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key == "f" || (e.key == "F" && meshRef.current)) {
-          console.log("interacting");
-          props.openModal(meshRef.current, props.textDescription);
+      // Use a ref to ensure event listeners are not re-registered
+      const keyDownListener = (e: KeyboardEvent) => {
+        if (distanceChecker() == true) {
+          if (e.key === "f" || e.key === "F") {
+            console.log("interacting");
+            props.openModal(meshRef.current, props.textDescription);
+          }
+          if (e.key === "x" || e.key === "X") {
+            props.closeModal();
+          }
         }
-      });
+      };
+
+      document.addEventListener("keydown", keyDownListener);
+
+      return () => {
+        // Cleanup event listener
+        document.removeEventListener("keydown", keyDownListener);
+      };
     }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key == "x" || e.key == "X") {
-        props.closeModal();
-      }
-    });
-
     // Calculate new Y position based on a sine wave for floating effect
     const time = state.clock.getElapsedTime(); // Get elapsed time
     meshRef.current.position.y =
       2.2 + floatAmplitude * Math.sin(floatSpeed * time); // Floating effect
   });
+
+  const distanceChecker = (): boolean => {
+    const distanceThreshold = 3;
+
+    if (bodyRef.current) {
+      const distanceToBody = camera.position.distanceTo(
+        bodyRef.current.position
+      );
+      const isWithinThreshold = distanceToBody <= distanceThreshold;
+
+      return isWithinThreshold;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <group ref={bodyRef}>
@@ -92,13 +85,15 @@ export default function Project(props: projects) {
         ref={meshRef}
         onPointerOver={(e) => {
           console.log("hovering over object");
-          setHover(true);
-          distanceChecker();
+          if (distanceChecker() == true) {
+            props.handleHover(true);
+            setHover(true);
+          }
         }}
         onPointerLeave={(e) => {
           console.log("no longer hovering");
+          props.handleHover(false);
           setHover(false);
-          distanceChecker();
         }}
         position={[0, 0, 0]}
       >
