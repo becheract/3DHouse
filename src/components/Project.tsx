@@ -1,99 +1,83 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useGLTF, CycleRaycast, Text } from "@react-three/drei";
+import { useGLTF, Text } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useBox } from "@react-three/cannon";
 
-import {
-  useBox,
-  usePlane,
-  PlaneProps,
-  BoxProps,
-  useSphere,
-} from "@react-three/cannon";
-
-interface projects {
+interface Projects {
   textDescription: string;
   handleHover: (value: boolean) => void;
   openModal: (ref: THREE.Mesh, text: string) => void;
   closeModal: () => void;
 }
 
-export default function Project(props: projects) {
-  const [hover, setHover] = useState(false);
+export default function Project(props: Projects) {
+  const hoverRef = useRef(false); // Use a ref to track hover state
   const meshRef = useRef<THREE.Mesh>(null!);
-
   const [bodyRef] = useBox<THREE.Group>(() => ({
     type: "Dynamic",
     position: [4.2, 0, 0.1],
   }));
-  const { camera } = useThree(); // Correctly call useThree here
-  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const { camera } = useThree();
 
-  // Float parameters
-  const floatAmplitude = 0.1; // How high the cube will float
-  const floatSpeed = 2; // Speed of the floating motion
+  const floatAmplitude = 0.1;
+  const floatSpeed = 2;
 
-  //interactions
-  useFrame((state) => {
-    if (hover && meshRef.current) {
-      meshRef.current.rotation.y += 0.01;
-
-      // Use a ref to ensure event listeners are not re-registered
-      const keyDownListener = (e: KeyboardEvent) => {
-        if (distanceChecker() == true) {
-          if (e.key === "f" || e.key === "F") {
-            console.log("interacting");
-            props.openModal(meshRef.current, props.textDescription);
-          }
-          if (e.key === "x" || e.key === "X") {
-            props.closeModal();
-          }
+  useEffect(() => {
+    // Key event listener function
+    const keyDownListener = (e: KeyboardEvent) => {
+      if (distanceChecker() && hoverRef.current) {
+        if (e.key === "f" || e.key === "F") {
+          props.openModal(meshRef.current, props.textDescription);
+        } else if (e.key === "x" || e.key === "X") {
+          props.closeModal();
         }
-      };
+      }
+    };
 
-      document.addEventListener("keydown", keyDownListener);
+    // Register key event listener once on mount
+    document.addEventListener("keydown", keyDownListener);
+    return () => {
+      document.removeEventListener("keydown", keyDownListener);
+    };
+  }, []); // Empty dependency array ensures this runs only once
 
-      return () => {
-        // Cleanup event listener
-        document.removeEventListener("keydown", keyDownListener);
-      };
+  useFrame((state) => {
+    // Rotate if hovering
+    if (hoverRef.current && meshRef.current) {
+      meshRef.current.rotation.y += 0.01;
     }
-    // Calculate new Y position based on a sine wave for floating effect
-    const time = state.clock.getElapsedTime(); // Get elapsed time
+
+    // Floating effect
+    const time = state.clock.getElapsedTime();
     meshRef.current.position.y =
-      2.2 + floatAmplitude * Math.sin(floatSpeed * time); // Floating effect
+      2.2 + floatAmplitude * Math.sin(floatSpeed * time);
   });
 
   const distanceChecker = (): boolean => {
     const distanceThreshold = 3;
-
     if (bodyRef.current) {
       const distanceToBody = camera.position.distanceTo(
         bodyRef.current.position
       );
-      const isWithinThreshold = distanceToBody <= distanceThreshold;
-
-      return isWithinThreshold;
-    } else {
-      return false;
+      return distanceToBody <= distanceThreshold;
     }
+    return false;
   };
 
   return (
     <group ref={bodyRef}>
       <mesh
         ref={meshRef}
-        onPointerOver={(e) => {
-          console.log("hovering over object");
-          if (distanceChecker() == true) {
+        onPointerOver={() => {
+          if (distanceChecker()) {
+            hoverRef.current = true;
             props.handleHover(true);
-            setHover(true);
           }
         }}
-        onPointerLeave={(e) => {
-          console.log("no longer hovering");
+        onPointerLeave={() => {
+          hoverRef.current = false;
           props.handleHover(false);
-          setHover(false);
         }}
         position={[0, 0, 0]}
       >

@@ -9,5 +9,9 @@
     "paths": {
       "/*": ["./*", "./public/*"]
     }
+  },
+  "compilerOptions": {
+    "types": ["@testing-library/jest-dom", "jest"]
+    // other options
   }
 }
