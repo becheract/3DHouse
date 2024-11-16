@@ -30,19 +30,29 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     videoTexture.minFilter = THREE.NearestFilter;
     videoTexture.magFilter = THREE.NearestFilter;
     videoTexture.needsUpdate = true;
+    
+   
 
     const shaderMaterial = new THREE.ShaderMaterial({
       uniforms: {
         map: { value: tvMaterial.map }, // Pass the video texture to the shader
-        uvScale: { value: 4.0 }, // You can adjust this value to scale the UVs
+        uvScale: { value: 4.4 }, // You can adjust this value to scale the UVs
       },
       vertexShader: vertexShader, // Your custom vertex shader
       fragmentShader: fragmentShader, // Your custom fragment shader
     });
 
-    // if (tv_Ref.current) {
-    //   tv_Ref.current.material = shaderMaterial;
-    // }
+    if (tvMaterial.map) {
+      tvMaterial.map.wrapS = THREE.ClampToEdgeWrapping;
+      tvMaterial.map.wrapT = THREE.ClampToEdgeWrapping;
+      tvMaterial.map.needsUpdate = true;
+    }
+    
+
+    if (tv_Ref.current) {
+      
+      tv_Ref.current.material = shaderMaterial;
+    }
 
     if (videoRef.current) {
       const material = videoRef.current.material;
@@ -75,6 +85,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           material.map.minFilter = THREE.NearestFilter;
           material.map.magFilter = THREE.NearestFilter;
           material.map.needsUpdate = true;
+    
         }
       }
     });

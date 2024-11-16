@@ -23,7 +23,9 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   let lastTime = 0;
   const fps = 30;
 
-  const { camera } = useThree();
+  const { camera , gl } = useThree();
+
+  // gl.shadowMap.enabled = true;
   camera.near = 0.01; // Move near plane closer
   camera.updateProjectionMatrix(); // Make sure to update the matrix after the change
   // Define the ref with a specific type of THREE.Mesh
@@ -31,7 +33,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const armsRef = useRef<THREE.Mesh>(null);
 
   const [sphereRef, api] = useSphere(() => ({
-    mass: 1,
+    mass: 3,
     type: "Dynamic",
     position: [0, 10, 0],
     ...props,

@@ -24,6 +24,7 @@ interface CurrentObject {
 
 function App() {
   extend(THREE);
+
   const [hover, setHover] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentObject, setCurrentObject] = useState<CurrentObject | null>(
@@ -45,6 +46,8 @@ function App() {
     setHover(value);
   };
 
+
+
   return (
     <>
       <Canvas
@@ -53,7 +56,11 @@ function App() {
         id={"canvas"}
         tabIndex={0}
         frameloop="demand"
+        gl={{
+          antialias:false
+        }}
       >
+        
         <Stats />
         <Sky
           distance={450000}

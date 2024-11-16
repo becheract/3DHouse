@@ -36,6 +36,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           material.map.minFilter = THREE.NearestFilter;
           material.map.magFilter = THREE.NearestFilter;
           material.map.needsUpdate = true;
+          material.shadowSide = THREE.DoubleSide
         }
       }
     });
@@ -48,6 +49,8 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
+      receiveShadow
+      castShadow
         ref={tvRef}
         geometry={(nodes.Cube200 as THREE.Mesh).geometry}
         material={materials.Wood_05}

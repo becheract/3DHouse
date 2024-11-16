@@ -12,7 +12,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Chair/chair.glb");
 
   const [ref, api] = useBox<THREE.Group>(() => ({
-    mass: 2, // Assign mass for the object to make it moveable
+    mass: 1, // Assign mass for the object to make it moveable
     position: [0, 0, 0], // Initial position
     rotation: [0, 0, 0],
     args: [1, 1, 1], // Adjust the size based on the object
