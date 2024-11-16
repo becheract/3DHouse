@@ -12,11 +12,18 @@ import { Suspense, useEffect } from "react";
 import "./main.css";
 import { Physics } from "@react-three/cannon";
 import Person from "./components/Person";
-import { EffectComposer, Scanline, Noise } from "@react-three/postprocessing";
+import {
+  EffectComposer,
+  Scanline,
+  Noise,
+  Pixelation,
+} from "@react-three/postprocessing";
 import { useState, useRef } from "react";
 import PixelatedEffect from "./Pixelated";
 import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
+import { Points, Point, PointMaterial, OrbitControls } from "@react-three/drei";
+
 interface CurrentObject {
   ref: THREE.Mesh;
   textDescription: string;
@@ -70,17 +77,17 @@ function App() {
         />
 
         <EffectComposer>
-          {/* <Scanline density={0.9999} /> */}
-          {/* <Noise opacity={0.1} /> */}
+          {/* <Pixelation granularity={2} /> */}
+
           <Suspense fallback={<CubeLoader />}>
             <Physics gravity={[0, -9.8, 0]}>
               {/* Lights */}
               {/* <directionalLight position={[0, 0, 0]} intensity={1} castShadow /> */}
-              {/* <ambientLight position={[0, 0, 0]} intensity={1} castShadow /> */}
+              <ambientLight position={[0, 0, 0]} intensity={1} castShadow />
               <BakeShadows />
               {/* <spotLight penumbra={1} position={[-10, 1, 0]} castShadow /> */}
 
-              <pointLight position={[0, 3.1, 2]} intensity={30} />
+              {/* <pointLight position={[0, 3.1, 2]} intensity={30} /> */}
               <PointerLockControls />
 
               {/* Box Component */}

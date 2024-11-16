@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { useLoader, useFrame } from "@react-three/fiber";
 import {
   useBox,
@@ -24,6 +24,7 @@ import Plant_2 from "../components/Plant_2";
 import Plant_3 from "../components/Plant_3";
 import Plant_4 from "../components/Plant_4";
 import Plant_5 from "../components/Plant_5";
+import { EffectComposer, Pixelation } from "@react-three/postprocessing";
 
 import Painting_1 from "../components/Painting_1";
 import Painting_2 from "../components/Painting_2";
@@ -138,45 +139,57 @@ function Room(props: {
     args: [20, 1, 20], // Thin horizontal ceiling
   }));
 
-  const material = new THREE.ShaderMaterial({
-    uniforms: {
-      map: { value: floorTexture }, // Your floor texture
-      uvScale: { value: 105 }, // Adjust the scale value to zoom in or out
-    },
-    vertexShader: vertexShader, // Your vertex shader code
-    fragmentShader: fragmentShader, // Your fragment shader code
-  });
+  const material = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        uniforms: {
+          map: { value: floorTexture }, // Your floor texture
+          uvScale: { value: 105 }, // Adjust the scale value to zoom in or out
+        },
+        vertexShader: vertexShader, // Your vertex shader code
+        fragmentShader: fragmentShader, // Your fragment shader code
+      }),
+    [floorTexture]
+  );
+
+  useEffect(() => {
+    // Dispose textures when component unmounts to free memory
+    return () => {
+      floorTexture.dispose();
+      wallTexture.dispose();
+    };
+  }, []);
 
   return (
     <>
       {/* Static Floor */}
-      <mesh ref={floorRef} receiveShadow>
+      <mesh ref={floorRef}>
         <planeGeometry args={[10, 10]} />
-        <meshStandardMaterial flatShading color="#FCFBF4" map={floorTexture} />
+        <meshStandardMaterial color="#FCFBF4" map={floorTexture} />
       </mesh>
 
       {/* Static Left Wall */}
-      <mesh ref={wallRef1} receiveShadow>
+      <mesh ref={wallRef1}>
         <boxGeometry args={[1, 10, 10]} />
-        <meshStandardMaterial flatShading color="#FCFBF4" map={wallTexture} />
+        <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
       {/* Static Right Wall */}
-      <mesh ref={wallRef2} receiveShadow>
+      <mesh ref={wallRef2}>
         <boxGeometry args={[1, 10, 10]} />
-        <meshStandardMaterial flatShading color="#FCFBF4" map={wallTexture} />
+        <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
       {/* Static Back Wall */}
-      <mesh ref={wallRef3} receiveShadow>
+      <mesh ref={wallRef3}>
         <boxGeometry args={[10, 10, 1]} />
-        <meshStandardMaterial flatShading color="#FCFBF4" map={wallTexture} />
+        <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
       {/* Static Ceiling */}
-      <mesh ref={ceilingRef} receiveShadow>
+      <mesh ref={ceilingRef}>
         <boxGeometry args={[10, 1, 10]} />
-        <meshStandardMaterial flatShading map={wallTexture} />
+        <meshStandardMaterial map={wallTexture} />
       </mesh>
 
       {/* Fan */}
@@ -207,7 +220,13 @@ function Room(props: {
       {/* Chair */}
       <Chair position={[0, 0.5, -2]} />
       {/* Monitor */}
-      <Monitor position={[10.7, 1.5, 2.2]} rotation={[0, 3.2, 0]} />
+      <Monitor
+        position={[10, 1.5, 3.2]}
+        rotation={[0, 9.4, 0]}
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+      />
       {/* Cup */}
       <Cup position={[6, 1.5, -10]} />
       {/* Table */}
@@ -242,7 +261,7 @@ function Room(props: {
         closeModal={props.closeModal}
       />
 
-      <mesh receiveShadow castShadow position={[0, 1, 8]}>
+      <mesh castShadow position={[0, 1, 8]}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="white" />
       </mesh>

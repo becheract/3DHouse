@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { usePlayerControls } from "../utils/helpers";
 import * as THREE from "three";
+import Particle from "./Particle";
 import Arms from "./Arms";
 // Define the type for props
 interface BaseCharacterProps {

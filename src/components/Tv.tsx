@@ -95,7 +95,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     <group {...props} dispose={null}>
       <group position={[-26.634, -1.509, 5.387]}>
         <mesh
-          ref={tv_Ref}
+          // ref={tv_Ref}
           geometry={(nodes.Cube311 as THREE.Mesh).geometry}
           material={materials.TV_06}
         />
