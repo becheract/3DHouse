@@ -62,12 +62,12 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         rotation={[Math.PI, 0, Math.PI]}
       >
         <mesh
-          // ref={tableRef}
+          ref={tableRef}
           geometry={(nodes.Cube093 as THREE.Mesh).geometry}
           material={materials.Wood_05}
         />
         <mesh
-          // ref={legRef}
+          ref={legRef}
           geometry={(nodes.Cube093_1 as THREE.Mesh).geometry}
           material={materials.Wood_02}
         />

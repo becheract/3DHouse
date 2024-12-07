@@ -6,12 +6,29 @@ Command: npx gltfjsx@6.5.2 Bookcase.glb
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { NearestFilter, LinearMipMapLinearFilter, Texture } from "three";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { vertexShader } from "../../shaders/vertexShader";
+import { fragmentShader } from "../../shaders/fragmentShader";
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { scene, nodes, materials } = useGLTF("Bookcase/Bookcase.glb");
+  const bookcaseRef = useRef<THREE.Mesh>(null!)
+
 
   useEffect(() => {
+
+    const bookcaseMaterial = materials.Bookcase_01 as THREE.MeshBasicMaterial;
+
+    const shaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        map: { value: bookcaseMaterial.map }, // No texture for the frame, adjust if needed
+        uvScale: { value: 4 }, // Control UV scaling if necessary
+        uJitterLevel: { value: 40 },
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+    });
+
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
       if (
@@ -25,6 +42,11 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         }
       }
     });
+
+    if( bookcaseRef.current){
+      bookcaseRef.current.material = shaderMaterial;
+    }
+
   }, [materials]);
 
   useEffect(() => {
@@ -55,6 +77,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
+      // ref={bookcaseRef}
         geometry={(nodes.Bookcase_01 as THREE.Mesh).geometry}
         material={materials.Bookcase_01}
         position={[-15.342, 0.513, 2.852]}

@@ -1,19 +1,21 @@
 export const fragmentShader = `
-// fragment shader
 varying vec2 vUv;
 varying float vAffine;
 
-uniform sampler2D map; // Your texture map
-
+uniform sampler2D map; // Texture map
 
 void main() {
-  // Apply affine transformation to the UV coordinates
-  vec2 uv = vUv / vAffine;
+  // Normalize affine factor to avoid extreme distortions
+  float normalizedAffine = max(vAffine, 1.0);
 
-  // Sample the texture
-  vec4 color = texture2D(map, uv);
+  // Apply affine distortion to UVs
+  vec2 distortedUv = vUv / normalizedAffine;
 
-  // Output the final color
-  gl_FragColor = color;
+  // Sample texture
+  vec4 texColor = texture2D(map, distortedUv);
+
+  // Final output
+  gl_FragColor = texColor;
 }
+
 `;

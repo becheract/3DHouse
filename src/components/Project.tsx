@@ -71,6 +71,7 @@ export default function Project(props: Projects) {
         ref={meshRef}
         onPointerOver={() => {
           if (distanceChecker()) {
+            console.log('hovering over')
             hoverRef.current = true;
             props.handleHover(true);
           }

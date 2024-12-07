@@ -49,7 +49,8 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
-        // ref={tvRef}
+        ref={tvRef}
+        
         geometry={(nodes.Cube200 as THREE.Mesh).geometry}
         material={materials.Wood_05}
         position={[-12.94, -1.476, 3.233]}

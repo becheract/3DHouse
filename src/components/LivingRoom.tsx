@@ -110,7 +110,7 @@ function Room(props: {
   // Static floor using usePlane
   const [floorRef] = usePlane<THREE.Mesh>(() => ({
     rotation: [-Math.PI / 2, 0, 0], // Horizontal floor
-    position: [0, 0, 0], // Centered floor
+    position: [0, -4, 0], // Centered floor
   }));
 
   // Static walls using useBox
@@ -122,13 +122,13 @@ function Room(props: {
 
   const [wallRef2] = useBox<THREE.Mesh>(() => ({
     type: "Static",
-    position: [5, 5, 0], // Right wall
+    position: [15, 5, 0], // Right wall
     args: [1, 10, 10],
   }));
 
   const [wallRef3] = useBox<THREE.Mesh>(() => ({
     type: "Static",
-    position: [0, 5, -5], // Back wall
+    position: [10, 5, -5], // Back wall
     args: [10, 10, 1],
   }));
 
@@ -167,12 +167,7 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={floorTexture} />
       </mesh>
 
-      {/* Static Left Wall */}
-      <mesh ref={wallRef1}>
-        <boxGeometry args={[1, 10, 10]} />
-        <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh>
-
+    
       {/* Static Right Wall */}
       <mesh ref={wallRef2}>
         <boxGeometry args={[1, 10, 10]} />
@@ -191,79 +186,6 @@ function Room(props: {
         <meshStandardMaterial map={wallTexture} />
       </mesh>
 
-      {/* Fan */}
-      <Fan position={[3, 3.5, -16]} rotation={[0, 1.6, 0]} castShadow />
-      {/* Bed */}
-      <Bed position={[7, 0, 8]} rotation={[0, -1.56, 0]} scale={1.3} />
-      {/* Bookcase */}
-      <Bookcase
-        position={[21.5, 0, -7]}
-        rotation={[0, 0, 0]}
-        scale={[1.6, 1.6, 1]}
-      />
-      {/* Plant */}
-      <Plant_4 position={[6, 0.2, -0.7]} />
-
-      <Plant_2 position={[12.3, 1.72, -10]} />
-      <Plant_5 position={[13.8, 0.2, 0.7]} />
-
-      <Plant_5 position={[6, 0.2, -2.2]} />
-
-      {/* Painting */}
-      <Painting_1 position={[1.9, 1.5, 16.19]} rotation={[0, 4.58, 0]} />
-      <Painting_2 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
-      <Painting_3 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
-      <Painting_4 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
-      <Painting_5 position={[-4.70, 1.5, -7.66]} rotation={[0, 1.58, 0]} />
-
-      {/* Chair */}
-      <Chair position={[0, 0.5, -2]} />
-      {/* Monitor */}
-      <Monitor
-        position={[10, 1.5, 3.2]}
-        rotation={[0, 9.4, 0]}
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-      />
-      {/* Cup */}
-      <Cup position={[6, 1.5, -10]} />
-      {/* Table */}
-      <Table position={[13, 2, -16.7]} />
-      {/* Bike */}
-      <Bike position={[3.8, 0, -4]} scale={0.5} rotation={[0, 0, -0.2]} />
-      {/* Magazines */}
-      <Magazines position={[-16, 0, -4]} />
-      {/* Garabage */}
-      <Garbage position={[19, 1.6, -21.5]} scale={0.7} />
-      {/* Radio */}
-      <Radio position={[2.3, 2.5, 15.1]} rotation={[0, 2, 0]} />
-      {/*Tv Table */}
-      <TV_Table
-        position={[-5.5, 1.2, -3.5]}
-        scale={0.5}
-        rotation={[0, 1.58, 0]}
-      />
-      {/* Sofa */}
-      <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
-      {/* TV */}
-      <TV position={[-1.3, 1.8, 16.3]} rotation={[0, 4.7, 0]} scale={0.5} />
-      {/* Fan */}
-      <Vent position={[9.5, 0.09, -1]} />
-      {/* Shelf */}
-      <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
-      {/* projects on shelf */}
-      <Project
-        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-      />
-
-      <mesh castShadow position={[0, 1, 8]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="white" />
-      </mesh>
     </>
   );
 }

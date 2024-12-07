@@ -8,6 +8,7 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
+import { useBox } from "@react-three/cannon"; // Import Cannon.js hook
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Sofa/sofa.glb");
@@ -61,15 +62,15 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} >
       <group position={[10.876, 0.177, -3.175]}>
         <mesh
-          // ref={sofaWoodRef}
+          ref={sofaWoodRef}
           geometry={(nodes.Armchair_08_1 as THREE.Mesh).geometry}
           material={materials.Wood_10}
         />
         <mesh
-          // ref={sofaMatRef}
+          ref={sofaMatRef}
           geometry={(nodes.Armchair_08_2 as THREE.Mesh).geometry}
           material={materials.Fabric_11}
         />

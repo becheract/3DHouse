@@ -11,6 +11,9 @@ type Movement = {
 
 // Player Controls hook
 export const usePlayerControls = (): Movement => {
+
+
+  
   // Define key mappings
   const keys: { [key: string]: keyof Movement } = {
     KeyW: "forward",

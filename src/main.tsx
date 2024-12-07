@@ -6,6 +6,7 @@ import {
   Sky,
   BakeShadows,
   Stats,
+  CameraShake
 } from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense, useEffect } from "react";
@@ -17,12 +18,16 @@ import {
   Scanline,
   Noise,
   Pixelation,
+  
 } from "@react-three/postprocessing";
 import { useState, useRef } from "react";
-import PixelatedEffect from "./Pixelated";
 import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
 import { Points, Point, PointMaterial, OrbitControls } from "@react-three/drei";
+import { BlendFunction } from "postprocessing";
+import LivingRoom from "./components/LivingRoom"
+import ParentRoom from "./components/ParentRoom"
+
 
 interface CurrentObject {
   ref: THREE.Mesh;
@@ -53,8 +58,6 @@ function App() {
     setHover(value);
   };
 
-
-
   return (
     <>
       <Canvas
@@ -77,7 +80,7 @@ function App() {
         />
 
         <EffectComposer>
-          {/* <Pixelation granularity={2} /> */}
+          <Pixelation granularity={10} />
 
           <Suspense fallback={<CubeLoader />}>
             <Physics gravity={[0, -9.8, 0]}>
@@ -97,6 +100,18 @@ function App() {
                 openModal={openModal}
                 closeModal={closeModal}
               />
+{/* 
+              <LivingRoom           
+                position={[0, 0, 0]}
+                handleHover={handleHover}
+                openModal={openModal}
+                closeModal={closeModal}/>
+
+              <ParentRoom         
+                position={[0, 0, 0]}
+                handleHover={handleHover}
+                openModal={openModal}
+                closeModal={closeModal}/>  */}
               <Person
                 controls
                 isOpen={isModalOpen}
@@ -104,7 +119,9 @@ function App() {
                 args={[0.5]}
                 color="yellow"
               />
+                 
             </Physics>
+ 
           </Suspense>
         </EffectComposer>
       </Canvas>

@@ -16,27 +16,38 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
 
-  // const { actions } = useAnimations(animations, group);
+  const { actions, names } = useAnimations(animations, group);
 
-  // const { camera } = useThree(); // Access the scene's camera
-  // const armRef = useRef<THREE.Group>(null!);
+  const { camera } = useThree(); // Access the scene's camera
+  const armRef = useRef<THREE.Group>(null!);
 
-  // useEffect(() => {
-  //   if (armRef.current) {
-  //     // Set arms as a child of the camera, so they move with it
-  //     camera.add(armRef.current);
+  useEffect(() => {
+    if (armRef.current) {
+      // Set arms as a child of the camera, so they move with it
+      camera.add(armRef.current);
 
-  //     if (armRef.current !== undefined) {
-  //       // Position the arms in front of the camera (adjust as needed)
-  //       armRef.current.position.set(0, -0.5, -1); // Fine-tune position to make it look realistic
-  //       armRef.current.rotation.set(0, 0, 0); // Adjust rotation if needed
-  //     }
+      if (armRef.current !== undefined) {
+        // Position the arms in front of the camera (adjust as needed)
+        armRef.current.position.set(0, -0.5, -1); // Fine-tune position to make it look realistic
+        armRef.current.rotation.set(0, 0, 0); // Adjust rotation if needed
+      }
 
-  //     return () => {
-  //       camera.remove(armRef.current); // Cleanup: remove from camera on unmount
-  //     };
-  //   }
-  // }, [camera]);
+      return () => {
+        camera.remove(armRef.current); // Cleanup: remove from camera on unmount
+      };
+    }
+  }, [camera]);
+
+  useEffect(() => {
+    console.log('names of actions')
+    console.log(names)
+    if(actions.Relax_hands_idle_loop !== null){
+      console.log('running?')
+      actions.Relax_hands_idle_loop.play()
+    }
+  }, [actions, scene])
+
+
 
   useEffect(() => {
     // Loop through all materials and set NearestFilter for their textures
@@ -55,7 +66,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null} >
       <group name="Scene">
         <group name="arms_armature">
           <primitive object={nodes.spine002} />

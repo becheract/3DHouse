@@ -1,9 +1,10 @@
 import { useSphere } from "@react-three/cannon";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef,useState } from "react";
 import { usePlayerControls } from "../utils/helpers";
 import * as THREE from "three";
 import Particle from "./Particle";
+import { CameraShake } from "@react-three/drei";
 import Arms from "./Arms";
 // Define the type for props
 interface BaseCharacterProps {
@@ -14,6 +15,9 @@ interface BaseCharacterProps {
   args?: [number]; // Adjust this based on the shape of args (for sphereGeometry)
 }
 
+
+
+
 // BaseCharacter component
 const BaseCharacter = (props: BaseCharacterProps) => {
   const direction = new THREE.Vector3();
@@ -23,9 +27,20 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const SPEED = 5;
   let lastTime = 0;
   const fps = 30;
-
+  
   const { camera , gl } = useThree();
 
+  // const shakeRef = useRef<ShakeController>();
+  const [shakeIntensity, setShakeIntesity] = useState(0);
+
+  const [maxYaw, setMaxYaw] = useState([0,1])
+  const [maxPitch, setMaxPitch] = useState([0,1]);
+  const [maxRoll,setMaxRoll] = useState([0,1]);
+
+
+
+  const [moving, setMoving] = useState(false);
+  
   // gl.shadowMap.enabled = true;
   camera.near = 0.01; // Move near plane closer
   camera.updateProjectionMatrix(); // Make sure to update the matrix after the change
@@ -64,32 +79,35 @@ const BaseCharacter = (props: BaseCharacterProps) => {
 
         // Update the camera to follow the player
         camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
-        // if (armsRef.current !== null) {
-        //   // Extract the yaw rotation (around Y-axis) from the camera's rotation
-        //   const yaw = camera.rotation.y; // Get the Y rotation (yaw)
 
-        //   // Calculate forward direction based on yaw
-        //   const forwardDirection = new THREE.Vector3(
-        //     Math.sin(yaw), // X component
-        //     0, // Ignore Y component
-        //     Math.cos(yaw) // Z component
-        //   ).normalize();
+        if (armsRef.current !== null) {
+          // Extract the yaw rotation (around Y-axis) from the camera's rotation
+          const yaw = camera.rotation.y; // Get the Y rotation (yaw)
 
-        //   // Calculate the arms offset
-        //   const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
+          // Calculate forward direction based on yaw
+          const forwardDirection = new THREE.Vector3(
+            Math.sin(yaw), // X component
+            0, // Ignore Y component
+            Math.cos(yaw) // Z component
+          ).normalize();
 
-        //   // Position the arms based on the camera's position and the arms offset
-        //   armsRef.current.position.set(
-        //     camera.position.x - 0,
-        //     camera.position.y - 1.6, // Keep a constant height for the arms
-        //     camera.position.z + 0
-        //   );
 
-        //   // Optionally, you can copy the camera's yaw rotation to the arms
-        //   armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
-        // }
 
-        // Calculate movement direction based on controls
+          // Calculate the arms offset
+          const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
+
+          // Position the arms based on the camera's position and the arms offset
+          // armsRef.current.position.set(
+          //   camera.position.x - 0,
+          //   camera.position.y - 1.6, // Keep a constant height for the arms
+          //   camera.position.z + 0
+          // );
+
+          // Optionally, you can copy the camera's yaw rotation to the arms
+          armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
+        }
+
+        // Calculate the movement direction based on controls (AWSD)
         frontVector.set(0, 0, Number(backward) - Number(forward));
         sideVector.set(Number(left) - Number(right), 0, 0);
 
@@ -110,7 +128,9 @@ const BaseCharacter = (props: BaseCharacterProps) => {
           jump &&
           Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05
         ) {
-          api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+
+            api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+          
         }
       }
     }
@@ -123,6 +143,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         {/* <sphereGeometry args={props.args} /> */}
         <meshStandardMaterial color="#FFFF00" />
         <Arms scale={[1, 1, 1]} rotation={[0, 3.1, 0]} />
+        {/* <CameraShake ref={shakeRef}/> */}
       </mesh>
     </group>
   );
