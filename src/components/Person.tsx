@@ -97,11 +97,11 @@ const BaseCharacter = (props: BaseCharacterProps) => {
           const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
 
           // Position the arms based on the camera's position and the arms offset
-          // armsRef.current.position.set(
-          //   camera.position.x - 0,
-          //   camera.position.y - 1.6, // Keep a constant height for the arms
-          //   camera.position.z + 0
-          // );
+          armsRef.current.position.set(
+            camera.position.x - 0,
+            camera.position.y - 1.8, // Keep a constant height for the arms
+            camera.position.z + 0.1
+          );
 
           // Optionally, you can copy the camera's yaw rotation to the arms
           armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
