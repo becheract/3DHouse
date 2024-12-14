@@ -16,6 +16,11 @@ interface BaseCharacterProps {
 }
 
 
+interface ShakeController {
+  getIntensity: () => number
+  setIntensity: (val: number) => void
+}
+
 
 
 // BaseCharacter component
@@ -29,17 +34,6 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const fps = 30;
   
   const { camera , gl } = useThree();
-
-  // const shakeRef = useRef<ShakeController>();
-  const [shakeIntensity, setShakeIntesity] = useState(0);
-
-  const [maxYaw, setMaxYaw] = useState([0,1])
-  const [maxPitch, setMaxPitch] = useState([0,1]);
-  const [maxRoll,setMaxRoll] = useState([0,1]);
-
-
-
-  const [moving, setMoving] = useState(false);
   
   // gl.shadowMap.enabled = true;
   camera.near = 0.01; // Move near plane closer
@@ -81,31 +75,30 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
 
         if (armsRef.current !== null) {
-          // Extract the yaw rotation (around Y-axis) from the camera's rotation
-          const yaw = camera.rotation.y; // Get the Y rotation (yaw)
+       // Calculate the forward direction (ignoring camera's X-axis rotation)
+        const forwardDirection = new THREE.Vector3(
+          Math.sin(camera.rotation.y), // X component (yaw)
+          0, // Lock the Y-axis
+          Math.cos(camera.rotation.y) // Z component (yaw)
+        ).normalize();
 
-          // Calculate forward direction based on yaw
-          const forwardDirection = new THREE.Vector3(
-            Math.sin(yaw), // X component
-            0, // Ignore Y component
-            Math.cos(yaw) // Z component
-          ).normalize();
+        // Define the offset for the arms (relative to the camera)
+        const offset = new THREE.Vector3(0, -1.8, 0.03);
 
+        // Calculate the arms' position
+        const armsPosition = new THREE.Vector3()
+          .copy(camera.position)
+          .add(forwardDirection.multiplyScalar(offset.z)) // Apply only horizontal offset
+          .add(new THREE.Vector3(0, offset.y, 0)); // Add vertical offset
 
+        armsRef.current.position.copy(armsPosition);
 
-          // Calculate the arms offset
-          const armsOffset = forwardDirection.multiplyScalar(0.4); // Adjust this value as needed
+        // Copy only the camera's yaw (Y-axis rotation) to the arms
+        const armsRotation = new THREE.Euler(0, camera.rotation.y, 0); // Lock pitch and roll
+        armsRef.current.quaternion.setFromEuler(armsRotation);
 
-          // Position the arms based on the camera's position and the arms offset
-          armsRef.current.position.set(
-            camera.position.x - 0,
-            camera.position.y - 1.8, // Keep a constant height for the arms
-            camera.position.z + 0.1
-          );
-
-          // Optionally, you can copy the camera's yaw rotation to the arms
-          armsRef.current.rotation.set(0, camera.rotation.y, 0); // Lock pitch and roll
-        }
+      }
+        
 
         // Calculate the movement direction based on controls (AWSD)
         frontVector.set(0, 0, Number(backward) - Number(forward));

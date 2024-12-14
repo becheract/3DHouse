@@ -6,8 +6,7 @@ Command: npx gltfjsx@6.5.2 tv_table.glb
 import React, { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { vertexShader } from "../../shaders/vertexShader";
-import { fragmentShader } from "../../shaders/fragmentShader";
+import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("TTable/tv_table.glb");
@@ -16,15 +15,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
 
   useEffect(() => {
     const tvMaterial = materials.Wood_05 as THREE.MeshBasicMaterial; // Cast to appropriate type
-
-    const shaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: tvMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 5 }, // Control UV scaling if necessary
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
 
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -42,7 +32,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (tvRef.current) {
-      tvRef.current.material = shaderMaterial;
+      tvRef.current.material = shaderMaterialTransformer(tvMaterial, 5);
     }
   }, [materials]);
 

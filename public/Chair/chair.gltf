@@ -1,0 +1,285 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.2.69",
+    "version": "2.0"
+  },
+  "extensionsUsed": [
+    "KHR_materials_specular"
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Cylinder.037",
+      "translation": [
+        -17.561307907104492,
+        -1.3372753858566284,
+        -3.649085283279419
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Material.010",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.04954908788204193,
+          0.04954908788204193,
+          0.04954908788204193,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Fabric",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cylinder.047",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "Fabric",
+      "uri": "Fabric.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 457,
+      "max": [
+        0.6666556596755981,
+        0.3944873511791229,
+        0.41635578870773315
+      ],
+      "min": [
+        -0.6365599632263184,
+        -1.0206787586212158,
+        -0.8523676991462708
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 457,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 457,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 882,
+      "type": "SCALAR",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 158,
+      "max": [
+        0.5009039044380188,
+        1.0610843896865845,
+        0.43945541977882385
+      ],
+      "min": [
+        -0.5014670491218567,
+        -0.14750516414642334,
+        -0.7905948758125305
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 158,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 158,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5123,
+      "count": 372,
+      "type": "SCALAR",
+      "byteOffset": 0
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 5484,
+      "byteOffset": 0,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5484,
+      "byteOffset": 5488,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3656,
+      "byteOffset": 10976,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1764,
+      "byteOffset": 14632,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1896,
+      "byteOffset": 16400,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1896,
+      "byteOffset": 18296,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1264,
+      "byteOffset": 20192,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 744,
+      "byteOffset": 21456,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "buffers": [
+    {
+      "name": "chair",
+      "byteLength": 22200,
+      "uri": "chair.bin"
+    }
+  ]
+}

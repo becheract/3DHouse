@@ -3,6 +3,8 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
+import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
+
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Table/table.glb");
@@ -13,24 +15,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     const tableMaterial = materials.Wood_05 as THREE.MeshBasicMaterial;
     const legMaterial = materials.Wood_02 as THREE.MeshBasicMaterial;
-
-    const shaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: tableMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 5 }, // Control UV scaling if necessary
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
-
-    const shaderLegMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: legMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 5 }, // Control UV scaling if necessary
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
 
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -47,11 +31,11 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (tableRef.current) {
-      tableRef.current.material = shaderMaterial;
+      tableRef.current.material = shaderMaterialTransformer(tableMaterial,5);
     }
 
     if (legRef.current) {
-      legRef.current.material = shaderLegMaterial;
+      legRef.current.material = shaderMaterialTransformer(legMaterial,5);
     }
   }, [materials]);
 

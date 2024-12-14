@@ -1,33 +1,39 @@
-import * as THREE from "three";
-import { extend, useFrame } from "@react-three/fiber";
-import { vertexShader } from "./vertexShader";
-import { fragmentShader } from "./fragmentShader";
-import { useRef } from "react";
 
-class CustomShaderMaterial extends THREE.ShaderMaterial {
-  constructor() {
-    super({
-      vertexShader,
-      fragmentShader,
-      uniforms: {
-        resolution: { value: new THREE.Vector2(320, 240) },
-        map: { value: null },
-      },
+  import * as THREE from "three";
+
+
+  const createCustomMaterial = (color :string, jitterLevel : number, texture : THREE.Texture) => {
+    const material = new THREE.MeshStandardMaterial({
+      color,
+      map: texture || null,
+ 
     });
-  }
-}
 
-extend({ CustomShaderMaterial });
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.uJitterLevel = { value: jitterLevel };
 
-const CustomShaderMaterialComponent = (props: any) => {
-  const materialRef = useRef<THREE.ShaderMaterial>(null!);
-  useFrame(() => {
-    if (materialRef.current) materialRef.current.uniforms.map.value = props.map;
-  });
+      shader.vertexShader = `
+        uniform float uJitterLevel;
+        ${shader.vertexShader}
+      `.replace(
+        `#include <project_vertex>`,
+        `
+          vec4 mvPosition = modelViewMatrix * vec4( transformed, 1.0 );
+          gl_Position = projectionMatrix * mvPosition;
 
-  return (
-    <customShaderMaterial ref={materialRef} attach="material" {...props} />
-  );
-};
+          gl_Position.xy /= gl_Position.w;
+          gl_Position.xy = floor(gl_Position.xy * uJitterLevel) / uJitterLevel * gl_Position.w;
+        `
+      );
 
-export default CustomShaderMaterialComponent;
+      shader.fragmentShader = shader.fragmentShader.replace(
+        `vec4 diffuseColor = vec4( diffuse, opacity );`,
+        `
+        vec4 diffuseColor = vec4( diffuse, opacity );
+        diffuseColor.rgb *= 0.8; // Little darker colors
+        `
+      );
+    }
+  };
+
+  export default createCustomMaterial

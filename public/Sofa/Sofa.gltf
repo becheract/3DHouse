@@ -1,0 +1,298 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.2.69",
+    "version": "2.0"
+  },
+  "extensionsUsed": [
+    "KHR_materials_specular"
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Armchair_08",
+      "translation": [
+        10.875758171081543,
+        0.17738917469978333,
+        -3.174536943435669
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Wood_10",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Fabric_11",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Armchair_08",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": 4,
+            "NORMAL": 5,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "Wood_10",
+      "uri": "Wood_10.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "name": "Fabric_11",
+      "uri": "Fabric_11.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 80,
+      "max": [
+        0.7576293349266052,
+        -0.30836552381515503,
+        0.30350494384765625
+      ],
+      "min": [
+        -0.7576294541358948,
+        -0.4551697075366974,
+        -0.4764041304588318
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 80,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 80,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 120,
+      "type": "SCALAR",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 338,
+      "max": [
+        0.7984809875488281,
+        0.5286914110183716,
+        0.3419780731201172
+      ],
+      "min": [
+        -0.7977352142333984,
+        -0.32953476905822754,
+        -0.5132675170898438
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 338,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 338,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5123,
+      "count": 900,
+      "type": "SCALAR",
+      "byteOffset": 0
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 960,
+      "byteOffset": 0,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 960,
+      "byteOffset": 960,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 640,
+      "byteOffset": 1920,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240,
+      "byteOffset": 2560,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4056,
+      "byteOffset": 2800,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4056,
+      "byteOffset": 6856,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2704,
+      "byteOffset": 10912,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1800,
+      "byteOffset": 13616,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "buffers": [
+    {
+      "name": "Sofa",
+      "byteLength": 15416,
+      "uri": "Sofa.bin"
+    }
+  ]
+}

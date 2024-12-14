@@ -19,7 +19,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     const shaderMaterial = new THREE.ShaderMaterial({
       uniforms: {
         map: { value: ventMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 4 }, // Control UV scaling if necessary
+        uvScale: { value: 1 }, // Control UV scaling if necessary
         uJitterLevel: { value: 100 },
       },
       vertexShader: vertexShader,
@@ -51,7 +51,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null}>
       <mesh
-        // ref={ventRef}
+        ref={ventRef}
         geometry={(nodes.Ventilator as THREE.Mesh).geometry}
         material={materials.Ventilator}
         position={[-13.143, -0.063, 0.571]}

@@ -40,10 +40,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [camera]);
 
   useEffect(() => {
-    console.log('names')
-    console.log(names)
     if(actions.Relax_hands_idle_start !== null && firstLoad == true){
-        console.log('first load?')
         actions.Relax_hands_idle_start.play()
         actions.Relax_hands_idle_start.repetitions = 1;
         mixer.stopAllAction();

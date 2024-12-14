@@ -36,28 +36,28 @@ export default function Model(props: Computer) {
   cubeScene.add(cube);
 
   useEffect(() => {
-    const shaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: monitorMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 100 }, // Control UV scaling if necessary
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
+    // const shaderMaterial = new THREE.ShaderMaterial({
+    //   uniforms: {
+    //     map: { value: monitorMaterial.map }, // No texture for the frame, adjust if needed
+    //     uvScale: { value: 100 }, // Control UV scaling if necessary
+    //   },
+    //   vertexShader: vertexShader,
+    //   fragmentShader: fragmentShader,
+    // });
 
     // Set nearest filter for all materials of the model
-    Object.values(materials).forEach((material: THREE.Material) => {
-      if (
-        material instanceof THREE.MeshBasicMaterial ||
-        material instanceof THREE.MeshStandardMaterial
-      ) {
-        if (material.map) {
-          material.map.minFilter = THREE.NearestFilter;
-          material.map.magFilter = THREE.NearestFilter;
-          material.map.needsUpdate = true;
-        }
-      }
-    });
+    // Object.values(materials).forEach((material: THREE.Material) => {
+    //   if (
+    //     material instanceof THREE.MeshBasicMaterial ||
+    //     material instanceof THREE.MeshStandardMaterial
+    //   ) {
+    //     if (material.map) {
+    //       material.map.minFilter = THREE.NearestFilter;
+    //       material.map.magFilter = THREE.NearestFilter;
+    //       material.map.needsUpdate = true;
+    //     }
+    //   }
+    // });
 
     if (emissorRef.current) {
       // Create a new MeshBasicMaterial for the emissor with a white background
@@ -65,14 +65,14 @@ export default function Model(props: Computer) {
         map: renderTarget.texture, // Set the render target texture to Emissor material
         color: 0xffffff, // Set background color to white
       });
-
+      emissorRef.current.add(cubeScene)
       // Assign the material to the emissor mesh
       emissorRef.current.material = emissorMaterial;
     }
 
-    if (monitorRef.current) {
-      monitorRef.current.material = shaderMaterial;
-    }
+    // if (monitorRef.current) {
+    //   monitorRef.current.material = shaderMaterial;
+    // }
   }, [materials, renderTarget.texture]);
 
   return (
