@@ -98,7 +98,6 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         armsRef.current.quaternion.setFromEuler(armsRotation);
 
       }
-        
 
         // Calculate the movement direction based on controls (AWSD)
         frontVector.set(0, 0, Number(backward) - Number(forward));
@@ -110,9 +109,9 @@ const BaseCharacter = (props: BaseCharacterProps) => {
           .normalize()
           .multiplyScalar(SPEED)
           .applyEuler(camera.rotation);
-
+        
         speed.fromArray(velocity.current);
-
+       
         // Set velocity based on the direction
         api.velocity.set(direction.x, velocity.current[1], direction.z);
 

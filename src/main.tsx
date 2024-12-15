@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import {
   PointerLockControls,
-  Sky,
+  // Sky,
   BakeShadows,
   Stats,
   CameraShake
@@ -27,7 +27,8 @@ import { Points, Point, PointMaterial, OrbitControls } from "@react-three/drei";
 import { BlendFunction } from "postprocessing";
 import LivingRoom from "./components/LivingRoom"
 import ParentRoom from "./components/ParentRoom"
-
+import SkyImage from "../public/sky/sphere.jpg"
+import SkySphere from "./utils/skyspehere";
 
 interface CurrentObject {
   ref: THREE.Mesh;
@@ -72,12 +73,14 @@ function App() {
       >
         
         <Stats />
-        <Sky
+        {/* <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
           inclination={0}
           azimuth={0.25}
-        />
+        /> */}
+
+        <SkySphere textureUrl={SkyImage}/>
 
         <EffectComposer>
           <Pixelation granularity={10} />
@@ -86,11 +89,11 @@ function App() {
             <Physics gravity={[0, -9.8, 0]}>
               {/* Lights */}
               {/* <directionalLight position={[0, 0, 0]} intensity={1} castShadow /> */}
-              <ambientLight position={[0, 0, 0]} intensity={1} castShadow />
-              <BakeShadows />
+              {/* <ambientLight position={[0, 0, 0]} intensity={1} castShadow /> */}
+              {/* <BakeShadows /> */}
               {/* <spotLight penumbra={1} position={[-10, 1, 0]} castShadow /> */}
 
-              {/* <pointLight position={[0, 3.1, 2]} intensity={30} /> */}
+              <pointLight position={[0, 5, 0]} intensity={10} />
               <PointerLockControls />
 
               {/* Box Component */}

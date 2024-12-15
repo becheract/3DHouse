@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import footsteps from "../components/footsteps.mp3"
 
 // Define the movement type
 type Movement = {
@@ -35,12 +36,14 @@ export const usePlayerControls = (): Movement => {
     jump: false,
   });
 
+  let footstepsSoundEffects = new Audio(footsteps)
   // Effect to handle key events
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const movementKey = moveFieldByKey(e.code);
       if (movementKey) {
         setMovement((m) => ({ ...m, [movementKey]: true }));
+        footstepsSoundEffects.play()
       }
     };
 
@@ -48,6 +51,8 @@ export const usePlayerControls = (): Movement => {
       const movementKey = moveFieldByKey(e.code);
       if (movementKey) {
         setMovement((m) => ({ ...m, [movementKey]: false }));
+        footstepsSoundEffects.pause()
+
       }
     };
 
