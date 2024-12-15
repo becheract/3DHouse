@@ -43,7 +43,7 @@ import Sofa from "./Sofa";
 import TV from "./Tv";
 import Vent from "./Vent";
 import Shelf from "./Shelf";
-
+import BreakableTable from "./Table_breakable";
 import Project from "./Project";
 
 import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
@@ -244,6 +244,9 @@ function Room(props: {
         scale={0.5}
         rotation={[0, 1.58, 0]}
       />
+
+
+      
       {/* Sofa */}
       <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
       {/* TV */}
@@ -259,6 +262,8 @@ function Room(props: {
         openModal={props.openModal}
         closeModal={props.closeModal}
       />
+
+    <BreakableTable position={[2, 0, 12]}/> 
 
       <mesh castShadow position={[0, 1, 8]}>
         <boxGeometry args={[1, 1, 1]} />

@@ -18,10 +18,10 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGraph(clone);
   const [ firstLoad, setFirstLoad] = useState(true);
   const { actions, names, mixer } = useAnimations(animations, group);
-
+  const [combat,setCombat] = useState( false )
   const { camera } = useThree(); // Access the scene's camera
   const armRef = useRef<THREE.Group>(null!);
-
+  const [combatCooldown, setCombatCooldown] = useState(false)
   useEffect(() => {
     if (armRef.current) {
       // Set arms as a child of the camera, so they move with it
@@ -40,21 +40,27 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [camera]);
 
   useEffect(() => {
-    if(actions.Relax_hands_idle_start !== null && firstLoad == true){
+    if(actions.Relax_hands_idle_start !== null && firstLoad == true ){
         actions.Relax_hands_idle_start.play()
         actions.Relax_hands_idle_start.repetitions = 1;
         mixer.stopAllAction();
         actions.Relax_hands_idle_start.reset().play()
+        setFirstLoad(false)
     }
   }, [actions, scene])
 
+
+  const playIdle = () => {
+    mixer.stopAllAction();
+    if(actions.Relax_hands_idle_loop ){
+      actions.Relax_hands_idle_loop.play();
+      setCombatCooldown(false)
+    }
+  };
+
+
   useEffect(() => {
-    const playIdle = () => {
-      mixer.stopAllAction();
-      if(actions.Relax_hands_idle_loop){
-        actions.Relax_hands_idle_loop.play();
-      }
-    };
+
     mixer.addEventListener('finished', playIdle);
     return () => {
       mixer.removeEventListener('finished', playIdle);
@@ -82,6 +88,65 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
 
 
   },[])
+
+  useEffect(() => {
+
+    const mouseListener = (e: MouseEvent) => {
+      console.log('testing')
+      const random = Math.random();
+      console.log('Mouse clicked. Random number:', random);
+      
+      if (e.button === 0) { // 0 is for left mouse button
+        setCombat(true)
+        if (random < 0.5) {
+          if (actions.Combat_punch_right) {
+            console.log('Playing right punch');
+            actions.Combat_punch_right.play();
+            actions.Combat_punch_right.repetitions = 1;
+            mixer.stopAllAction();
+            actions.Combat_punch_right.reset().play();
+          }
+        } else {
+          if (actions.Combat_punch_left) {
+            console.log('Playing left punch');
+            actions.Combat_punch_left.play();
+            actions.Combat_punch_left.repetitions = 1;
+            mixer.stopAllAction();
+            actions.Combat_punch_left.reset().play();
+          }
+        }
+      }
+    };
+
+      // Register key event listener once on mount
+      document.addEventListener("click", mouseListener);
+      return () => {
+        document.removeEventListener("click", mouseListener);
+      };
+
+  }, [actions,mixer])
+
+
+  useEffect(() => {
+    const playCombatIdle = () => {
+      if(actions.Combat_idle_loop !== null && combat == true){
+        console.log('entering combat')
+        actions.Combat_idle_loop.play()
+
+        if(combatCooldown == false){
+          setTimeout( playIdle , 3000)
+          setCombatCooldown(true)
+        }
+      }
+    };
+
+    mixer.addEventListener('finished', playCombatIdle);
+    return () => {
+      mixer.removeEventListener('finished', playCombatIdle);
+    }
+
+  },[combat, actions, mixer])
+
 
 
   useEffect(() => {
