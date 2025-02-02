@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import footsteps from "../components/footsteps.mp3"
+import { useFrame, useThree } from "@react-three/fiber";
 
 // Define the movement type
 type Movement = {
@@ -11,8 +12,7 @@ type Movement = {
 };
 
 // Player Controls hook
-export const usePlayerControls = (): Movement => {
-
+export const usePlayerControls = (): Movement =>{
 
   
   // Define key mappings
@@ -36,6 +36,7 @@ export const usePlayerControls = (): Movement => {
     jump: false,
   });
 
+
   let footstepsSoundEffects = new Audio(footsteps)
   // Effect to handle key events
   useEffect(() => {
@@ -52,9 +53,11 @@ export const usePlayerControls = (): Movement => {
       if (movementKey) {
         setMovement((m) => ({ ...m, [movementKey]: false }));
         footstepsSoundEffects.pause()
-
       }
     };
+
+
+
 
     // Attach event listeners
     document.addEventListener("keydown", handleKeyDown);
@@ -66,6 +69,9 @@ export const usePlayerControls = (): Movement => {
       document.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
+
+
+
 
   return movement;
 };

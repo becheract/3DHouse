@@ -20,8 +20,8 @@ function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
     if (!currentObject) return;
 
     handleHover(false); // Disable hover while modal is open
-    console.log('inside dark modal')
-    console.log(currentObject.textDescription)
+    // console.log('inside dark modal')
+    // console.log(currentObject.textDescription)
     const elem = document.getElementById("textDescription");
     if (elem) appearChars(currentObject.textDescription, elem, 42);
 

@@ -9,7 +9,7 @@ import {
   useSphere,
 } from "@react-three/cannon";
 import { useGLTF, MeshWobbleMaterial, CycleRaycast } from "@react-three/drei";
-
+import MonitorOld from "./monitor_old"
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
 import ceilTextureAsset from "../assets/ceil2.png";
@@ -208,7 +208,7 @@ function Room(props: {
       <Plant_5 position={[13.8, 0.2, 0.7]} />
 
       <Plant_5 position={[6, 0.2, -2.2]} />
-
+      <MonitorOld position={[0,2,0]} scale={.8}/>
       {/* Painting */}
       <Painting_1 position={[1.9, 1.5, 16.19]} rotation={[0, 4.58, 0]} />
       <Painting_2 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />

@@ -2,6 +2,7 @@ import { useSphere } from "@react-three/cannon";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef,useState } from "react";
 import { usePlayerControls } from "../utils/helpers";
+import HeadBob from "../utils/headbob";
 import * as THREE from "three";
 import Particle from "./Particle";
 import { CameraShake } from "@react-three/drei";
@@ -133,6 +134,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
       {/* Ensure the ref is typed correctly for the mesh */}
       <mesh castShadow position={props.position} ref={armsRef}>
         {/* <sphereGeometry args={props.args} /> */}
+        {/* <HeadBob/> */}
         <meshStandardMaterial color="#FFFF00" />
         <Arms scale={[1, 1, 1]} rotation={[0, 3.1, 0]} />
         {/* <CameraShake ref={shakeRef}/> */}
