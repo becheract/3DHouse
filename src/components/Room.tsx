@@ -45,7 +45,7 @@ import Vent from "./Vent";
 import Shelf from "./Shelf";
 import BreakableTable from "./Table_breakable";
 import Project from "./Project";
-
+import Desktop from "./Desktop"
 import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
@@ -245,8 +245,7 @@ function Room(props: {
         rotation={[0, 1.58, 0]}
       />
 
-
-      
+      <Desktop position={[5, 0.4, 19]} />
       {/* Sofa */}
       <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
       {/* TV */}
