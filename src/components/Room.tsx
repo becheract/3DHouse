@@ -46,7 +46,7 @@ import Shelf from "./Shelf";
 import BreakableTable from "./Table_breakable";
 import Project from "./Project";
 import Desktop from "./Desktop"
-import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
+// import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
 
@@ -132,6 +132,12 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
+  const [wallRef4] = useBox<THREE.Mesh>(() => ({
+    type: "Static",
+    position: [0, 5, 5.5], // front wall
+    args: [10, 10, 1],
+  }))
+
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
     position: [0, 5, 0], // Ceiling
@@ -185,6 +191,13 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
+           {/* Static Front Wall */}
+        <mesh ref={wallRef4}>
+        <boxGeometry args={[10, 10, 1]} />
+        <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
+      </mesh>
+
+
       {/* Static Ceiling */}
       <mesh ref={ceilingRef}>
         <boxGeometry args={[10, 1, 10]} />
@@ -208,12 +221,11 @@ function Room(props: {
       <Plant_5 position={[13.8, 0.2, 0.7]} />
 
       <Plant_5 position={[6, 0.2, -2.2]} />
-      <MonitorOld position={[0,2,0]} scale={.8}/>
+      {/* <MonitorOld position={[0,2,0]} scale={.8}/> */}
       {/* Painting */}
       <Painting_1 position={[1.9, 1.5, 16.19]} rotation={[0, 4.58, 0]} />
-      <Painting_2 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
-      <Painting_3 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
-      <Painting_4 position={[15, 0.2, -5]} rotation={[0, 0, 0]} />
+      <Painting_2 position={[2.4, 1.5, 10 ]} rotation={[0, 4.70, 0]} />
+      <Painting_3 position={[15, 0.2, -7]} rotation={[0, 0, 0]} />
       <Painting_5 position={[-4.70, 1.5, -7.66]} rotation={[0, 1.58, 0]} />
 
       {/* Chair */}
@@ -227,7 +239,7 @@ function Room(props: {
         closeModal={props.closeModal}
       />
       {/* Cup */}
-      <Cup position={[6, 1.5, -10]} />
+      <Cup position={[9.2, 1.55, -15]} />
       {/* Table */}
       <Table position={[13, 2, -16.7]} />
       {/* Bike */}
@@ -245,7 +257,7 @@ function Room(props: {
         rotation={[0, 1.58, 0]}
       />
 
-      <Desktop position={[5, 0.4, 19]} />
+      <Desktop position={[-2, 0, -3.5 ]} scale={0.5} rotation={[0,-1.6,0]}/>
       {/* Sofa */}
       <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
       {/* TV */}
@@ -260,9 +272,33 @@ function Room(props: {
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
+        position={[0, 0, 0.6]}
+        colour="red"
+
       />
 
-    <BreakableTable position={[2, 0, 12]}/> 
+      <Project
+        textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
+        came to the design aspect."
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0]}
+        colour="green"
+      />
+
+<Project
+        textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
+        came to the design aspect."
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 1.2]}
+        colour="blue"
+      />
+
+
+    {/* <BreakableTable position={[2, 0, 12]}/>  */}
 
       <mesh castShadow position={[0, 1, 8]}>
         <boxGeometry args={[1, 1, 1]} />

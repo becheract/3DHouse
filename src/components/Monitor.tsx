@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF,Html } from "@react-three/drei";
 import * as THREE from "three";
 import { Euler, useFrame, Vector3 } from "@react-three/fiber";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
+import Portfolio from "./Portfolio";
 
 interface Computer {
   handleHover: (value: boolean) => void;
@@ -59,21 +60,24 @@ export default function Model(props: Computer) {
     //   }
     // });
 
-    if (emissorRef.current) {
-      // Create a new MeshBasicMaterial for the emissor with a white background
-      const emissorMaterial = new THREE.MeshBasicMaterial({
-        map: renderTarget.texture, // Set the render target texture to Emissor material
-        color: 0xffffff, // Set background color to white
-      });
-      emissorRef.current.add(cubeScene)
-      // Assign the material to the emissor mesh
-      emissorRef.current.material = emissorMaterial;
-    }
+    // if (emissorRef.current) {
+    //   // Create a new MeshBasicMaterial for the emissor with a white background
+    //   const emissorMaterial = new THREE.MeshBasicMaterial({
+    //     map: renderTarget.texture, // Set the render target texture to Emissor material
+    //     color: 0xffffff, // Set background color to white
+    //   });
+    //   emissorRef.current.add(cubeScene)
+    //   // Assign the material to the emissor mesh
+    //   emissorRef.current.material = emissorMaterial;
+    // }
 
     // if (monitorRef.current) {
     //   monitorRef.current.material = shaderMaterial;
     // }
   }, [materials, renderTarget.texture]);
+
+
+
 
   return (
     <group position={props.position} rotation={props.rotation} dispose={null}>
@@ -86,10 +90,20 @@ export default function Model(props: Computer) {
         <mesh
           ref={emissorRef}
           geometry={(nodes.TV_04_2 as THREE.Mesh).geometry}
-        ></mesh>
+        >
+        <Html className="content" rotation-y={3} position={[0, 0.05, -0.09]} transform occlude>
+              <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+                <Portfolio />
+              </div>
+            </Html>
+
+
+        </mesh>
       </group>
     </group>
   );
 }
+
+
 
 useGLTF.preload("/monitor.glb");

@@ -94,22 +94,11 @@ function App() {
                 openModal={openModal}
                 closeModal={closeModal}
               />
-{/* 
-              <LivingRoom           
-                position={[0, 0, 0]}
-                handleHover={handleHover}
-                openModal={openModal}
-                closeModal={closeModal}/>
 
-              <ParentRoom         
-                position={[0, 0, 0]}
-                handleHover={handleHover}
-                openModal={openModal}
-                closeModal={closeModal}/>  */}
               <Person
                 controls
                 isOpen={isModalOpen}
-                position={[0, 0, 6]}
+                position={[0, 0, 5]}
                 args={[0.5]}
                 color="yellow"
               />

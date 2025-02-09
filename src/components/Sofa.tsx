@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
 import { useBox } from "@react-three/cannon"; // Import Cannon.js hook
+import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Sofa/sofa.glb");
@@ -20,24 +21,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     const woodMaterial = materials.Wood_10 as THREE.MeshBasicMaterial; // Cast to appropriate type
     const fabricMaterial = materials.Fabric_11 as THREE.MeshBasicMaterial; // Cast to appropriate type
     // Create the ShaderMaterial for the TV frame (or model)
-    const shaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: woodMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 95 }, // Control UV scaling if necessary
-        uJitterLevel: { value: 70 },
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
-
-    const shaderFMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: fabricMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 3 }, // Control UV scaling if necessary
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
 
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -54,10 +37,10 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (sofaWoodRef.current) {
-      sofaWoodRef.current.material = shaderMaterial;
+      sofaWoodRef.current.material = shaderMaterialTransformer(woodMaterial,4);
     }
     if (sofaMatRef.current) {
-      sofaMatRef.current.material = shaderFMaterial;
+      sofaMatRef.current.material = shaderMaterialTransformer(fabricMaterial,10);
     }
   }, [materials]);
 
@@ -65,12 +48,12 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     <group {...props} dispose={null} >
       <group position={[10.876, 0.177, -3.175]}>
         <mesh
-          ref={sofaWoodRef}
+          // ref={sofaWoodRef}
           geometry={(nodes.Armchair_08_1 as THREE.Mesh).geometry}
           material={materials.Wood_10}
         />
         <mesh
-          ref={sofaMatRef}
+          // ref={sofaMatRef}
           geometry={(nodes.Armchair_08_2 as THREE.Mesh).geometry}
           material={materials.Fabric_11}
         />

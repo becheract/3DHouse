@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useGLTF, Text } from "@react-three/drei";
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree, Vector3 } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
 
 interface Projects {
@@ -9,6 +9,8 @@ interface Projects {
   handleHover: (value: boolean) => void;
   openModal: (ref: THREE.Mesh, text: string) => void;
   closeModal: () => void;
+  position: Vector3 | undefined;
+  colour: string
 }
 
 export default function Project(props: Projects) {
@@ -67,7 +69,8 @@ export default function Project(props: Projects) {
 
   return (
     <group ref={bodyRef}>
-      <mesh
+      <mesh 
+        position={props.position}
         ref={meshRef}
         onPointerOver={() => {
           if (distanceChecker()) {
@@ -80,10 +83,9 @@ export default function Project(props: Projects) {
           hoverRef.current = false;
           props.handleHover(false);
         }}
-        position={[0, 0, 0]}
       >
-        <boxGeometry args={[0.2, 0.2, 0.2]} attach={"geometry"} />
-        <meshStandardMaterial flatShading color={"red"} />
+        <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
+        <meshStandardMaterial flatShading color={props.colour} />
       </mesh>
     </group>
   );

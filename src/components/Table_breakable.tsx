@@ -36,7 +36,7 @@ export default function Table(props : JSX.IntrinsicElements["group"]) {
   return (
     <group {...props} dispose={null} ref={group}>
       <mesh name="original" geometry={(nodes.original as THREE.Mesh).geometry} material={materials.Wood_05} position={[1.708, 0.951, -3.896]} />
-      <mesh name="Cube200_cell" geometry={(nodes.Cube200_cell as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.46, 0.954, -5.007]} />
+      {/* <mesh name="Cube200_cell" geometry={(nodes.Cube200_cell as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.46, 0.954, -5.007]} />
       <mesh name="Cube200_cell001" geometry={(nodes.Cube200_cell001 as THREE.Mesh).geometry} material={materials.Wood_05} position={[0.14, 0.372, -4.902]} />
       <mesh name="Cube200_cell002" geometry={(nodes.Cube200_cell002 as THREE.Mesh).geometry} material={materials.Wood_05} position={[-0.031, 1.048, -4.957]} />
       <mesh name="Cube200_cell003" geometry={(nodes.Cube200_cell003 as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.281, 0.397, -2.881]} />
@@ -78,7 +78,7 @@ export default function Table(props : JSX.IntrinsicElements["group"]) {
       <mesh name="Cube200_cell040" geometry={(nodes.Cube200_cell040 as THREE.Mesh).geometry} material={materials.Wood_05} position={[0.105, 0.579, -2.929]} />
       <mesh name="Cube200_cell041" geometry={(nodes.Cube200_cell041 as THREE.Mesh).geometry} material={materials.Wood_05} position={[0.105, 0.579, -4.856]} />
       <mesh name="Cube200_cell042" geometry={(nodes.Cube200_cell042 as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.32, 0.579, -2.929]} />
-      <mesh name="Cube200_cell043" geometry={(nodes.Cube200_cell043 as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.405, 0.59, -2.845]} />
+      <mesh name="Cube200_cell043" geometry={(nodes.Cube200_cell043 as THREE.Mesh).geometry} material={materials.Wood_05} position={[3.405, 0.59, -2.845]} /> */}
     </group>
   )
 }

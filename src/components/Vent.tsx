@@ -8,6 +8,7 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
+import shaderMaterialTransformerAtlas from "./../../shaders/shaderMaterialTransformerAtlas"
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Vent/Vent.glb");
@@ -15,16 +16,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const ventRef = useRef<THREE.Mesh>(null!);
   useEffect(() => {
     const ventMaterial = materials.Ventilator as THREE.MeshBasicMaterial;
-
-    const shaderMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        map: { value: ventMaterial.map }, // No texture for the frame, adjust if needed
-        uvScale: { value: 1 }, // Control UV scaling if necessary
-        uJitterLevel: { value: 100 },
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-    });
 
     // Set nearest filter for all materials of the model
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -44,14 +35,14 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (ventRef.current) {
-      ventRef.current.material = shaderMaterial;
+      ventRef.current.material = shaderMaterialTransformerAtlas(ventMaterial, 2);
     }
   }, [materials]);
 
   return (
     <group {...props} dispose={null}>
       <mesh
-        ref={ventRef}
+        // ref={ventRef}
         geometry={(nodes.Ventilator as THREE.Mesh).geometry}
         material={materials.Ventilator}
         position={[-13.143, -0.063, 0.571]}

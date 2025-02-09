@@ -39,7 +39,7 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
 
   return (
     <group {...props} dispose={null} >
-      <mesh ref={desktopRef} geometry={(nodes.Desktop as THREE.Mesh).geometry} material={materials.Material} position={[0, 0.221, -2.921]} />
+      <mesh  geometry={(nodes.Desktop as THREE.Mesh).geometry} material={materials.Material} position={[0, 0.221, -2.921]} />
     </group>
   )
 }

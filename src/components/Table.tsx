@@ -31,11 +31,11 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (tableRef.current) {
-      tableRef.current.material = shaderMaterialTransformer(tableMaterial,5);
+      tableRef.current.material = shaderMaterialTransformer(tableMaterial,1);
     }
 
     if (legRef.current) {
-      legRef.current.material = shaderMaterialTransformer(legMaterial,5);
+      legRef.current.material = shaderMaterialTransformer(legMaterial,15);
     }
   }, [materials]);
 
@@ -46,12 +46,12 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         rotation={[Math.PI, 0, Math.PI]}
       >
         <mesh
-          ref={tableRef}
+          // ref={tableRef}
           geometry={(nodes.Cube093 as THREE.Mesh).geometry}
           material={materials.Wood_05}
         />
         <mesh
-          ref={legRef}
+          // ref={legRef}
           geometry={(nodes.Cube093_1 as THREE.Mesh).geometry}
           material={materials.Wood_02}
         />
