@@ -5,10 +5,12 @@ varying float vAffine;
 
 void main() {
     float affineFactor = max(vAffine, 0.001);
-    vec2 uv = vUv / affineFactor;
-    
-    // Ensure UV stays within the tile bounds (0-1 range inside the subregion)
-    uv = clamp(uv, vec2(0.0), vec2(1.0));
+
+    // Apply affine distortion while keeping UVs inside the atlas tile
+    vec2 uv = vUv + (vUv - 0.5) * (1.0 - 1.0 / affineFactor);
+
+    // Ensure UV stays within the assigned atlas tile
+    uv = clamp(uv, vUv - 0.5 * (1.0 - affineFactor), vUv + 0.5 * (1.0 - affineFactor));
 
     gl_FragColor = texture2D(map, uv);
 }

@@ -35,7 +35,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
     });
 
     if (ventRef.current) {
-      ventRef.current.material = shaderMaterialTransformerAtlas(ventMaterial, 2);
+      ventRef.current.material = shaderMaterialTransformerAtlas(ventMaterial, 25);
     }
   }, [materials]);
 

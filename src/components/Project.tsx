@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
 import { useGLTF, Text } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame, useThree, Vector3 } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
 
 interface Projects {
+  children: ReactNode;
   textDescription: string;
   handleHover: (value: boolean) => void;
   openModal: (ref: THREE.Mesh, text: string) => void;
   closeModal: () => void;
   position: Vector3 | undefined;
-  colour: string
 }
 
 export default function Project(props: Projects) {
@@ -22,7 +22,7 @@ export default function Project(props: Projects) {
   }));
   const { camera } = useThree();
 
-  const floatAmplitude = 0.1;
+  const floatAmplitude = 0.09;
   const floatSpeed = 2;
 
   useEffect(() => {
@@ -84,8 +84,7 @@ export default function Project(props: Projects) {
           props.handleHover(false);
         }}
       >
-        <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
-        <meshStandardMaterial flatShading color={props.colour} />
+        {props.children}
       </mesh>
     </group>
   );

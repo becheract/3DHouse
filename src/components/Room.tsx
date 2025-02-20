@@ -13,7 +13,7 @@ import MonitorOld from "./monitor_old"
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
 import ceilTextureAsset from "../assets/ceil2.png";
-
+import Door from "./Door"
 import Bed from "../components/Bed";
 import Fan from "../components/Fan";
 import Bookcase from "../components/Bookcase";
@@ -191,11 +191,11 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
-           {/* Static Front Wall */}
+           {/* Static Front Wall
         <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh>
+      </mesh> */}
 
 
       {/* Static Ceiling */}
@@ -224,22 +224,16 @@ function Room(props: {
       {/* <MonitorOld position={[0,2,0]} scale={.8}/> */}
       {/* Painting */}
       <Painting_1 position={[1.9, 1.5, 16.19]} rotation={[0, 4.58, 0]} />
-      <Painting_2 position={[2.4, 1.5, 10 ]} rotation={[0, 4.70, 0]} />
-      <Painting_3 position={[15, 0.2, -7]} rotation={[0, 0, 0]} />
+      <Painting_2 position={[0,0,0 ]} rotation={[0, 0, 0]} />
       <Painting_5 position={[-4.70, 1.5, -7.66]} rotation={[0, 1.58, 0]} />
 
       {/* Chair */}
       <Chair position={[0, 0.5, -2]} />
-      {/* Monitor */}
-      <Monitor
-        position={[10, 1.5, 3.2]}
-        rotation={[0, 9.4, 0]}
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-      />
+
+    
       {/* Cup */}
       <Cup position={[9.2, 1.55, -15]} />
+      <Door position={[-4.2, 1.4, -1.8]} scale={1.3} rotation={[0,1.54,0]}/>
       {/* Table */}
       <Table position={[13, 2, -16.7]} />
       {/* Bike */}
@@ -266,6 +260,16 @@ function Room(props: {
       <Vent position={[9.5, 0.09, -1]} />
       {/* Shelf */}
       <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
+
+        {/* Monitor */}
+        <Monitor
+                 handleHover={props.handleHover}
+                 openModal={props.openModal}
+                 closeModal={props.closeModal}
+        position={[0.1, 1.3, -3.7]}
+        rotation={[0, 3.1, 0]}
+      />
+      
       {/* projects on shelf */}
       <Project
         textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
@@ -273,9 +277,10 @@ function Room(props: {
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 0.6]}
-        colour="red"
-
-      />
+        >
+      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
+      <meshStandardMaterial flatShading color={"red"} />
+          </Project>
 
       <Project
         textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
@@ -284,18 +289,22 @@ function Room(props: {
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 0]}
-        colour="green"
-      />
+      >
+      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
+      <meshStandardMaterial flatShading color={"green"} />
+        </Project>
 
-<Project
+    <Project
         textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
         came to the design aspect."
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 1.2]}
-        colour="blue"
-      />
+      > 
+      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
+      <meshStandardMaterial flatShading color={"blue"} />
+      </Project>
 
 
     {/* <BreakableTable position={[2, 0, 12]}/>  */}

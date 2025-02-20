@@ -7,6 +7,16 @@ const shaderMaterialTransformer = (material: THREE.MeshBasicMaterial, uvScale: n
   const lightColour = new THREE.Color(1, 1, 1);
   const ambientColour = new THREE.Color(0.1, 0.1, 0.1);
 
+  const tileX = 2; // Example: second tile in a 4x4 grid
+const tileY = 1; // Example: second row
+
+const tilesPerRow = 4; // Assuming 4 tiles per row
+const tilesPerColumn = 4; // Assuming 4 rows
+
+const atlasOffset = new THREE.Vector2(tileX / tilesPerRow, tileY / tilesPerColumn);
+const atlasScale = new THREE.Vector2(1 / tilesPerRow, 1 / tilesPerColumn);
+
+
   const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
       map: { value: material.map }, // Texture from the input material
@@ -14,8 +24,8 @@ const shaderMaterialTransformer = (material: THREE.MeshBasicMaterial, uvScale: n
       lightPosition: { value: lightPosition }, // Light position uniform
       // lightColour: { value: lightColour }, // Uncomment if needed
       // ambientColour: { value: ambientColour }, // Uncomment if needed
-      uTileOffset: { value: new THREE.Vector2(0.0, 0.0) }, // Offset in the atlas
-      uTileScale: { value: new THREE.Vector2(0.25, 0.25) }, // Scale for tiles in the atlas
+      atlasOffset: { value:atlasOffset }, // Offset in the atlas
+      atlasScale: { value:atlasScale }, // Scale for tiles in the atlas
       uJitterLevel: { value: 80 },
     },
     vertexShader: vertexShader,
