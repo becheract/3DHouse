@@ -50,6 +50,26 @@ const BaseCharacter = (props: BaseCharacterProps) => {
     ...props,
   }));
 
+   useEffect(() => {
+    if (armsRef.current && camera) {
+      // Set arms as a child of the camera, so they move with it
+      camera.add(armsRef.current);
+  
+      if (armsRef.current !== undefined) {
+        // Position the arms in front of the camera (adjust as needed)
+        armsRef.current.position.set(0, -1.8, -0.05); // Fine-tune position to make it look realistic
+
+      }
+    }
+  
+    return () => {
+      if(armsRef.current !== null){
+      camera.remove(armsRef.current); // Cleanup: remove from camera on unmount
+    }
+    };
+  }, [camera]);
+
+
   // Destructure movement controls from custom hook
   const { forward, backward, left, right, jump } = usePlayerControls();
 
@@ -83,20 +103,23 @@ const BaseCharacter = (props: BaseCharacterProps) => {
           Math.cos(camera.rotation.y) // Z component (yaw)
         ).normalize();
 
-        // Define the offset for the arms (relative to the camera)
+        // // Define the offset for the arms (relative to the camera)
         const offset = new THREE.Vector3(0, -1.8, 0.03);
 
-        // Calculate the arms' position
-        const armsPosition = new THREE.Vector3()
-          .copy(camera.position)
-          .add(forwardDirection.multiplyScalar(offset.z)) // Apply only horizontal offset
-          .add(new THREE.Vector3(0, offset.y, 0)); // Add vertical offset
+        // // Calculate the arms' position
+        // const armsPosition = new THREE.Vector3()
+        //   .copy(camera.position)
+        //   .add(forwardDirection.multiplyScalar(offset.z)) // Apply only horizontal offset
+        //   .add(new THREE.Vector3(0, offset.y, 0)); // Add vertical offset
 
-        armsRef.current.position.copy(armsPosition);
+        // //follows the position of player
+        // armsRef.current.position.copy(armsPosition);
 
-        // Copy only the camera's yaw (Y-axis rotation) to the arms
-        const armsRotation = new THREE.Euler(0, camera.rotation.y, 0); // Lock pitch and roll
-        armsRef.current.quaternion.setFromEuler(armsRotation);
+        // //ARMS rotation code
+        // // Copy only the camera's yaw (Y-axis rotation) to the arms
+        // const armsRotation = new THREE.Euler(camera.rotation.x, camera.rotation.y, camera.rotation.z); // Lock pitch and roll
+        // console.log(camera.rotation.y)
+        // armsRef.current.quaternion.setFromEuler(armsRotation);
 
       }
 
@@ -127,7 +150,10 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         }
       }
     }
+
+    
   });
+
 
   return (
     <group>
