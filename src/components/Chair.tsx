@@ -12,10 +12,10 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Chair/chair.glb");
 
   const [ref, api] = useBox<THREE.Group>(() => ({
-    mass: 1, // Assign mass for the object to make it moveable
-    position: [0, 0, 0], // Initial position
+    mass: 1.5, // Assign mass for the object to make it moveable
+    position: [0, -1, -1.5], // Initial position
     rotation: [0, 0, 0],
-    args: [1, 1, 1], // Adjust the size based on the object
+    args: [1, 2, 1], // Adjust the size based on the object
   }));
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group {...props} dispose={null} >
-      <group ref={ref}>
+    <group {...props} dispose={null} ref={ref}>
+      <group >
         <mesh
           geometry={(nodes.Cylinder047 as THREE.Mesh).geometry}
           material={materials["Material.010"]}

@@ -8,7 +8,8 @@ import {
   BoxProps,
   useSphere,
 } from "@react-three/cannon";
-import { useGLTF, MeshWobbleMaterial, CycleRaycast } from "@react-three/drei";
+import { Physics, RigidBody } from '@react-three/rapier'
+
 import MonitorOld from "./monitor_old"
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
@@ -24,7 +25,7 @@ import Plant_3 from "../components/Plant_3";
 import Plant_4 from "../components/Plant_4";
 import Plant_5 from "../components/Plant_5";
 import { EffectComposer, Pixelation } from "@react-three/postprocessing";
-
+import Phone from "../components/Phone"
 import Painting_1 from "../components/Painting_1";
 import Painting_2 from "../components/Painting_2";
 import Painting_3 from "../components/Painting_3";
@@ -144,18 +145,6 @@ function Room(props: {
     args: [20, 1, 20], // Thin horizontal ceiling
   }));
 
-  const material = useMemo(
-    () =>
-      new THREE.ShaderMaterial({
-        uniforms: {
-          map: { value: floorTexture }, // Your floor texture
-          uvScale: { value: 105 }, // Adjust the scale value to zoom in or out
-        },
-        vertexShader: vertexShader, // Your vertex shader code
-        fragmentShader: fragmentShader, // Your fragment shader code
-      }),
-    [floorTexture]
-  );
 
   useEffect(() => {
     // Dispose textures when component unmounts to free memory
@@ -166,13 +155,12 @@ function Room(props: {
   }, []);
 
   return (
-    <>
+<>
       {/* Static Floor */}
       <mesh ref={floorRef}>
         <planeGeometry args={[10, 10]} />
         <meshStandardMaterial color="#FCFBF4" map={floorTexture} />
       </mesh>
-
       {/* Static Left Wall */}
       <mesh ref={wallRef1}>
         <boxGeometry args={[1, 10, 10]} />
@@ -203,6 +191,7 @@ function Room(props: {
         <boxGeometry args={[10, 1, 10]} />
         <meshStandardMaterial map={wallTexture} />
       </mesh>
+
 
       {/* Fan */}
       <Fan position={[3, 3.5, -16]} rotation={[0, 1.6, 0]} castShadow />
@@ -252,8 +241,10 @@ function Room(props: {
       />
 
       <Desktop position={[-2, 0, -3.5 ]} scale={0.5} rotation={[0,-1.6,0]}/>
-      {/* Sofa */}
-      <Sofa position={[5, 0.4, 19]} rotation={[0, 1.6, 0]} scale={1.5} />
+
+      
+      {/* Sofa rotation={[0, 1.6, 0]} */}
+      <Sofa position={[0, 0.4, 0]}  scale={1.5} />
       {/* TV */}
       <TV position={[-1.3, 1.8, 16.3]} rotation={[0, 4.7, 0]} scale={0.5} />
       {/* Fan */}
@@ -306,6 +297,8 @@ function Room(props: {
       <meshStandardMaterial flatShading color={"blue"} />
       </Project>
 
+      <Phone position={[0, 0.4, 0]} scale={0.1}/>
+     
 
     {/* <BreakableTable position={[2, 0, 12]}/>  */}
 
@@ -313,7 +306,7 @@ function Room(props: {
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="white" />
       </mesh>
-    </>
+      </>
   );
 }
 

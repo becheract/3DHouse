@@ -5,11 +5,12 @@ import {
   PointerLockControls,
   Sky,
   Stats,
+  AdaptiveDpr
 } from "@react-three/drei";
 import Room from "./components/Room";
 import { Suspense} from "react";
 import "./main.css";
-import { Physics } from "@react-three/cannon";
+import { Physics,Debug } from "@react-three/cannon";
 import Person from "./components/Person";
 import {
   EffectComposer,
@@ -63,6 +64,10 @@ function App() {
           antialias:false
         }}
       >
+
+        {/* allows for higer fps compared to dpr above */}
+        {/* <AdaptiveDpr pixelated /> */}
+
                 <Stats />
         <Sky
           distance={450000}
@@ -77,7 +82,9 @@ function App() {
           <Pixelation granularity={10} />
 
           <Suspense fallback={<CubeLoader />}>
-            <Physics gravity={[0, -9.8, 0]}>
+            <Physics >
+            <Debug color="red" scale={1.1}>
+
               {/* Lights */}
               <directionalLight position={[0, 0, 0]} intensity={1} castShadow />
               <ambientLight position={[0, 0, 0]} intensity={1} castShadow />
@@ -104,7 +111,7 @@ function App() {
               />
       
       <HeadBob />
-
+        </Debug>
             </Physics>
  
           </Suspense>

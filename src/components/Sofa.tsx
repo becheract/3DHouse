@@ -12,6 +12,12 @@ import { useBox } from "@react-three/cannon"; // Import Cannon.js hook
 import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
+  const [ref, api] = useBox<THREE.Group>(() => ({
+     mass: 4 ,
+     args: [1, 3, 1], // Adjust the size based on the object
+    //  rotation: [0, 0, 0],
+    }))
+
   const { nodes, materials } = useGLTF("Sofa/sofa.glb");
 
   const sofaWoodRef = useRef<THREE.Mesh>(null!);
@@ -45,8 +51,9 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group {...props} dispose={null} >
+    <group {...props} dispose={null}  ref={ref}>
       <group position={[10.876, 0.177, -3.175]}>
+  
         <mesh
           ref={sofaWoodRef}
           geometry={(nodes.Armchair_08_1 as THREE.Mesh).geometry}
@@ -57,6 +64,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           geometry={(nodes.Armchair_08_2 as THREE.Mesh).geometry}
           material={materials.Fabric_11}
         />
+
       </group>
     </group>
   );

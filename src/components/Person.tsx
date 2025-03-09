@@ -6,6 +6,8 @@ import HeadBob from "../utils/headbob";
 import * as THREE from "three";
 import Particle from "./Particle";
 import { CameraShake } from "@react-three/drei";
+import { Physics, RigidBody } from '@react-three/rapier'
+
 import Arms from "./Arms";
 // Define the type for props
 interface BaseCharacterProps {
@@ -106,20 +108,6 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         // // Define the offset for the arms (relative to the camera)
         const offset = new THREE.Vector3(0, -1.8, 0.03);
 
-        // // Calculate the arms' position
-        // const armsPosition = new THREE.Vector3()
-        //   .copy(camera.position)
-        //   .add(forwardDirection.multiplyScalar(offset.z)) // Apply only horizontal offset
-        //   .add(new THREE.Vector3(0, offset.y, 0)); // Add vertical offset
-
-        // //follows the position of player
-        // armsRef.current.position.copy(armsPosition);
-
-        // //ARMS rotation code
-        // // Copy only the camera's yaw (Y-axis rotation) to the arms
-        // const armsRotation = new THREE.Euler(camera.rotation.x, camera.rotation.y, camera.rotation.z); // Lock pitch and roll
-        // console.log(camera.rotation.y)
-        // armsRef.current.quaternion.setFromEuler(armsRotation);
 
       }
 
@@ -157,6 +145,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
 
   return (
     <group>
+    
       {/* Ensure the ref is typed correctly for the mesh */}
       <mesh castShadow position={props.position} ref={armsRef}>
         {/* <sphereGeometry args={props.args} /> */}
@@ -165,7 +154,9 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         <Arms scale={[1, 1, 1]} rotation={[0, 3.1, 0]} />
         {/* <CameraShake ref={shakeRef}/> */}
       </mesh>
+ 
     </group>
+    
   );
 };
 
