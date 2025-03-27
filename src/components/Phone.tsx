@@ -8,24 +8,51 @@ import { useGraph, useThree } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from "three";
+import { QuaternionKeyframeTrack, VectorKeyframeTrack } from 'three';
+
+interface AnimationClip {
+  name: string;
+  tracks: Array<VectorKeyframeTrack | QuaternionKeyframeTrack>;
+  duration: number;
+  blendMode: number;
+  uuid: string;
+}
 
 export default function Model(props : JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>(null)
-  const { scene, animations } = useGLTF('Phone/phone.glb')
+  const { scene, animations } = useGLTF('Phone/phone-transformed.glb')
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)
-  const { actions, names, mixer } = useAnimations(animations, group);
   const { camera } = useThree(); // Access the scene's camera
   const [phonePosition, setPhonePosition] = useState(props.position) 
   const phoneRef = useRef<THREE.Group>(null);
 
+
+  const raycaster = new THREE.Raycaster(new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z), new THREE.Vector3(0,0,-1),0,1);
+
+
+  
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
       if (e.key === "c" || e.key === "C" ) {
         if(phoneRef.current !== null){
-          phoneRef.current.position.set(camera.position.x,camera.position.y, camera.position.z + 2)
-          setPhonePosition(phoneRef.current.position)
+          // Set the phone's position in front of the camera
+          // Assuming the camera's forward direction is along the Z axis
+          const cameraPosition = camera.position.clone();
+          const cameraDirection = camera.getWorldDirection(new THREE.Vector3());
+          
+          // Offset the phone's position in front of the camera
+          // Adjust the distance based on how far in front you want it to appear
+          const offset = new THREE.Vector3(0, 0, 0.7);  // 1 unit in front of the camera
+          phoneRef.current.position.copy(cameraPosition.add(cameraDirection.multiplyScalar(offset.z)));
+          // Adjust the y-axis separately (to move the phone higher or lower)
+          const yOffset = -0.24;  // Move the phone 1 unit up on the Y axis
+          phoneRef.current.position.y += yOffset;  // Add this offset to the Y position
+          // Optionally adjust the orientation of the phone based on camera orientation
+          phoneRef.current.rotation.copy(camera.rotation);
         }
+        
+     
       }
     };
 
@@ -35,15 +62,12 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
     };
   }, [camera])
 
-  useEffect(() => {
-    console.log("actions")
-    console.log(actions)
-  })
-  
+
+
   return (
     <group ref={phoneRef} {...props} dispose={null} position={phonePosition}>
       <group name="Scene" >
-        <group name="Armature" position={[0, 0.179, 0]} scale={[0.99, 2.207, 2.207]}>
+        <group name="Armature" position={[0, 0.179, 0]} scale={[0.99, 2.207, 2.207]} rotation={[0,-1.6,0]}>
           <primitive object={nodes.Bone} />
           <skinnedMesh name="Cube" geometry={(nodes.Cube as THREE.Mesh).geometry} material={materials['Material.001']} skeleton={(nodes.Cube as THREE.SkinnedMesh).skeleton} />
           <skinnedMesh name="Cube001" geometry={(nodes.Cube001 as THREE.Mesh).geometry} material={materials['Material.001']} skeleton={(nodes.Cube001 as THREE.SkinnedMesh).skeleton} />

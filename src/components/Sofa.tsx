@@ -51,8 +51,8 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group {...props} dispose={null}  ref={ref}>
-      <group position={[10.876, 0.177, -3.175]}>
+    // <group {...props} dispose={null}  ref={ref}>
+      <group position={[10.876, 0.177, -3.175]} {...props} dispose={null} >
   
         <mesh
           ref={sofaWoodRef}
@@ -66,7 +66,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
         />
 
       </group>
-    </group>
+    // </group>
   );
 }
 

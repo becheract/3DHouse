@@ -133,11 +133,11 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
-  const [wallRef4] = useBox<THREE.Mesh>(() => ({
-    type: "Static",
-    position: [0, 5, 5.5], // front wall
-    args: [10, 10, 1],
-  }))
+  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
+  //   type: "Static",
+  //   position: [0, 5, 5.5], // front wall
+  //   args: [10, 10, 1],
+  // }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -244,7 +244,7 @@ function Room(props: {
 
       
       {/* Sofa rotation={[0, 1.6, 0]} */}
-      <Sofa position={[0, 0.4, 0]}  scale={1.5} />
+      <Sofa position={[-0.7, 0.7, 3]}  scale={1.5} rotation={[0, 1.6, 0]}/>
       {/* TV */}
       <TV position={[-1.3, 1.8, 16.3]} rotation={[0, 4.7, 0]} scale={0.5} />
       {/* Fan */}

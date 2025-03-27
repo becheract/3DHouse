@@ -46,7 +46,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   // }, [camera]);
   
   
-  
+
   
   // Handle first load animation
   useEffect(() => {
@@ -100,12 +100,10 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     const mouseListener = debounce((e: MouseEvent) => {
       const random = Math.random();
-      console.log('Mouse clicked. Random number:', random);
       if (e.button === 0) { // 0 is for left mouse button
         setCombat(true);
         if (random < 0.5) {
           if (actions.Combat_punch_right && actions.Relax_hands_idle_loop) {
-            console.log('Playing right punch');
             actions.Combat_punch_right.play();
             actions.Combat_punch_right.repetitions = 1;
             mixer.stopAllAction();
@@ -114,7 +112,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           }
         } else {
           if (actions.Combat_punch_left && actions.Relax_hands_idle_loop) {
-            console.log('Playing left punch');
             actions.Combat_punch_left.play();
             actions.Combat_punch_left.repetitions = 1;
             mixer.stopAllAction();
@@ -135,7 +132,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     const playCombatIdle = () => {
       if (actions.Combat_idle_loop !== null && combat === true) {
-        console.log('Entering combat');
         actions.Combat_idle_loop.play();
 
         if (!combatCooldown) {

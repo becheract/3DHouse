@@ -97,20 +97,6 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         // Update the camera to follow the player
         camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
 
-        if (armsRef.current !== null) {
-       // Calculate the forward direction (ignoring camera's X-axis rotation)
-        const forwardDirection = new THREE.Vector3(
-          Math.sin(camera.rotation.y), // X component (yaw)
-          0, // Lock the Y-axis
-          Math.cos(camera.rotation.y) // Z component (yaw)
-        ).normalize();
-
-        // // Define the offset for the arms (relative to the camera)
-        const offset = new THREE.Vector3(0, -1.8, 0.03);
-
-
-      }
-
         // Calculate the movement direction based on controls (AWSD)
         frontVector.set(0, 0, Number(backward) - Number(forward));
         sideVector.set(Number(left) - Number(right), 0, 0);
