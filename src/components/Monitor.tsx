@@ -6,7 +6,7 @@ import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
 import Portfolio from "./Portfolio";
 import { Triplet, useBox } from "@react-three/cannon";
-
+import HeroPage from "./HeroPage"
 interface Computer {
   handleHover: (value: boolean) => void;
   openModal: (ref: THREE.Mesh, text: string) => void;
@@ -148,6 +148,12 @@ export default function Model(props: Computer) {
          geometry={(nodes.TV_04_2 as THREE.Mesh).geometry}
           position={[0,2,0]}
         >
+            <Html className="content"  position={[0, 0.05, -0.09]} transform occlude>
+            <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+              <iframe src="https://bechera.com">
+              </iframe>
+              </div>
+              </Html>
         </mesh>
       </group>
       </group>

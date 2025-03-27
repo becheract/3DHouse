@@ -26,11 +26,6 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   const { camera } = useThree(); // Access the scene's camera
   const [phonePosition, setPhonePosition] = useState(props.position) 
   const phoneRef = useRef<THREE.Group>(null);
-
-
-  const raycaster = new THREE.Raycaster(new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z), new THREE.Vector3(0,0,-1),0,1);
-
-
   
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
@@ -51,8 +46,6 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
           // Optionally adjust the orientation of the phone based on camera orientation
           phoneRef.current.rotation.copy(camera.rotation);
         }
-        
-     
       }
     };
 

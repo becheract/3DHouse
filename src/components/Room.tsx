@@ -31,7 +31,7 @@ import Painting_2 from "../components/Painting_2";
 import Painting_3 from "../components/Painting_3";
 import Painting_4 from "../components/Painting_4";
 import Painting_5 from "../components/Painting_5";
-
+import Circuit from "./Circuit"
 import Chair from "./Chair";
 import Monitor from "./Monitor";
 import Cup from "./Cup";
@@ -281,8 +281,9 @@ function Room(props: {
         closeModal={props.closeModal}
         position={[0, 0, 0]}
       >
-      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
-      <meshStandardMaterial flatShading color={"green"} />
+      {/* <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} /> */}
+      {/* <meshStandardMaterial flatShading color={"green"} /> */}
+      <Circuit scale={0.15}/>
         </Project>
 
     <Project

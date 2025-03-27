@@ -43,9 +43,9 @@ canvas {
 
 .content {
   width: 120px;
-  height: 50px;
+  height: 70px;
   background: #f0f0f0;
-    overflow-y: auto;
+  overflow-y: auto;
   padding: 0;
 }
 
@@ -53,6 +53,5 @@ canvas {
   padding: 10px;
   width: 200px;
   height: 50px;
-  transform: scale(0.5);
-  transform-origin: top left;
+  transform: scale(0.1);
 } 
