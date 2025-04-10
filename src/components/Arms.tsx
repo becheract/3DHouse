@@ -120,7 +120,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           }
         }
       }
-    }, 500);
+    }, 50);
 
     document.addEventListener("click", mouseListener);
     return () => {

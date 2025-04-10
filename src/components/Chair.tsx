@@ -11,12 +11,6 @@ import { useBox } from "@react-three/cannon"; // Import Cannon.js hook
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Chair/chair.glb");
 
-  const [ref, api] = useBox<THREE.Group>(() => ({
-    mass: 1.5, // Assign mass for the object to make it moveable
-    position: [0, -1, -1.5], // Initial position
-    rotation: [0, 0, 0],
-    args: [1, 2, 1], // Adjust the size based on the object
-  }));
 
   useEffect(() => {
     // Loop through all materials and set NearestFilter for their textures
@@ -35,7 +29,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   }, [materials]);
 
   return (
-    <group {...props} dispose={null} ref={ref}>
+    <group {...props} dispose={null} >
       <group >
         <mesh
           geometry={(nodes.Cylinder047 as THREE.Mesh).geometry}

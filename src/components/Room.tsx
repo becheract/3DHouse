@@ -8,8 +8,7 @@ import {
   BoxProps,
   useSphere,
 } from "@react-three/cannon";
-import { Physics, RigidBody } from '@react-three/rapier'
-
+import Fanshawe from "./Fanshawe"  
 import MonitorOld from "./monitor_old"
 import floorTextureAsset from "../assets/floor.png";
 import wallTextureAsset from "../assets/wally.webp";
@@ -47,6 +46,7 @@ import Shelf from "./Shelf";
 import BreakableTable from "./Table_breakable";
 import Project from "./Project";
 import Desktop from "./Desktop"
+import Police from "./Police"
 // import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
@@ -133,11 +133,11 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
-  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
-  //   type: "Static",
-  //   position: [0, 5, 5.5], // front wall
-  //   args: [10, 10, 1],
-  // }))
+  const [wallRef4] = useBox<THREE.Mesh>(() => ({
+    type: "Static",
+    position: [0, 5, 5.5], // front wall
+    args: [10, 10, 1],
+  }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -179,11 +179,11 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
-           {/* Static Front Wall
+           {/* Static Front Wall*/}
         <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh> */}
+      </mesh> 
 
 
       {/* Static Ceiling */}
@@ -217,12 +217,12 @@ function Room(props: {
       <Painting_5 position={[-4.70, 1.5, -7.66]} rotation={[0, 1.58, 0]} />
 
       {/* Chair */}
-      <Chair position={[0, 0.5, -2]} />
+      <Chair position={[0, 1, -2]} />
 
     
       {/* Cup */}
       <Cup position={[9.2, 1.55, -15]} />
-      <Door position={[-4.2, 1.4, -1.8]} scale={1.3} rotation={[0,1.54,0]}/>
+      <Door position={[-4.5, 1.3, -1.8]} scale={1.3} rotation={[0,1.54,0]}/>
       {/* Table */}
       <Table position={[13, 2, -16.7]} />
       {/* Bike */}
@@ -232,7 +232,8 @@ function Room(props: {
       {/* Garabage */}
       <Garbage position={[19, 1.6, -21.5]} scale={0.7} />
       {/* Radio */}
-      <Radio position={[2.3, 2.5, 15.1]} rotation={[0, 2, 0]} />
+      
+      <Radio position={[2.3, 2.55 , 15.1]} rotation={[0, 2, 0]} handleHover={props.handleHover}/>
       {/*Tv Table */}
       <TV_Table
         position={[-5.5, 1.2, -3.5]}
@@ -274,15 +275,12 @@ function Room(props: {
           </Project>
 
       <Project
-        textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
-        came to the design aspect."
+        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 0]}
       >
-      {/* <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} /> */}
-      {/* <meshStandardMaterial flatShading color={"green"} /> */}
       <Circuit scale={0.15}/>
         </Project>
 
@@ -298,15 +296,30 @@ function Room(props: {
       <meshStandardMaterial flatShading color={"blue"} />
       </Project>
 
+      <Project
+        textDescription="fanshawe"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[-0, 0, 1.2]}
+      > 
+      <Fanshawe scale={0.05} position={[0,0-0.45,0]}/>
+      </Project>
+
+
+      <Project
+        textDescription="Ontario Police College"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0]}
+
+      > 
+      <Police scale={0.05} position={[0,0-0.45,0]}/>
+      </Project>
+
       <Phone position={[0, 0.4, 0]} scale={0.1}/>
      
-
-    {/* <BreakableTable position={[2, 0, 12]}/>  */}
-
-      <mesh castShadow position={[0, 1, 8]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="white" />
-      </mesh>
       </>
   );
 }

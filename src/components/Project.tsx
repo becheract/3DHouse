@@ -11,6 +11,7 @@ interface Projects {
   openModal: (ref: THREE.Mesh, text: string) => void;
   closeModal: () => void;
   position: Vector3 | undefined;
+  radio? : boolean
 }
 
 export default function Project(props: Projects) {
@@ -22,7 +23,7 @@ export default function Project(props: Projects) {
   }));
   const { camera } = useThree();
 
-  const floatAmplitude = 0.09;
+  const floatAmplitude = 0.05;
   const floatSpeed = 2;
 
   useEffect(() => {
@@ -46,7 +47,10 @@ export default function Project(props: Projects) {
 
   useFrame((state) => {
     // Rotate if hovering
-    if (hoverRef.current && meshRef.current) {
+    if(props.radio == true){
+
+    }else if (hoverRef.current && meshRef.current ) {
+      //this is causing an issue 
       meshRef.current.rotation.y += 0.01;
     }
 
@@ -74,7 +78,6 @@ export default function Project(props: Projects) {
         ref={meshRef}
         onPointerOver={() => {
           if (distanceChecker()) {
-            console.log('hovering over')
             hoverRef.current = true;
             props.handleHover(true);
           }

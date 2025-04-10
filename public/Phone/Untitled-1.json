@@ -1,0 +1,90 @@
+{
+    "uri": "phone-transformed.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "validatedAt": "2025-03-28T00:50:51.860Z",
+    "issues": {
+        "numErrors": 0,
+        "numWarnings": 2,
+        "numInfos": 3,
+        "numHints": 0,
+        "messages": [
+            {
+                "code": "UNSUPPORTED_EXTENSION",
+                "message": "Cannot validate an extension as it is not supported by the validator: 'KHR_draco_mesh_compression'.",
+                "severity": 2,
+                "pointer": "/extensionsUsed/1"
+            },
+            {
+                "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "message": "Local transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/2"
+            },
+            {
+                "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+                "message": "Local transforms will not affect a skinned mesh.",
+                "severity": 1,
+                "pointer": "/nodes/3"
+            },
+            {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/bufferViews/3"
+            },
+            {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/bufferViews/4"
+            }
+        ],
+        "truncated": false
+    },
+    "info": {
+        "version": "2.0",
+        "generator": "glTF-Transform v4.1.0",
+        "extensionsUsed": [
+            "EXT_texture_webp",
+            "KHR_draco_mesh_compression"
+        ],
+        "extensionsRequired": [
+            "EXT_texture_webp",
+            "KHR_draco_mesh_compression"
+        ],
+        "resources": [
+            {
+                "pointer": "/buffers/0",
+                "mimeType": "application/gltf-buffer",
+                "storage": "glb",
+                "byteLength": 13388
+            },
+            {
+                "pointer": "/images/0",
+                "mimeType": "image/webp",
+                "storage": "buffer-view",
+                "image": {
+                    "width": 256,
+                    "height": 256,
+                    "format": "rgb",
+                    "primaries": "srgb",
+                    "transfer": "srgb",
+                    "bits": 8
+                }
+            }
+        ],
+        "animationCount": 2,
+        "materialCount": 1,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 2,
+        "totalVertexCount": 208,
+        "totalTriangleCount": 104,
+        "maxUVs": 1,
+        "maxInfluences": 4,
+        "maxAttributes": 6
+    }
+}

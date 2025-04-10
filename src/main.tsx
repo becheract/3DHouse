@@ -23,6 +23,9 @@ import CubeLoader from "./components/CubeLoader";
   import SkyImage from "../public/sky/sphere.jpg"
 import SkySphere from "./utils/skySpehere.tsx";
 import HeadBob from "./utils/headbob.tsx";
+import { Text } from "@react-three/drei";
+
+
 interface CurrentObject {
   ref: THREE.Mesh;
   textDescription: string;
@@ -68,7 +71,7 @@ function App() {
         {/* allows for higer fps compared to dpr above */}
         {/* <AdaptiveDpr pixelated /> */}
 
-                <Stats />
+        <Stats />
         <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
@@ -83,7 +86,7 @@ function App() {
 
           <Suspense fallback={<CubeLoader />}>
             <Physics >
-            <Debug color="red" scale={1.1}>
+            <Debug color="green" scale={1.1}>
 
               {/* Lights */}
               <directionalLight position={[0, 0, 0]} intensity={1} castShadow />
@@ -126,6 +129,10 @@ function App() {
 
       {hover ? <h1 className="interaction">Interact </h1> : null}
       <div className="dot" />
+
+      <div className="radio">
+        <h1>Now Playing </h1>
+      </div>
     </>
   );
 }

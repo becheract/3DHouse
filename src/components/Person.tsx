@@ -5,8 +5,6 @@ import { usePlayerControls } from "../utils/helpers";
 import HeadBob from "../utils/headbob";
 import * as THREE from "three";
 import Particle from "./Particle";
-import { CameraShake } from "@react-three/drei";
-import { Physics, RigidBody } from '@react-three/rapier'
 
 import Arms from "./Arms";
 // Define the type for props

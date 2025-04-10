@@ -12,11 +12,11 @@ import { useBox } from "@react-three/cannon"; // Import Cannon.js hook
 import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
-  const [ref, api] = useBox<THREE.Group>(() => ({
-     mass: 4 ,
-     args: [1, 3, 1], // Adjust the size based on the object
-    //  rotation: [0, 0, 0],
-    }))
+  // const [ref, api] = useBox<THREE.Group>(() => ({
+  //    mass: 4 ,
+  //    args: [1, 3, 1], // Adjust the size based on the object
+  //   //  rotation: [0, 0, 0],
+  //   }))
 
   const { nodes, materials } = useGLTF("Sofa/sofa.glb");
 

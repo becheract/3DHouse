@@ -9,6 +9,7 @@ import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from "three";
 import { QuaternionKeyframeTrack, VectorKeyframeTrack } from 'three';
+import Debounce from '../utils/Debounce';
 
 interface AnimationClip {
   name: string;
@@ -18,19 +19,41 @@ interface AnimationClip {
   uuid: string;
 }
 
+
 export default function Model(props : JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>(null)
-  const { scene, animations } = useGLTF('Phone/phone-transformed.glb')
+  const { scene, animations, } = useGLTF('Phone/phone-transformed.glb')
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)
   const { camera } = useThree(); // Access the scene's camera
   const [phonePosition, setPhonePosition] = useState(props.position) 
   const phoneRef = useRef<THREE.Group>(null);
-  
+  const { actions, names, mixer } = useAnimations(animations, group);
+
+  useEffect(() => {
+    if(phoneRef.current)
+    phoneRef.current.visible = false
+  },[])
+
+  useEffect(() => {
+    console.log('animations')
+    console.log(animations)
+    console.log('scene')
+    console.log(scene)
+  })
+
+  const disapearPhone = Debounce((e: MouseEvent) => {
+    if(phoneRef.current !== null) {
+      phoneRef.current.visible = false
+    }
+  }, 1000)
+
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
       if (e.key === "c" || e.key === "C" ) {
+        
         if(phoneRef.current !== null){
+          phoneRef.current.visible = true
           // Set the phone's position in front of the camera
           // Assuming the camera's forward direction is along the Z axis
           const cameraPosition = camera.position.clone();
@@ -45,17 +68,44 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
           phoneRef.current.position.y += yOffset;  // Add this offset to the Y position
           // Optionally adjust the orientation of the phone based on camera orientation
           phoneRef.current.rotation.copy(camera.rotation);
+
+          disapearPhone()
         }
+        
       }
     };
 
+
+
+
     document.addEventListener("keydown", keyDownListener);
     return () => {
+   
       document.removeEventListener("keydown", keyDownListener);
     };
   }, [camera])
 
+  useEffect(() => {
+    const keyDownListener = (e: KeyboardEvent) => {
+      if (e.key === "z" || e.key === "Z" ) {
+        console.log('inside func')
+        console.log(actions)
+    if (actions.openAction) {
+      console.log('inside')
+      actions.openAction.play();
+      actions.openAction.repetitions = 1;
+      mixer.stopAllAction();
+    }
+    }
+  }
+    document.addEventListener("keydown", keyDownListener);
+    return () => {
 
+      document.removeEventListener("keydown", keyDownListener);
+    };
+
+
+  })
 
   return (
     <group ref={phoneRef} {...props} dispose={null} position={phonePosition}>
