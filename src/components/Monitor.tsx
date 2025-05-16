@@ -7,6 +7,7 @@ import { fragmentShader } from "../../shaders/fragmentShader";
 import Portfolio from "./Portfolio";
 import { Triplet, useBox } from "@react-three/cannon";
 import HeroPage from "./HeroPage"
+import Video from "./skyrim.mp4"
 interface Computer {
   // handleHover: (value: boolean) => void;
   // openModal: (ref: THREE.Mesh, text: string) => void;
@@ -18,16 +19,10 @@ interface Computer {
 export default function Model(props: Computer) {
   const { nodes, materials } = useGLTF("Monitor/monitor.glb");
 
-  const monitorMaterial = materials.Electronics as THREE.MeshBasicMaterial;
-  const monitorRef = useRef<THREE.Mesh>(null!);
-
+  const videoRef = useRef<THREE.Mesh>(null!);
   // Set up a render target for the cube's render texture
-  const renderTarget = new THREE.WebGLRenderTarget(512, 512);
   // const emissorRef = useRef<THREE.Mesh>(null!);
 
- 
-
-    const hoverRef = useRef(false); // Use a ref to track hover state
     const meshRef = useRef<THREE.Mesh>(null!);
 
     const [bodyRef] = useBox<THREE.Group>(() => ({
@@ -35,98 +30,42 @@ export default function Model(props: Computer) {
       position: props.position,
       rotation: props.rotation
     }));
-    const { camera } = useThree();
-  
-    const floatAmplitude = 0.09;
-    const floatSpeed = 2;
-  
-    // useEffect(() => {
-    //   // Key event listener function
-    //   // const keyDownListener = (e: KeyboardEvent) => {
-    //   //   if (distanceChecker() && hoverRef.current) {
-    //   //     if (e.key === "f" || e.key === "F") {
-    //   //       props.openModal(meshRef.current, 'testing ');
-    //   //     } else if (e.key === "x" || e.key === "X") {
-    //   //       console.log('cloe ')
-    //   //       props.closeModal();
-    //   //     }
-    //   //   }
-    //   // };
-  
-    //   // Register key event listener once on mount
-    //   document.addEventListener("keydown", keyDownListener);
-    //   return () => {
-    //     document.removeEventListener("keydown", keyDownListener);
-    //   };
-    // }, []); // Empty dependency array ensures this runs only once
-  
-    // useFrame((state) => {
-    //   // Floating effect
-    //   const time = state.clock.getElapsedTime();
-    //   meshRef.current.position.y =
-    //     2.2 + floatAmplitude * Math.sin(floatSpeed * time);
+
+    useEffect(()=>{
+      const videoElement = document.createElement("video");
+      videoElement.src = Video; // Replace with your video path or URL
+      videoElement.crossOrigin = "anonymous";
+      videoElement.loop = true; // Set to true if you want the video to loop
+      videoElement.muted = true; // Optional: to mute the video
+      videoElement.play(); // Autoplay the video
+      const videoTexture = new THREE.VideoTexture(videoElement);
+      videoTexture.flipY = false; // Flip the video texture along the Y-axis
+      videoTexture.minFilter = THREE.NearestFilter;
+      videoTexture.magFilter = THREE.NearestFilter;
+      videoTexture.needsUpdate = true;
+
+          if (videoRef.current) {
+            const material = videoRef.current.material;
       
-    //     monitorRef.current.position.y =
-    //     2.2 + floatAmplitude * Math.sin(floatSpeed * time);
-    // });
-  
-    const distanceChecker = (): boolean => {
-      const distanceThreshold = 3;
-      if (bodyRef.current) {
-        const distanceToBody = camera.position.distanceTo(
-          bodyRef.current.position
-        );
-        return distanceToBody <= distanceThreshold;
-      }
-      return false;
-    };
-
-  // useEffect(() => {
-    // const shaderMaterial = new THREE.ShaderMaterial({
-    //   uniforms: {
-    //     map: { value: monitorMaterial.map }, // No texture for the frame, adjust if needed
-    //     uvScale: { value: 100 }, // Control UV scaling if necessary
-    //   },
-    //   vertexShader: vertexShader,
-    //   fragmentShader: fragmentShader,
-    // });
-
-    // Set nearest filter for all materials of the model
-    // Object.values(materials).forEach((material: THREE.Material) => {
-    //   if (
-    //     material instanceof THREE.MeshBasicMaterial ||
-    //     material instanceof THREE.MeshStandardMaterial
-    //   ) {
-    //     if (material.map) {
-    //       material.map.minFilter = THREE.NearestFilter;
-    //       material.map.magFilter = THREE.NearestFilter;
-    //       material.map.needsUpdate = true;
-    //     }
-    //   }
-    // });
-
-    // if (emissorRef.current) {
-    //   // Create a new MeshBasicMaterial for the emissor with a white background
-    //   const emissorMaterial = new THREE.MeshBasicMaterial({
-    //     map: renderTarget.texture, // Set the render target texture to Emissor material
-    //     color: 0xffffff, // Set background color to white
-    //   });
-    //   emissorRef.current.add(cubeScene)
-    //   // Assign the material to the emissor mesh
-    //   emissorRef.current.material = emissorMaterial;
-    // }
-
-    // if (monitorRef.current) {
-    //   monitorRef.current.material = shaderMaterial;
-    // }
-  // }, [materials, renderTarget.texture]);
-
-
-
-
+            // Handle case where material is an array or a single material
+            if (Array.isArray(material)) {
+              material.forEach((mat: THREE.Material) => {
+                if (mat instanceof THREE.MeshBasicMaterial) {
+                  mat.map = videoTexture;
+                  mat.needsUpdate = true;
+                }
+              });
+            } else {
+              if (material instanceof THREE.MeshBasicMaterial) {
+                material.map = videoTexture;
+                material.needsUpdate = true;
+              }
+            }
+          }
+    })
   return (
    
-<group   dispose={null} ref={bodyRef}>
+<group dispose={null} ref={bodyRef}>
      <group  scale={0.375} dispose={null} >
         <mesh
         ref={meshRef}
@@ -135,11 +74,11 @@ export default function Model(props: Computer) {
           position={[0,1.8,0]}
         />
         <mesh
-        ref={monitorRef}
+        ref={videoRef}
          geometry={(nodes.TV_04_2 as THREE.Mesh).geometry}
           position={[0,1.8,0]}
+          scale={[1,1, 1]}
         >
-   
         </mesh>
       </group>
       </group>

@@ -55,12 +55,13 @@ import Cart from "./Cart"
 import Skyrim from "./Skyrim"
 import Fn from "./Fn"
 import Mario from "./Mario"
-
-
+import Keyboard from "./Keyboard"
+import Mouse from "./Mouse.tsx"
+import Backpack from "./Backpack.tsx";
 function Room(props: {
   handleHover: (value: boolean) => void;
   position: [number, number, number];
-  openModal: (ref: THREE.Mesh, textDescription: string) => void;
+  openModal: (ref: THREE.Mesh, textDescription: string, tag: string | null) => void;
   closeModal: () => void;
 }) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
@@ -161,7 +162,7 @@ function Room(props: {
   }, []);
 
   return (
-<>
+    <>
       {/* Static Floor */}
       <mesh ref={floorRef}>
         <planeGeometry args={[10, 10]} />
@@ -248,8 +249,8 @@ function Room(props: {
       />
 
       <Desktop position={[-2, 0, -3.5 ]} scale={0.5} rotation={[0,-1.6,0]}/>
-
-      
+      <Keyboard position={[0.2, 1.5, -3.8 ]}/>
+      <Mouse position={[0.2, 1.5, -3.8 ]}/>
       {/* Sofa rotation={[0, 1.6, 0]} */}
       <Sofa position={[-0.7, 0.7, 3]}  scale={1.5} rotation={[0, 1.6, 0]}/>
       {/* TV */}
@@ -270,6 +271,7 @@ function Room(props: {
       
       {/* projects on shelf */}
       <Project
+        tag="top"
         textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
         handleHover={props.handleHover}
         openModal={props.openModal}
@@ -280,6 +282,7 @@ function Room(props: {
           </Project>
 
       <Project
+        tag="top"
         textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
         handleHover={props.handleHover}
         openModal={props.openModal}
@@ -290,6 +293,7 @@ function Room(props: {
         </Project>
 
     <Project
+        tag="top"
         textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
         came to the design aspect."
         handleHover={props.handleHover}
@@ -300,17 +304,45 @@ function Room(props: {
       <Paint scale={0.04}  rotation={[4, 0, 2]}/>
       </Project>
 
-      {/* <Project
-        textDescription="fanshawe"
+      <Project
+        tag="middle"
+        textDescription="Skyrim"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[-0, 0, 1.2]}
+      > 
+      <Fanshawe scale={0.05} position={[0,-0.45,0]} />
+      </Project>
+
+
+      <Project
+        tag="middle"
+        textDescription="Ontario Police College"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 0]}
+
       > 
-        <Skyrim scale={0.1} position={[0,-0.94,-1.2]} />
-      </Project> */}
+      <Police scale={0.05} position={[0,-0.45,0]}/>
+      </Project>
+
 
       <Project
+        tag="middle"
+        textDescription="Steamlabs"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0.65]}
+
+      > 
+      <Plant_3 scale={0.05} position={[0,-0.45,0]}/>
+      </Project>
+
+      <Project
+        tag="lower"
         textDescription="Ontario Police College"
         handleHover={props.handleHover}
         openModal={props.openModal}
@@ -321,9 +353,10 @@ function Room(props: {
       <Skyrim scale={0.10} position={[0,-0.94,0]}/>
       </Project>
 
-
+        <Backpack position={[5.6,0,-2]} rotation={[0,2,0]}/>
 
       <Project
+          tag="lower"
         textDescription="Fallout new vegas"
         handleHover={props.handleHover}
         openModal={props.openModal}
@@ -335,39 +368,19 @@ function Room(props: {
 
       {/* projects on shelf */}
       <Project
+        tag="lower"
         textDescription="Mario Kart"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[0, 0, 0.68]}
         >
-          <Mario scale={0.10} position={[0,-0.94,-0.06]} />
+          <Mario scale={0.10} position={[0,-0.94,-0.04]} />
         </Project>
 
 
-      <Project
-        textDescription="Skyrim"
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-        position={[-0, 0, 1.2]}
-      > 
-      <Fanshawe scale={0.05} position={[0,0-0.45,0]} />
-      </Project>
-
-
-      <Project
-        textDescription="Ontario Police College"
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-        position={[0, 0, 0]}
-
-      > 
-      <Police scale={0.05} position={[0,0-0.45,0]}/>
-      </Project>
-
-      {/* <Phone openModal={props.openModal} position={[0, 0.4, 0]} scale={0.1}/> */}
+ 
+      <Phone openModal={props.openModal}  position={[0, 0.4, 0]} scale={0.1}/>
      
       </>
   );

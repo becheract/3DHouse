@@ -6,19 +6,36 @@ import { Canvas } from "@react-three/fiber";
 interface Modal {
   isOpen: boolean;
   onClose: () => void;
-  currentObject: { ref: THREE.Mesh; textDescription: string } | null;
+  currentObject: { ref: THREE.Mesh; textDescription: string , tag: string | null} | null;
   handleHover: (value: boolean) => void;
 }
 
 function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
-  const clonedObject = useMemo(
-    () => currentObject?.ref.clone(),
-    [currentObject]
-  );
+const clonedObject = useMemo(() => {
+  if (!currentObject) return null;
 
-  useEffect(() => {
-    console.log(clonedObject)
-  })
+  const clone = currentObject.ref.clone();
+  console.log('TEST')
+
+  console.log(currentObject.tag)
+  switch (currentObject.tag){
+    case 'top':
+      console.log('top')
+      clone.position.set(0, 0, 0); // Reset position to center the object
+      break;
+    case 'middle':
+      console.log('middle')
+      clone.position.set(0,10,0);
+      break;
+    case 'lower':
+      console.log('lower ')
+      clone.position.set(0,28,0)
+      break;
+  }
+  return clone;
+}, [currentObject]);
+
+
 
   useEffect(() => {
     if (!currentObject) return;
@@ -68,9 +85,7 @@ function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
         {/* Render cloned object */}
         {clonedObject ? (
           <>
-         <axesHelper args={[2]} />
-         <gridHelper args={[10, 10]} />
-          <primitive object={clonedObject} position={[0, 2, 0]} scale={35} />
+            <primitive object={clonedObject}  scale={35} />
           </>
         ) : null}
       </Canvas>

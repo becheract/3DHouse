@@ -7,8 +7,9 @@ import { useBox } from "@react-three/cannon";
 interface Projects {
   children: ReactNode;
   textDescription: string;
+  tag: string | null;
   handleHover: (value: boolean) => void;
-  openModal: (ref: THREE.Mesh, text: string) => void;
+  openModal: (ref: THREE.Mesh, text: string, tag: string) => void;
   closeModal: () => void;
   position: Vector3 | undefined;
   radio? : boolean
@@ -31,7 +32,8 @@ export default function Project(props: Projects) {
     const keyDownListener = (e: KeyboardEvent) => {
       if (distanceChecker() && hoverRef.current) {
         if (e.key === "f" || e.key === "F") {
-          props.openModal(meshRef.current, props.textDescription);
+          if(props.tag !== null)
+          props.openModal(meshRef.current, props.textDescription, props.tag);
         } else if (e.key === "x" || e.key === "X") {
           props.closeModal();
         }

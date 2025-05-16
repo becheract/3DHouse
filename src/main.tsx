@@ -28,6 +28,7 @@ import HeadBob from "./utils/headbob.tsx";
 interface CurrentObject {
   ref: THREE.Mesh;
   textDescription: string;
+  tag:string | null;
 }
 
 
@@ -92,9 +93,15 @@ function App() {
 
 
   // Open modal when cube is clicked
-  const openModal = (ref: THREE.Mesh, textDescription: string) => {
-    setCurrentObject({ ref: ref, textDescription: textDescription });
-    setModalOpen(true);
+  const openModal = (ref: THREE.Mesh, textDescription: string , tag: string | null) => {
+    if(tag !== null){
+      setCurrentObject({ ref: ref, textDescription: textDescription, tag: tag });
+      setModalOpen(true);
+    }else if (tag == null){
+      setCurrentObject({ ref: ref, textDescription: textDescription, tag : null});
+      setModalOpen(true);
+    }
+
   };
 
   // Close modal

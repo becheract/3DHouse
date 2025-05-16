@@ -120,7 +120,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
  
-      if (e.key === "Control" || e.key === "Meta") {
+      if (e.key === "Control" ) {
        if (isCrouching == false) {
           console.log('crouch')
           setIsCrouching(true)
@@ -131,7 +131,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   }
 
     const keyUpListener = (e : KeyboardEvent) =>{
-      if (e.key === "Control" || e.key === "Meta") {
+      if (e.key === "Control" ) {
         if (isCrouching) {
           console.log("uncrouch");
           setIsCrouching(false);

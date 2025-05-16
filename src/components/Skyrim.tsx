@@ -12,7 +12,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF('Skyrim/skyrim-transformed.glb')
   return (
     <group {...props} dispose={null}>
-      <axesHelper args={[1]} />
       <mesh geometry={(nodes.Cube as THREE.Mesh).geometry} material={materials.Material} position={[0, 1.166, 0]} scale={[1, 1.324, 0.156]} rotation={[0, 1.4, 0]} />
     </group>
   )
