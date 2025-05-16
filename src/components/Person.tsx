@@ -30,17 +30,13 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   const frontVector = new THREE.Vector3();
   const sideVector = new THREE.Vector3();
   const speed = new THREE.Vector3();
-  const SPEED = 5;
+  const NORMAL_SPEED = 5;
+  const CROUCH_SPEED = 2.5; // Reduced speed while crouching
   let lastTime = 0;
   const fps = 30;
-  
-  const { camera , gl } = useThree();
-  
-  // gl.shadowMap.enabled = true;
-  camera.near = 0.01; // Move near plane closer
-  camera.updateProjectionMatrix(); // Make sure to update the matrix after the change
-  // Define the ref with a specific type of THREE.Mesh
-  const ref = useRef<THREE.Mesh>(null!);
+
+  const { camera } = useThree();
+
   const armsRef = useRef<THREE.Mesh>(null);
 
   const [sphereRef, api] = useSphere(() => ({
@@ -50,25 +46,21 @@ const BaseCharacter = (props: BaseCharacterProps) => {
     ...props,
   }));
 
-   useEffect(() => {
-    if (armsRef.current && camera) {
-      // Set arms as a child of the camera, so they move with it
-      camera.add(armsRef.current);
-  
-      if (armsRef.current !== undefined) {
-        // Position the arms in front of the camera (adjust as needed)
-        armsRef.current.position.set(0, -1.8, -0.05); // Fine-tune position to make it look realistic
+  // State to track crouching
+  const [isCrouching, setIsCrouching] = useState(false);
 
-      }
+  useEffect(() => {
+    if (armsRef.current && camera) {
+      camera.add(armsRef.current);
+      armsRef.current.position.set(0, -1.8, -0.05);
     }
-  
+
     return () => {
-      if(armsRef.current !== null){
-      camera.remove(armsRef.current); // Cleanup: remove from camera on unmount
-    }
+      if (armsRef.current !== null) {
+        camera.remove(armsRef.current);
+      }
     };
   }, [camera]);
-
 
   // Destructure movement controls from custom hook
   const { forward, backward, left, right, jump } = usePlayerControls();
@@ -82,6 +74,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
     return () => unsubscribe();
   }, [api.velocity]);
 
+
   useFrame((state) => {
     if (props.isOpen == false) {
       const delta = state.clock.getElapsedTime() - lastTime;
@@ -89,11 +82,12 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         lastTime = state.clock.getElapsedTime();
 
         const spherePos = new THREE.Vector3();
-        // Update the camera position
         sphereRef.current?.getWorldPosition(spherePos);
 
         // Update the camera to follow the player
-        camera.position.set(spherePos.x, spherePos.y + 1.5, spherePos.z);
+        const cameraHeight = isCrouching ? 0.8 : 1.5; // Lower height when crouching
+
+        camera.position.set(spherePos.x, spherePos.y + cameraHeight, spherePos.z);
 
         // Calculate the movement direction based on controls (AWSD)
         frontVector.set(0, 0, Number(backward) - Number(forward));
@@ -103,11 +97,11 @@ const BaseCharacter = (props: BaseCharacterProps) => {
         direction
           .subVectors(frontVector, sideVector)
           .normalize()
-          .multiplyScalar(SPEED)
+          .multiplyScalar(isCrouching ? CROUCH_SPEED : NORMAL_SPEED) // Adjust speed
           .applyEuler(camera.rotation);
-        
+
         speed.fromArray(velocity.current);
-       
+
         // Set velocity based on the direction
         api.velocity.set(direction.x, velocity.current[1], direction.z);
 
@@ -116,31 +110,52 @@ const BaseCharacter = (props: BaseCharacterProps) => {
           jump &&
           Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05
         ) {
+          api.velocity.set(velocity.current[0], 5, velocity.current[2]);
+        }
+      }
 
-            api.velocity.set(velocity.current[0], 5, velocity.current[2]);
-          
+    }
+  });
+
+  useEffect(() => {
+    const keyDownListener = (e: KeyboardEvent) => {
+ 
+      if (e.key === "Control" || e.key === "Meta") {
+       if (isCrouching == false) {
+          console.log('crouch')
+          setIsCrouching(true)
+        } else{
+        setIsCrouching(false)
+      }
+    }
+  }
+
+    const keyUpListener = (e : KeyboardEvent) =>{
+      if (e.key === "Control" || e.key === "Meta") {
+        if (isCrouching) {
+          console.log("uncrouch");
+          setIsCrouching(false);
         }
       }
     }
 
-    
-  });
+    document.addEventListener("keydown", keyDownListener);
+    document.addEventListener("keyup", keyUpListener);
+    return () => {
+      document.removeEventListener("keydown", keyDownListener);
+      document.removeEventListener("keyup", keyUpListener);
+    };
+  }, [isCrouching]);
+
 
 
   return (
     <group>
-    
-      {/* Ensure the ref is typed correctly for the mesh */}
       <mesh castShadow position={props.position} ref={armsRef}>
-        {/* <sphereGeometry args={props.args} /> */}
-        {/* <HeadBob/> */}
         <meshStandardMaterial color="#FFFF00" />
         <Arms scale={[1, 1, 1]} rotation={[0, 3.1, 0]} />
-        {/* <CameraShake ref={shakeRef}/> */}
       </mesh>
- 
     </group>
-    
   );
 };
 

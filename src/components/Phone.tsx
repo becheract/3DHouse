@@ -10,10 +10,12 @@ import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from "three";
 import { QuaternionKeyframeTrack, VectorKeyframeTrack } from 'three';
 import Debounce from '../utils/Debounce';
+import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 interface AnimationClip {
   name: string;
   tracks: Array<VectorKeyframeTrack | QuaternionKeyframeTrack>;
+  openModal: (ref: THREE.Mesh, text: string) => void;
   duration: number;
   blendMode: number;
   uuid: string;
@@ -28,30 +30,58 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   const { camera } = useThree(); // Access the scene's camera
   const [phonePosition, setPhonePosition] = useState(props.position) 
   const phoneRef = useRef<THREE.Group>(null);
-  const { actions, names, mixer } = useAnimations(animations, group);
+  const { actions, names, mixer } = useAnimations(animations, clone);
+  const teleRef = useRef<THREE.Mesh>(null!);
+  // useEffect(() => {
+  //   if(phoneRef.current)
+  //   phoneRef.current.visible = false
+  // },[])
 
-  useEffect(() => {
-    if(phoneRef.current)
-    phoneRef.current.visible = false
-  },[])
 
-  useEffect(() => {
-    console.log('animations')
-    console.log(animations)
-    console.log('scene')
-    console.log(scene)
-  })
 
   const disapearPhone = Debounce((e: MouseEvent) => {
     if(phoneRef.current !== null) {
+      if (actions["closeAction"]) {
+
+        actions["closeAction"].fadeIn(0.5).play();
+        actions["closeAction"].repetitions = 1;
+
+        mixer.stopAllAction();
+
+      }
       phoneRef.current.visible = false
+
     }
-  }, 1000)
+  }, 4000)
+
+  useEffect(() => {
+    const phoneMat = materials["'Material.001'"] as THREE.MeshBasicMaterial;
+    // Loop through all materials and set NearestFilter for their textures
+    Object.values(materials).forEach((material: THREE.Material) => {
+      if (
+        material instanceof THREE.MeshBasicMaterial ||
+        material instanceof THREE.MeshStandardMaterial
+      ) {
+        if (material.map) {
+          material.map.minFilter = THREE.NearestFilter;
+          material.map.magFilter = THREE.NearestFilter;
+          material.map.needsUpdate = true;
+        }
+      }
+      
+      if (teleRef.current) {
+        teleRef.current.material = shaderMaterialTransformer(phoneMat,3);
+      }
+      
+    });
+
+  }, [materials])
 
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
+      
+
       if (e.key === "c" || e.key === "C" ) {
-        
         if(phoneRef.current !== null){
           phoneRef.current.visible = true
           // Set the phone's position in front of the camera
@@ -64,19 +94,32 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
           const offset = new THREE.Vector3(0, 0, 0.7);  // 1 unit in front of the camera
           phoneRef.current.position.copy(cameraPosition.add(cameraDirection.multiplyScalar(offset.z)));
           // Adjust the y-axis separately (to move the phone higher or lower)
-          const yOffset = -0.24;  // Move the phone 1 unit up on the Y axis
+          const yOffset = -0.50;  // Move the phone 1 unit up on the Y axis
           phoneRef.current.position.y += yOffset;  // Add this offset to the Y position
           // Optionally adjust the orientation of the phone based on camera orientation
           phoneRef.current.rotation.copy(camera.rotation);
 
-          disapearPhone()
+          if (actions["openAction"]) {
+            mixer.stopAllAction();
+            console.log('try')
+            console.log(actions["openAction"])
+            actions["openAction"]
+            .reset()
+            .setLoop(THREE.LoopOnce, 1)
+            .fadeIn(0.5)
+            .play();
+
+            // if(actions["openAction"].isRunning() == false){
+            // disapearPhone()
+            // }
+          }
+
         }
         
       }
+
+
     };
-
-
-
 
     document.addEventListener("keydown", keyDownListener);
     return () => {
@@ -108,10 +151,10 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   })
 
   return (
-    <group ref={phoneRef} {...props} dispose={null} position={phonePosition}>
+    <group  ref={phoneRef} {...props} dispose={null} position={phonePosition} >
       <group name="Scene" >
         <group name="Armature" position={[0, 0.179, 0]} scale={[0.99, 2.207, 2.207]} rotation={[0,-1.6,0]}>
-          <primitive object={nodes.Bone} />
+          <primitive  object={clone} />
           <skinnedMesh name="Cube" geometry={(nodes.Cube as THREE.Mesh).geometry} material={materials['Material.001']} skeleton={(nodes.Cube as THREE.SkinnedMesh).skeleton} />
           <skinnedMesh name="Cube001" geometry={(nodes.Cube001 as THREE.Mesh).geometry} material={materials['Material.001']} skeleton={(nodes.Cube001 as THREE.SkinnedMesh).skeleton} />
         </group>

@@ -50,6 +50,12 @@ import Police from "./Police"
 // import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
 import { vertexShader } from "../../shaders/vertexShader";
 import { fragmentShader } from "../../shaders/fragmentShader";
+import Paint from "./Paint"
+import Cart from "./Cart"
+import Skyrim from "./Skyrim"
+import Fn from "./Fn"
+import Mario from "./Mario"
+
 
 function Room(props: {
   handleHover: (value: boolean) => void;
@@ -129,15 +135,15 @@ function Room(props: {
 
   const [wallRef3] = useBox<THREE.Mesh>(() => ({
     type: "Static",
-    position: [0, 5, -5], // Back wall
+    position: [0, 5, -5], // Back walla
     args: [10, 10, 1],
   }));
 
-  const [wallRef4] = useBox<THREE.Mesh>(() => ({
-    type: "Static",
-    position: [0, 5, 5.5], // front wall
-    args: [10, 10, 1],
-  }))
+  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
+  //   type: "Static",
+  //   position: [0, 5, 5.5], // front wall
+  //   args: [10, 10, 1],
+  // }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -179,11 +185,11 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
-           {/* Static Front Wall*/}
+           {/* Static Front Wall
         <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh> 
+      </mesh>  */}
 
 
       {/* Static Ceiling */}
@@ -255,9 +261,9 @@ function Room(props: {
 
         {/* Monitor */}
         <Monitor
-                 handleHover={props.handleHover}
-                 openModal={props.openModal}
-                 closeModal={props.closeModal}
+                //  handleHover={props.handleHover}
+                //  openModal={props.openModal}
+                //  closeModal={props.closeModal}
         position={[0.1, 1.3, -3.7]}
         rotation={[0, 3.1, 0]}
       />
@@ -268,10 +274,9 @@ function Room(props: {
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
-        position={[0, 0, 0.6]}
+        position={[0, 0, 0.68]}
         >
-      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
-      <meshStandardMaterial flatShading color={"red"} />
+          <Cart scale={0.05} position={[0,-0.13,0]}/>
           </Project>
 
       <Project
@@ -290,20 +295,64 @@ function Room(props: {
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
-        position={[0, 0, 1.2]}
+        position={[0, -1, 1.2]}
       > 
-      <boxGeometry args={[0.2,0.2,0.2]} attach={"geometry"} />
-      <meshStandardMaterial flatShading color={"blue"} />
+      <Paint scale={0.04}  rotation={[4, 0, 2]}/>
       </Project>
 
-      <Project
+      {/* <Project
         textDescription="fanshawe"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0]}
+      > 
+        <Skyrim scale={0.1} position={[0,-0.94,-1.2]} />
+      </Project> */}
+
+      <Project
+        textDescription="Ontario Police College"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0]}
+
+      > 
+      <Skyrim scale={0.10} position={[0,-0.94,0]}/>
+      </Project>
+
+
+
+      <Project
+        textDescription="Fallout new vegas"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
         position={[-0, 0, 1.2]}
       > 
-      <Fanshawe scale={0.05} position={[0,0-0.45,0]}/>
+      <Fn scale={0.10} position={[0,-0.94,0]} />
+      </Project>
+
+      {/* projects on shelf */}
+      <Project
+        textDescription="Mario Kart"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[0, 0, 0.68]}
+        >
+          <Mario scale={0.10} position={[0,-0.94,-0.06]} />
+        </Project>
+
+
+      <Project
+        textDescription="Skyrim"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[-0, 0, 1.2]}
+      > 
+      <Fanshawe scale={0.05} position={[0,0-0.45,0]} />
       </Project>
 
 
@@ -318,7 +367,7 @@ function Room(props: {
       <Police scale={0.05} position={[0,0-0.45,0]}/>
       </Project>
 
-      <Phone position={[0, 0.4, 0]} scale={0.1}/>
+      {/* <Phone openModal={props.openModal} position={[0, 0.4, 0]} scale={0.1}/> */}
      
       </>
   );

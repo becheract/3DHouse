@@ -11,7 +11,7 @@ import * as THREE from "three";
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF('Fanshawe/fanshawe-transformed.glb')
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} name='fanshawe'>
       <group position={[0, 0.628, -0.539]} rotation={[2.345, 0, 0]} scale={0.276}>
         <mesh geometry={(nodes.Cube005 as THREE.Mesh).geometry} material={materials['red.002']} />
         <mesh geometry={(nodes.Cube005_1 as THREE.Mesh).geometry} material={materials['dark red.002']} />

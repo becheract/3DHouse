@@ -17,6 +17,10 @@ function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
   );
 
   useEffect(() => {
+    console.log(clonedObject)
+  })
+
+  useEffect(() => {
     if (!currentObject) return;
 
     handleHover(false); // Disable hover while modal is open
@@ -55,13 +59,19 @@ function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <OrbitControls
+          autoRotate
+          autoRotateSpeed={3}
           enableZoom={true}
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
         />
         {/* Render cloned object */}
         {clonedObject ? (
-          <primitive object={clonedObject} position={[0, -2.5, 0]} scale={25} />
+          <>
+         <axesHelper args={[2]} />
+         <gridHelper args={[10, 10]} />
+          <primitive object={clonedObject} position={[0, 2, 0]} scale={35} />
+          </>
         ) : null}
       </Canvas>
       <div style={modalStyle}>

@@ -8,9 +8,9 @@ import Portfolio from "./Portfolio";
 import { Triplet, useBox } from "@react-three/cannon";
 import HeroPage from "./HeroPage"
 interface Computer {
-  handleHover: (value: boolean) => void;
-  openModal: (ref: THREE.Mesh, text: string) => void;
-  closeModal: () => void;
+  // handleHover: (value: boolean) => void;
+  // openModal: (ref: THREE.Mesh, text: string) => void;
+  // closeModal: () => void;
   position: Triplet | undefined;
   rotation: Triplet | undefined;
 }
@@ -40,34 +40,35 @@ export default function Model(props: Computer) {
     const floatAmplitude = 0.09;
     const floatSpeed = 2;
   
-    useEffect(() => {
-      // Key event listener function
-      const keyDownListener = (e: KeyboardEvent) => {
-        if (distanceChecker() && hoverRef.current) {
-          if (e.key === "f" || e.key === "F") {
-            props.openModal(meshRef.current, 'testing ');
-          } else if (e.key === "x" || e.key === "X") {
-            props.closeModal();
-          }
-        }
-      };
+    // useEffect(() => {
+    //   // Key event listener function
+    //   // const keyDownListener = (e: KeyboardEvent) => {
+    //   //   if (distanceChecker() && hoverRef.current) {
+    //   //     if (e.key === "f" || e.key === "F") {
+    //   //       props.openModal(meshRef.current, 'testing ');
+    //   //     } else if (e.key === "x" || e.key === "X") {
+    //   //       console.log('cloe ')
+    //   //       props.closeModal();
+    //   //     }
+    //   //   }
+    //   // };
   
-      // Register key event listener once on mount
-      document.addEventListener("keydown", keyDownListener);
-      return () => {
-        document.removeEventListener("keydown", keyDownListener);
-      };
-    }, []); // Empty dependency array ensures this runs only once
+    //   // Register key event listener once on mount
+    //   document.addEventListener("keydown", keyDownListener);
+    //   return () => {
+    //     document.removeEventListener("keydown", keyDownListener);
+    //   };
+    // }, []); // Empty dependency array ensures this runs only once
   
-    useFrame((state) => {
-      // Floating effect
-      const time = state.clock.getElapsedTime();
-      meshRef.current.position.y =
-        2.2 + floatAmplitude * Math.sin(floatSpeed * time);
+    // useFrame((state) => {
+    //   // Floating effect
+    //   const time = state.clock.getElapsedTime();
+    //   meshRef.current.position.y =
+    //     2.2 + floatAmplitude * Math.sin(floatSpeed * time);
       
-        monitorRef.current.position.y =
-        2.2 + floatAmplitude * Math.sin(floatSpeed * time);
-    });
+    //     monitorRef.current.position.y =
+    //     2.2 + floatAmplitude * Math.sin(floatSpeed * time);
+    // });
   
     const distanceChecker = (): boolean => {
       const distanceThreshold = 3;
@@ -131,29 +132,14 @@ export default function Model(props: Computer) {
         ref={meshRef}
           geometry={(nodes.TV_04_1 as THREE.Mesh).geometry}
           material={materials.Electronics}
-          onPointerOver={() => {
-            if (distanceChecker()) {
-              console.log('hovering over')
-              hoverRef.current = true;
-              props.handleHover(true);
-            }
-          }}
-          onPointerLeave={() => {
-            hoverRef.current = false;
-            props.handleHover(false);
-          }}
+          position={[0,1.8,0]}
         />
         <mesh
         ref={monitorRef}
          geometry={(nodes.TV_04_2 as THREE.Mesh).geometry}
-          position={[0,2,0]}
+          position={[0,1.8,0]}
         >
-            <Html className="content"  position={[0, 0.05, -0.09]} transform occlude>
-            <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
-              <iframe src="https://bechera.com">
-              </iframe>
-              </div>
-              </Html>
+   
         </mesh>
       </group>
       </group>

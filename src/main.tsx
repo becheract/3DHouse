@@ -8,7 +8,7 @@ import {
   AdaptiveDpr
 } from "@react-three/drei";
 import Room from "./components/Room";
-import { Suspense} from "react";
+import { Suspense , createContext, useContext, useRef} from "react";
 import "./main.css";
 import { Physics,Debug } from "@react-three/cannon";
 import Person from "./components/Person";
@@ -17,18 +17,23 @@ import {
   Pixelation,
   
 } from "@react-three/postprocessing";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
   import SkyImage from "../public/sky/sphere.jpg"
 import SkySphere from "./utils/skySpehere.tsx";
 import HeadBob from "./utils/headbob.tsx";
-import { Text } from "@react-three/drei";
 
 
 interface CurrentObject {
   ref: THREE.Mesh;
   textDescription: string;
+}
+
+
+interface EloiBeats {
+  name: string;
+  url:string;
 }
 
 function App() {
@@ -39,6 +44,52 @@ function App() {
   const [currentObject, setCurrentObject] = useState<CurrentObject | null>(
     null!
   );
+
+  function isDevToolsOpen() {
+    const threshold = 160;
+    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+    return widthThreshold || heightThreshold;
+  }
+  
+  if (isDevToolsOpen()) {
+    console.warn = () => {};
+    window.alert = () => {};
+  }
+
+  const radio = [
+    { name: "mirage", url: "/Radio/mirage.mp3" },
+    { name: "luvr roq", url: "/Radio/luvr_roq_2k252.mp3" },
+    { name: "ok ok ok", url: "/Radio/ok_ok_ok.mp3" },
+    { name: "adidas girl", url: "/Radio/adidas_girl_2k25update.mp3" },
+  ];
+
+  const radioIndex = useRef(0);
+  const radioName = useRef(radio[radioIndex.current].name);
+  const [displayName, setDisplayName] = useState(radioName.current); // Only for UI
+  
+
+  useEffect(() => {
+    const keyDownListener = (e: KeyboardEvent) => {
+      if (e.key === "q" || e.key === "Q") {
+        radioIndex.current = (radioIndex.current + 1) % radio.length;
+      } else if (e.key === "e" || e.key === "E") {
+        radioIndex.current = (radioIndex.current - 1 + radio.length) % radio.length;
+      } else {
+        return;
+      }
+  
+      radioName.current = radio[radioIndex.current].name;
+      setDisplayName(radioName.current); // Re-render just this part
+    };
+  
+    document.addEventListener("keydown", keyDownListener);
+    return () => {
+      document.removeEventListener("keydown", keyDownListener);
+    };
+  }, []);
+  
+
 
   // Open modal when cube is clicked
   const openModal = (ref: THREE.Mesh, textDescription: string) => {
@@ -57,6 +108,7 @@ function App() {
 
   return (
     <>
+    {/* <indexContext.Provider value={index}> */}
       <Canvas
         dpr={[4, 138]}
         shadows
@@ -131,7 +183,7 @@ function App() {
       <div className="dot" />
 
       <div className="radio">
-        <h1>Now Playing </h1>
+        <h1>Now Playing {displayName}</h1>
       </div>
     </>
   );

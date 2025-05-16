@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useContext } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { Canvas, useThree, useLoader } from "@react-three/fiber";
@@ -37,6 +37,7 @@ function Sound() {
     { name: "ok ok ok", url: "/Radio/ok_ok_ok.mp3" },
     { name: "adidas girl", url: "/Radio/adidas_girl_2k25update.mp3" },
   ]).current;
+
 
   const audioLoader = useRef(new THREE.AudioLoader()).current;
 
@@ -79,6 +80,7 @@ function Sound() {
         console.log("e pressed");
         loadAndPlay(indexRef.current + 1);
       }
+      
     };
 
     document.addEventListener("keydown", keyDownListener);

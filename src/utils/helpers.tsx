@@ -9,6 +9,7 @@ type Movement = {
   left: boolean;
   right: boolean;
   jump: boolean;
+  crouch: boolean;
 };
 
 // Player Controls hook
@@ -22,6 +23,7 @@ export const usePlayerControls = (): Movement =>{
     KeyA: "left",
     KeyD: "right",
     Space: "jump",
+    Ctrl: "crouch"
   };
 
   // Function to get the movement field by key
@@ -34,6 +36,7 @@ export const usePlayerControls = (): Movement =>{
     left: false,
     right: false,
     jump: false,
+    crouch: false,
   });
 
 
@@ -46,6 +49,8 @@ export const usePlayerControls = (): Movement =>{
         setMovement((m) => ({ ...m, [movementKey]: true }));
         footstepsSoundEffects.play()
       }
+      console.log('testing ctrl')
+      console.log(e.code)
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -55,7 +60,6 @@ export const usePlayerControls = (): Movement =>{
         footstepsSoundEffects.pause()
       }
     };
-
 
 
 
