@@ -13,6 +13,7 @@ body,
 
 body {
   background: #f0f0f0;
+  overflow-y: hidden;
 }
 
 .dot {
@@ -35,6 +36,17 @@ body {
   height: 'full';
   color: white;
 }
+
+.info{
+  position: absolute;
+  top: 92%;
+  right: 1%;
+  width: '100%';
+  display: flex;
+  height: 'full';
+  color: white;
+}
+
 
 .interaction {
   position: absolute;

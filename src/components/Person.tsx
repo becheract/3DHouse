@@ -6,7 +6,7 @@ import HeadBob from "../utils/headbob";
 import * as THREE from "three";
 import Particle from "./Particle";
 
-import Arms from "./Arms";
+import Arms from "./Black_arms";
 // Define the type for props
 interface BaseCharacterProps {
   controls?: boolean;

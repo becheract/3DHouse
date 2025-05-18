@@ -55,12 +55,12 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
       <group position={[10.876, 0.177, -3.175]} {...props} dispose={null} >
   
         <mesh
-          ref={sofaWoodRef}
+          // ref={sofaWoodRef}
           geometry={(nodes.Armchair_08_1 as THREE.Mesh).geometry}
           material={materials.Wood_10}
         />
         <mesh
-          ref={sofaMatRef}
+          // ref={sofaMatRef}
           geometry={(nodes.Armchair_08_2 as THREE.Mesh).geometry}
           material={materials.Fabric_11}
         />

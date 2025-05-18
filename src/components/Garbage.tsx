@@ -48,7 +48,7 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
           material={materials["Material.010"]}
         />
         <mesh
-        ref={garbagePlasticRef}
+        // ref={garbagePlasticRef}
           geometry={(nodes.Cube178_1 as THREE.Mesh).geometry}
           material={materials.Plastic}
         />

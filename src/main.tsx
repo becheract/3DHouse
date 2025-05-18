@@ -23,7 +23,7 @@ import CubeLoader from "./components/CubeLoader";
   import SkyImage from "../public/sky/sphere.jpg"
 import SkySphere from "./utils/skySpehere.tsx";
 import HeadBob from "./utils/headbob.tsx";
-
+import PhoneModal from "./components/PhoneModal.tsx";
 
 interface CurrentObject {
   ref: THREE.Mesh;
@@ -32,19 +32,50 @@ interface CurrentObject {
 }
 
 
-interface EloiBeats {
-  name: string;
-  url:string;
-}
 
 function App() {
   extend(THREE);
 
+  const [isScreenTooSmall, setIsScreenTooSmall] = useState(false);
+
+  useEffect(() => {
+    // Function to check screen resolution
+    const checkScreenResolution = () => {
+      if (window.innerWidth < 768) {
+        setIsScreenTooSmall(true);
+      } else {
+        setIsScreenTooSmall(false);
+      }
+    };
+
+    // Initial check
+    checkScreenResolution();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenResolution);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener("resize", checkScreenResolution);
+    };
+  }, []);
+
+  if (isScreenTooSmall) {
+    return (
+      <div style={screenTooSmallStyle}>
+        <h1>Screen Resolution Too Small</h1>
+        <p>This experience cannot be played at the current resolution.</p>
+      </div>
+    );
+  }
+
+  const [textDesc, setTextDesc] = useState('Welcome to my three js project, it took me a while to actually finish this due to my schedcule and obligitions but I can say that this is complete. Orignally this was supposed to be a ps1 type site by emulating the actual graphics but I realized half way through that it would be a much harder task. I would first like to thank Eloi Pins')
   const [hover, setHover] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentObject, setCurrentObject] = useState<CurrentObject | null>(
     null!
   );
+  const [phoneModal, setPhoneModal] = useState(true)
 
   function isDevToolsOpen() {
     const threshold = 160;
@@ -57,6 +88,11 @@ function App() {
     console.warn = () => {};
     window.alert = () => {};
   }
+
+
+  useEffect(() => {
+
+  }, [])
 
   const radio = [
     { name: "mirage", url: "/Radio/mirage.mp3" },
@@ -104,10 +140,18 @@ function App() {
 
   };
 
+  const openPhoneModal = () => {
+    setPhoneModal(true)
+  }
+
   // Close modal
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const closePhoneModal = () => {
+    setPhoneModal(false)
+  }
 
   const handleHover = (value: boolean): void => {
     setHover(value);
@@ -162,6 +206,8 @@ function App() {
                 handleHover={handleHover}
                 openModal={openModal}
                 closeModal={closeModal}
+                openPhoneModal={openPhoneModal}
+                closePhoneModal={closePhoneModal}
               />
 
               <Person
@@ -182,18 +228,38 @@ function App() {
       <DarkWindow
         currentObject={currentObject}
         isOpen={isModalOpen}
-        onClose={closeModal}
         handleHover={handleHover}
       />
-
+      
+      {phoneModal ? <>
+        <PhoneModal isOpen={phoneModal} openPhoneModal={openPhoneModal} onClose={closePhoneModal} textDescription={textDesc}/>
+      </>
+      :
+      null}
+      
       {hover ? <h1 className="interaction">Interact </h1> : null}
       <div className="dot" />
 
       <div className="radio">
         <h1>Now Playing {displayName}</h1>
       </div>
+
     </>
   );
 }
+
+// Styles for the "Screen Too Small" message
+const screenTooSmallStyle: React.CSSProperties = {
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+  backgroundColor: "rgba(0, 0, 0, 0.8)",
+  color: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  zIndex: 1000,
+};
 
 createRoot(document.getElementById("root")!).render(<App />);

@@ -13,18 +13,11 @@ import Debounce from '../utils/Debounce';
 import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 import { Canvas } from "@react-three/fiber";
 
-interface AnimationClip {
-  name: string;
-  tracks: Array<VectorKeyframeTrack | QuaternionKeyframeTrack>;
-  openModal: (ref: THREE.Mesh, text: string, tag: string | null) => void;
-  duration: number;
-  blendMode: number;
-  uuid: string;
-}
 
 // Extend the props to include AnimationClip
 interface ModelProps extends React.ComponentPropsWithoutRef<"group"> {
-  animationClip: AnimationClip; // Add AnimationClip to the props
+  openPhoneModal: () => void; // Add openPhoneModal as an optional function
+  closePhoneModal: () => void;
 }
 
 export default function Model(props: ModelProps) {
@@ -34,49 +27,61 @@ export default function Model(props: ModelProps) {
   const { nodes, materials } = useGraph(clone);
   const { camera } = useThree();
   const phoneRef = useRef<THREE.Group>(null);
-  const { actions, mixer } = useAnimations(animations, clone);
+  const { actions, mixer } = useAnimations(animations, clone );
 
-  const [isOverlayVisible, setOverlayVisible] = useState(false);
-
-
-  const disapearPhone = Debounce((e: MouseEvent) => {
-    if(phoneRef.current !== null) {
-      if (actions["closeAction"]) {
-
-        actions["closeAction"].fadeIn(0.5).play();
-        actions["closeAction"].repetitions = 1;
-
-        mixer.stopAllAction();
-
-      }
-      phoneRef.current.visible = false
-
-    }
-  }, 4000)
 
   useEffect(() => {
-    const phoneMat = materials["'Material.001'"] as THREE.MeshBasicMaterial;
-    // Loop through all materials and set NearestFilter for their textures
-    Object.values(materials).forEach((material: THREE.Material) => {
-      if (
-        material instanceof THREE.MeshBasicMaterial ||
-        material instanceof THREE.MeshStandardMaterial
-      ) {
-        if (material.map) {
-          material.map.minFilter = THREE.NearestFilter;
-          material.map.magFilter = THREE.NearestFilter;
-          material.map.needsUpdate = true;
-        }
-      }
-   
-    });
+    if(phoneRef.current){
+      phoneRef.current.visible = false
+    }
+  },[])
 
-  }, [materials])
+
+
+
+    useEffect(() => {
+      const keyDownListener = (e: KeyboardEvent) => {
+        if (e.key === "x" || e.key === "X") {
+          if(phoneRef.current !== null) {
+            if (actions["closeAction"]) {
+              console.log("Starting close animation");
+              console.log(Object.keys(actions)); // Logs all available animations
+              // Stop all other actions
+              mixer.stopAllAction();
+
+              // Play the close animation
+              actions["closeAction"]
+                .reset() // Reset the animation to the beginning
+                .setLoop(THREE.LoopOnce, 1) // Play the animation only once
+                .fadeIn(0.5) // Smoothly fade in the animation
+                .play(); // Start the animation
+
+                setTimeout(() => {
+                  if(phoneRef.current)
+                  phoneRef.current.visible = false
+                }, 1000)
+
+
+            }
+    
+      
+          }
+           props.closePhoneModal()
+        }
+      };
+  
+      document.addEventListener("keydown", keyDownListener);
+      return () => {
+        document.removeEventListener("keydown", keyDownListener);
+      };
+    }, [actions, mixer])
+
+
+
 
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
       
-
       if (e.key === "c" || e.key === "C" ) {
         if(phoneRef.current !== null){
           phoneRef.current.visible = true
@@ -104,22 +109,13 @@ export default function Model(props: ModelProps) {
             .setLoop(THREE.LoopOnce, 1)
             .fadeIn(0.5)
             .play();
-
-            props.animationClip.openModal(
-              phoneRef.current as unknown as THREE.Mesh,
-              "Contact Information",
-              null
-            );
             
-            if(actions["openAction"].isRunning() == false){
-            disapearPhone()
-            }
+            props.openPhoneModal();
           }
 
         }
         
       }
-
 
     };
 
@@ -128,7 +124,7 @@ export default function Model(props: ModelProps) {
    
       document.removeEventListener("keydown", keyDownListener);
     };
-  }, [camera, actions, mixer, props.animationClip])
+  }, [camera, actions, mixer])
 
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
@@ -168,31 +164,6 @@ export default function Model(props: ModelProps) {
   )
 }
 
-
-const overlayStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column",
-  zIndex: 10,
-};
-
-const modalStyle: React.CSSProperties = {
-  backgroundColor: "rgba(14,13,13, 0.8)",
-  color: "#fff",
-  padding: "20px",
-  width: "80%",
-  textAlign: "center",
-  fontFamily: "Geo, sans-serif",
-  fontWeight: 400,
-  fontStyle: "normal",
-};
 
 
 useGLTF.preload('/phone.glb')

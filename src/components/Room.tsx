@@ -58,12 +58,16 @@ import Mario from "./Mario"
 import Keyboard from "./Keyboard"
 import Mouse from "./Mouse.tsx"
 import Backpack from "./Backpack.tsx";
+
+
 function Room(props: {
   handleHover: (value: boolean) => void;
   position: [number, number, number];
   openModal: (ref: THREE.Mesh, textDescription: string, tag: string | null) => void;
   closeModal: () => void;
-}) {
+  openPhoneModal:() => void;
+  closePhoneModal: () => void;
+  }) {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
   const wallTexture = useLoader(THREE.TextureLoader, wallTextureAsset);
   const ceilTexture = useLoader(THREE.TextureLoader, ceilTextureAsset);
@@ -140,11 +144,11 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
-  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
-  //   type: "Static",
-  //   position: [0, 5, 5.5], // front wall
-  //   args: [10, 10, 1],
-  // }))
+  const [wallRef4] = useBox<THREE.Mesh>(() => ({
+    type: "Static",
+    position: [0, 5, 5.5], // front wall
+    args: [10, 10, 1],
+  }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -186,11 +190,11 @@ function Room(props: {
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
       </mesh>
 
-           {/* Static Front Wall
+           {/* Static Front Wall */}
         <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh>  */}
+      </mesh> 
 
 
       {/* Static Ceiling */}
@@ -380,7 +384,7 @@ function Room(props: {
 
 
  
-      <Phone openModal={props.openModal}  position={[0, 0.4, 0]} scale={0.1}/>
+      <Phone openPhoneModal={props.openPhoneModal} closePhoneModal={props.closePhoneModal} position={[0, 0.4, 0]} scale={0.1}/>
      
       </>
   );

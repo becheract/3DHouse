@@ -17,7 +17,7 @@ const debounce = (func: Function, delay: number) => {
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>(null);
-  const { scene, animations } = useGLTF("Arms/Arms.glb");
+  const { scene, animations } = useGLTF("Arms/black_arms.glb");
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const [firstLoad, setFirstLoad] = useState(true);
@@ -28,24 +28,6 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const [combatCooldown, setCombatCooldown] = useState(false);
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   if (armRef.current && camera) {
-  //     // Set arms as a child of the camera, so they move with it
-  //     camera.add(armRef.current);
-  
-  //     if (armRef.current !== undefined) {
-  //       // Position the arms in front of the camera (adjust as needed)
-  //       armRef.current.position.set(0, -0.5, -1); // Fine-tune position to make it look realistic
-
-  //     }
-  //   }
-  
-  //   return () => {
-  //     camera.remove(armRef.current); // Cleanup: remove from camera on unmount
-  //   };
-  // }, [camera]);
-  
-  
 
   
   // Handle first load animation

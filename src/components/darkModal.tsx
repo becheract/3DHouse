@@ -5,17 +5,15 @@ import { Canvas } from "@react-three/fiber";
 
 interface Modal {
   isOpen: boolean;
-  onClose: () => void;
   currentObject: { ref: THREE.Mesh; textDescription: string , tag: string | null} | null;
   handleHover: (value: boolean) => void;
 }
 
-function DarkWindow({ isOpen, onClose, currentObject, handleHover }: Modal) {
+function DarkWindow({ isOpen, currentObject, handleHover }: Modal) {
 const clonedObject = useMemo(() => {
   if (!currentObject) return null;
 
   const clone = currentObject.ref.clone();
-  console.log('TEST')
 
   console.log(currentObject.tag)
   switch (currentObject.tag){
