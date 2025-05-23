@@ -189,7 +189,6 @@ function App() {
 
           <Suspense fallback={<CubeLoader />}>
             <Physics >
-            <Debug color="green" scale={1.1}>
 
               {/* Lights */}
               <directionalLight position={[0, 0, 0]} intensity={1} castShadow />
@@ -219,7 +218,6 @@ function App() {
               />
       
       <HeadBob />
-        </Debug>
             </Physics>
  
           </Suspense>

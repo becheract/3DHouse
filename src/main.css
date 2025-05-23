@@ -37,6 +37,11 @@ body {
   color: white;
 }
 
+.radio h1{
+  font-family: "Geo, sans-serif";
+
+}
+
 .info{
   position: absolute;
   top: 92%;
