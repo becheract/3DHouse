@@ -277,9 +277,9 @@
   ],
   "images": [
     {
-      "mimeType": "image/png",
-      "name": "BikeAtlas.png",
-      "uri": "BikeAtlas.png.png"
+      "mimeType": "image/jpeg",
+      "name": "BikeAtlas.jpg",
+      "uri": "./BikeAtlas.jpg"
     }
   ],
   "accessors": [

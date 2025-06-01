@@ -141,9 +141,9 @@
       "uri": "Plaster_02.jpg"
     },
     {
-      "mimeType": "image/png",
+      "mimeType": "image/jpeg",
       "name": "Plants",
-      "uri": "Plants.png"
+      "uri": "Plants.jpg"
     }
   ],
   "accessors": [

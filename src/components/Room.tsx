@@ -10,9 +10,9 @@ import {
 } from "@react-three/cannon";
 import Fanshawe from "./Fanshawe"  
 import MonitorOld from "./monitor_old"
-import floorTextureAsset from "../assets/floor.png";
+import floorTextureAsset from "../assets/floor.jpg";
 import wallTextureAsset from "../assets/wally.webp";
-import ceilTextureAsset from "../assets/ceil2.png";
+import ceilTextureAsset from "../assets/ceil2.jpg";
 import Door from "./Door"
 import Bed from "../components/Bed";
 import Fan from "../components/Fan";
@@ -322,7 +322,7 @@ function Room(props: {
 
       <Project
         tag="middle"
-        textDescription="Ontario Police College"
+        textDescription="At the police college I am a multi-media programmer"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}

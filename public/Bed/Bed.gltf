@@ -67,9 +67,9 @@
 	],
 	"images":[
 		{
-			"mimeType":"image/png",
+			"mimeType":"image/jpeg",
 			"name":"bed_04",
-			"uri":"bed_04.png"
+			"uri":"bed_04.jpg"
 		}
 	],
 	"accessors":[

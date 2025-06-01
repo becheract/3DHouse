@@ -68,7 +68,7 @@
   "images": [
     {
       "name": "Bookcase_01",
-      "uri": "Bookcase_img0.png"
+      "uri": "./Bookcase_img.jpg"
     }
   ],
   "accessors": [

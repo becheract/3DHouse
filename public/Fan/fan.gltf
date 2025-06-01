@@ -129,9 +129,9 @@
   ],
   "images": [
     {
-      "mimeType": "image/png",
+      "mimeType": "image/jpeg",
       "name": "Ceiling_Fan",
-      "uri": "Ceiling_Fan.png"
+      "uri": "Ceiling_Fan.jpg"
     }
   ],
   "accessors": [

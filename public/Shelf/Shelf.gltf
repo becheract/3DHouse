@@ -93,9 +93,9 @@
   ],
   "images": [
     {
-      "mimeType": "image/png",
+      "mimeType": "image/jpeg",
       "name": "Fitment_02",
-      "uri": "Fitment_02.png"
+      "uri": "Fitment_02.jpg"
     }
   ],
   "accessors": [

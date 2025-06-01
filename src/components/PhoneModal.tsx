@@ -61,7 +61,7 @@ function PhoneModal(props : Modal) {
 
       <div style={controlsStyles}>
         Controls
-        <img src="./public/Controls/Controls.png"/>
+        <img src="./public/Controls/controls_white.png" width={'500px'} height={'auto'}/>
       </div>
     </div> 
     </>

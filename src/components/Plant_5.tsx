@@ -6,12 +6,13 @@ Command: npx gltfjsx@6.5.2 plant_5.glb
 import React, { useEffect } from "react";
 import { useGLTF, MeshWobbleMaterial } from "@react-three/drei";
 import * as THREE from "three";
+import { useLoader } from "@react-three/fiber";
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("Plant_5/plant_5.glb") as any;
 
   const texture =
-    materials.Plants?.map || new THREE.TextureLoader().load("Plant/Plants.png");
+    materials.Plants?.map || useLoader(THREE.TextureLoader,"Plant/Plants.jpg");
 
   useEffect(() => {
     // Loop through all materials and set NearestFilter for their textures

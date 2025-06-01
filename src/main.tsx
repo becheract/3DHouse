@@ -3,14 +3,14 @@ import { createRoot } from "react-dom/client";
 import { Canvas, extend,  } from "@react-three/fiber";
 import {
   PointerLockControls,
-  Sky,
   Stats,
-  AdaptiveDpr
+  AdaptiveDpr,
+  BakeShadows
 } from "@react-three/drei";
 import Room from "./components/Room";
-import { Suspense , createContext, useContext, useRef} from "react";
+import { Suspense ,useRef} from "react";
 import "./main.css";
-import { Physics,Debug } from "@react-three/cannon";
+import { Physics } from "@react-three/cannon";
 import Person from "./components/Person";
 import {
   EffectComposer,
@@ -36,40 +36,8 @@ interface CurrentObject {
 function App() {
   extend(THREE);
 
-  const [isScreenTooSmall, setIsScreenTooSmall] = useState(false);
 
-  useEffect(() => {
-    // Function to check screen resolution
-    const checkScreenResolution = () => {
-      if (window.innerWidth < 768) {
-        setIsScreenTooSmall(true);
-      } else {
-        setIsScreenTooSmall(false);
-      }
-    };
-
-    // Initial check
-    checkScreenResolution();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", checkScreenResolution);
-
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener("resize", checkScreenResolution);
-    };
-  }, []);
-
-  if (isScreenTooSmall) {
-    return (
-      <div style={screenTooSmallStyle}>
-        <h1>Screen Resolution Too Small</h1>
-        <p>This experience cannot be played at the current resolution.</p>
-      </div>
-    );
-  }
-
-  const [textDesc, setTextDesc] = useState('Welcome to my three js project, it took me a while to actually finish this due to my schedcule and obligitions but I can say that this is complete. Orignally this was supposed to be a ps1 type site by emulating the actual graphics but I realized half way through that it would be a much harder task. I would first like to thank Eloi Pins')
+  const [textDesc] = useState('Welcome to my three js project, it took me a while to actually finish this due to my schedcule and obligitions but I can say that this is complete. Orignally this was supposed to be a ps1 type site by emulating the actual graphics but I realized half way through that it would be a much harder task. I would first like to thank Eloi Pins')
   const [hover, setHover] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentObject, setCurrentObject] = useState<CurrentObject | null>(
@@ -90,9 +58,6 @@ function App() {
   }
 
 
-  useEffect(() => {
-
-  }, [])
 
   const radio = [
     { name: "mirage", url: "/Radio/mirage.mp3" },
@@ -142,9 +107,10 @@ function App() {
 
   const openPhoneModal = () => {
     setPhoneModal(true)
+    
   }
 
-  // Close modal
+  // Close modalß
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -161,7 +127,8 @@ function App() {
     <>
     {/* <indexContext.Provider value={index}> */}
       <Canvas
-        dpr={[4, 138]}
+        performance={{ min: 0.5 }}
+        // dpr={[4, 138]}
         shadows
         id={"canvas"}
         tabIndex={0}
@@ -170,22 +137,17 @@ function App() {
           antialias:false
         }}
       >
-
+      <BakeShadows />
         {/* allows for higer fps compared to dpr above */}
-        {/* <AdaptiveDpr pixelated /> */}
+        <AdaptiveDpr pixelated/> 
 
         <Stats />
-        <Sky
-          distance={450000}
-          sunPosition={[0, 1, 0]}
-          inclination={0}
-          azimuth={0.25}
-        />
+
 
         <SkySphere textureUrl={SkyImage}/>
 
         <EffectComposer>
-          <Pixelation granularity={10} />
+          <Pixelation granularity={6} />
 
           <Suspense fallback={<CubeLoader />}>
             <Physics >
@@ -217,7 +179,7 @@ function App() {
                 color="yellow"
               />
       
-      <HeadBob />
+        <HeadBob />
             </Physics>
  
           </Suspense>
@@ -246,18 +208,5 @@ function App() {
   );
 }
 
-// Styles for the "Screen Too Small" message
-const screenTooSmallStyle: React.CSSProperties = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  textAlign: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
-  color: "white",
-  padding: "20px",
-  borderRadius: "10px",
-  zIndex: 1000,
-};
 
 createRoot(document.getElementById("root")!).render(<App />);

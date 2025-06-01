@@ -8,8 +8,6 @@ import { useGraph, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";
-import { TextureLoader, NearestFilter, LinearMipMapLinearFilter } from "three";
-import { usePlayerControls } from "../utils/helpers";
 
 // Debounce utility function for cooldowns
 const debounce = (func: Function, delay: number) => {
@@ -26,12 +24,10 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
   const [firstLoad, setFirstLoad] = useState(true);
-  const { actions, names, mixer } = useAnimations(animations, group);
+  const { actions,  mixer } = useAnimations(animations, group);
   const [combat, setCombat] = useState(false);
-  const { camera } = useThree(); // Access the scene's camera
-  const armRef = useRef<THREE.Group>(null!);
   const [combatCooldown, setCombatCooldown] = useState(false);
-  const [actionFeedback, setActionFeedback] = useState<string | null>(null);
+  const [actionFeedback] = useState<string | null>(null);
 
     
     // Handle first load animation

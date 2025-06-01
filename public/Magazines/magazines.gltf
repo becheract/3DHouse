@@ -93,9 +93,9 @@
   ],
   "images": [
     {
-      "mimeType": "image/png",
+      "mimeType": "image/jpeg",
       "name": "Entertainment",
-      "uri": "Entertainment.png"
+      "uri": "./Entertainment.jpg"
     }
   ],
   "accessors": [
