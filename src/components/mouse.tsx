@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 mouse.glb --transform
 Files: mouse.glb [95.16KB] > /Users/bechera/Documents/3DHouse/public/keyboard/mouse-transformed.glb [10.1KB] (89%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

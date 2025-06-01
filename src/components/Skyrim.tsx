@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 skyrim.glb --transform
 Files: skyrim.glb [11.35KB] > /Users/bechera/Documents/3DHouse/public/Skyrim/skyrim-transformed.glb [2.67KB] (76%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

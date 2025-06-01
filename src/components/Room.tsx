@@ -1,15 +1,12 @@
 import * as THREE from "three";
-import { useRef, useState, useEffect, useMemo } from "react";
-import { useLoader, useFrame } from "@react-three/fiber";
+import {  useEffect } from "react";
+import { useLoader } from "@react-three/fiber";
 import {
   useBox,
   usePlane,
-  PlaneProps,
-  BoxProps,
-  useSphere,
+
 } from "@react-three/cannon";
 import Fanshawe from "./Fanshawe"  
-import MonitorOld from "./monitor_old"
 import floorTextureAsset from "../assets/floor.jpg";
 import wallTextureAsset from "../assets/wally.webp";
 import ceilTextureAsset from "../assets/ceil2.jpg";
@@ -18,22 +15,17 @@ import Bed from "../components/Bed";
 import Fan from "../components/Fan";
 import Bookcase from "../components/Bookcase";
 import Magazines from "./Magazines";
-import Plant from "./Plant_1";
 import Plant_2 from "../components/Plant_2";
 import Plant_3 from "../components/Plant_3";
 import Plant_4 from "../components/Plant_4";
 import Plant_5 from "../components/Plant_5";
-import { EffectComposer, Pixelation } from "@react-three/postprocessing";
 import Phone from "../components/Phone"
 import Painting_1 from "../components/Painting_1";
 import Painting_2 from "../components/Painting_2";
-import Painting_3 from "../components/Painting_3";
-import Painting_4 from "../components/Painting_4";
 import Painting_5 from "../components/Painting_5";
 import Circuit from "./Circuit"
 import Chair from "./Chair";
 import Monitor from "./Monitor";
-import Cup from "./Cup";
 import Table from "./Table";
 import Garbage from "./Garbage";
 import Bike from "./Bicycle";
@@ -43,13 +35,9 @@ import Sofa from "./Sofa";
 import TV from "./Tv";
 import Vent from "./Vent";
 import Shelf from "./Shelf";
-import BreakableTable from "./Table_breakable";
 import Project from "./Project";
 import Desktop from "./Desktop"
 import Police from "./Police"
-// import CustomShaderMaterial from "../../shaders/CustomShaderMaterial";
-import { vertexShader } from "../../shaders/vertexShader";
-import { fragmentShader } from "../../shaders/fragmentShader";
 import Paint from "./Paint"
 import Cart from "./Cart"
 import Skyrim from "./Skyrim"
@@ -229,10 +217,7 @@ function Room(props: {
 
       {/* Chair */}
       <Chair position={[0, 1, -2]} />
-
-    
-      {/* Cup */}
-      <Cup position={[9.2, 1.55, -15]} />
+ 
       <Door position={[-4.5, 1.3, -1.8]} scale={1.3} rotation={[0,1.54,0]}/>
       {/* Table */}
       <Table position={[13, 2, -16.7]} />

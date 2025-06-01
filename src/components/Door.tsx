@@ -8,7 +8,6 @@ Source: https://sketchfab.com/3d-models/low-poly-psx-hinged-door-4c195ed39f14418
 Title: Low Poly Psx Hinged door
 */
 import * as THREE from "three";
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props : JSX.IntrinsicElements["group"]) {

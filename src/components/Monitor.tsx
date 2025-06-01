@@ -1,12 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { useGLTF,Html } from "@react-three/drei";
+import { useEffect, useRef } from "react";
+import { useGLTF} from "@react-three/drei";
 import * as THREE from "three";
-import { Euler, useFrame, useThree, Vector3 } from "@react-three/fiber";
-import { vertexShader } from "../../shaders/vertexShader";
-import { fragmentShader } from "../../shaders/fragmentShader";
-import Portfolio from "./Portfolio";
 import { Triplet, useBox } from "@react-three/cannon";
-import HeroPage from "./HeroPage"
 import Video from "./skyrim.mp4"
 interface Computer {
   // handleHover: (value: boolean) => void;

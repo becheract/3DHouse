@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 fn.glb --transform
 Files: fn.glb [5.78KB] > /Users/bechera/Documents/3DHouse/public/FN/fn-transformed.glb [4.52KB] (22%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 

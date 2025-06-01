@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import footsteps from "../components/footsteps.mp3"
-import { useFrame, useThree } from "@react-three/fiber";
 
 // Define the movement type
 type Movement = {

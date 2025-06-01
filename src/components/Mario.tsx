@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 mario.glb --transform
 Files: mario.glb [12.94KB] > /Users/bechera/Documents/3DHouse/public/Mario/mario-transformed.glb [4.62KB] (64%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

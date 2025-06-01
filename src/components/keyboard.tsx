@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 keyboard.glb --transform
 Files: keyboard.glb [106.97KB] > /Users/bechera/Documents/3DHouse/public/keyboard/keyboard-transformed.glb [10.97KB] (90%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

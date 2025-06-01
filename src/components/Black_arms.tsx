@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 black_arms.glb --transform
 Files: black_arms.glb [1.08MB] > /Users/bechera/Documents/3DHouse/public/Arms/black_arms-transformed.glb [565.6KB] (48%)
 */
 import { useRef, useEffect, useMemo, useState } from "react";
-import { useGraph, useThree } from "@react-three/fiber";
+import { useGraph} from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
 import * as THREE from "three";

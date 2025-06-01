@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 paint.glb --transform
 Files: paint.glb [6.55KB] > /Users/bechera/Documents/3DHouse/public/paint/paint-transformed.glb [1.34KB] (80%)
 */
 import * as THREE from "three";
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props : JSX.IntrinsicElements["group"]) {

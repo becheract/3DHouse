@@ -2,9 +2,7 @@ import { useSphere } from "@react-three/cannon";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef,useState } from "react";
 import { usePlayerControls } from "../utils/helpers";
-import HeadBob from "../utils/headbob";
 import * as THREE from "three";
-import Particle from "./Particle";
 
 import Arms from "./Black_arms";
 // Define the type for props
@@ -16,11 +14,6 @@ interface BaseCharacterProps {
   args?: [number]; // Adjust this based on the shape of args (for sphereGeometry)
 }
 
-
-interface ShakeController {
-  getIntensity: () => number
-  setIntensity: (val: number) => void
-}
 
 
 

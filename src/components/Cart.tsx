@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 cart.glb --transform
 Files: cart.glb [20.6KB] > /Users/bechera/Documents/3DHouse/public/Cart/cart-transformed.glb [8.36KB] (59%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

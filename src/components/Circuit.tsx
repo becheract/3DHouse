@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 circuit.glb --transform
 Files: circuit.glb [1.05MB] > /Users/bechera/Documents/3DHouse/public/circuit/circuit-transformed.glb [85.41KB] (92%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

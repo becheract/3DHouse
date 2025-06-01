@@ -20,8 +20,7 @@ import {
 import { useState, useEffect} from "react";
 import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
-  import SkyImage from "../public/sky/sphere.jpg"
-import SkySphere from "./utils/skySpehere.tsx";
+
 import HeadBob from "./utils/headbob.tsx";
 import PhoneModal from "./components/PhoneModal.tsx";
 
@@ -143,8 +142,6 @@ function App() {
 
         <Stats />
 
-
-        <SkySphere textureUrl={SkyImage}/>
 
         <EffectComposer>
           <Pixelation granularity={6} />

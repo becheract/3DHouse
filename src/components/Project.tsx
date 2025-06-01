@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, ReactNode } from "react";
-import { useGLTF, Text } from "@react-three/drei";
+import  {  useRef, useEffect, ReactNode } from "react";
 import * as THREE from "three";
 import { useFrame, useThree, Vector3 } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";

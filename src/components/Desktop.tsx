@@ -4,18 +4,16 @@ Command: npx gltfjsx@6.5.3 desktop-2.glb --transform
 Files: desktop-2.glb [39.59KB] > /Users/bechera/Documents/3DHouse/public/desktop/desktop-2-transformed.glb [6.38KB] (84%)
 */
 
-import React, {useRef, useEffect} from 'react'
+import  {useEffect} from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
-import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props : JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF('desktop/desktop-2-transformed.glb')
 
-  const desktopRef = useRef<THREE.Mesh>(null!);
+
 
   useEffect(() => {
-    const dekstopMaterial = materials.Material as THREE.MeshBasicMaterial;
 
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -31,9 +29,7 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
       }
     });
 
-    if (desktopRef.current) {
-      desktopRef.current.material = shaderMaterialTransformer(dekstopMaterial, 0.1);
-    }
+ 
   }, [materials]);
 
 

@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 fanshawe.glb --transform
 Files: fanshawe.glb [62.02KB] > /Users/bechera/Documents/3DHouse/public/Fanshawe/fanshawe-transformed.glb [7.45KB] (88%)
 */
 
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 

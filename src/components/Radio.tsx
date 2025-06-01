@@ -1,12 +1,9 @@
-import { useEffect, useState, useRef, useCallback, useContext } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { Canvas, useThree, useLoader } from "@react-three/fiber";
+import {  useThree} from "@react-three/fiber";
 import { GroupProps } from "@react-three/fiber"; // Import GroupProps from react-three/fiber
 
-interface SoundProps {
-  index: number;
-}
 
 interface ModelProps extends GroupProps {
   handleHover?: (value: boolean) => void; // Add your custom hover prop

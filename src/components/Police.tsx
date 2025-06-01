@@ -4,18 +4,15 @@ Command: npx gltfjsx@6.5.3 Car5_Police.glb --transform
 Files: Car5_Police.glb [58.99KB] > /Users/bechera/Documents/3DHouse/public/police/Car5_Police-transformed.glb [10KB] (83%)
 */
 
-import React, {useRef, useEffect} from 'react'
+import  { useEffect} from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from "three";
-import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
 
 export default function Model(props : JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF('police/Car5_Police-transformed.glb')
 
-  const policeRef = useRef<THREE.Mesh>(null!);
   
   useEffect(() => {
-    const policeMat = materials["car5_police_mat"] as THREE.MeshBasicMaterial;
 
     // Loop through all materials and set NearestFilter for their textures
     Object.values(materials).forEach((material: THREE.Material) => {
@@ -29,10 +26,7 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
           material.map.needsUpdate = true;
         }
       }
-      
-      if (policeRef.current) {
-        policeRef.current.material = shaderMaterialTransformer(policeMat,1);
-      }
+
       
     });
   }, [materials]);
