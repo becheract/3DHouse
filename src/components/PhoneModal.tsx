@@ -47,7 +47,7 @@ function PhoneModal(props : Modal) {
       </div>
 
       <div style={controlsStyles}>
-        <img src="./control.png" width={'500px'}/>
+        <img src="./assets/control.png" width={'500px'}/>
          
         <p>Press the X key to close this screen</p>
       </div>
