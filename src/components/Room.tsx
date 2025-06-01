@@ -43,7 +43,7 @@ import Cart from "./Cart"
 import Skyrim from "./Skyrim"
 import Fn from "./Fn"
 import Mario from "./Mario"
-import Keyboard from "./Keyboard"
+import Keyboard from "./Keyboard.tsx"
 import Mouse from "./Mouse.tsx"
 import Backpack from "./Backpack.tsx";
 
