@@ -9,6 +9,7 @@ import Arms from "./Black_arms";
 interface BaseCharacterProps {
   controls?: boolean;
   isOpen: boolean;
+  isPhoneOpen: boolean;
   position?: [number, number, number];
   color?: string;
   args?: [number]; // Adjust this based on the shape of args (for sphereGeometry)
@@ -69,7 +70,10 @@ const BaseCharacter = (props: BaseCharacterProps) => {
 
 
   useFrame((state) => {
-    if (props.isOpen == false) {
+    if (props.isOpen || props.isPhoneOpen) {
+      // Modal or phone is open, lock movement
+      return;
+    }else if (props.isOpen == false) {
       const delta = state.clock.getElapsedTime() - lastTime;
       if (delta > 1 / fps) {
         lastTime = state.clock.getElapsedTime();

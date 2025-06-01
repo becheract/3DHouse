@@ -165,6 +165,7 @@ function App() {
               <Person
                 controls
                 isOpen={isModalOpen}
+                isPhoneOpen={phoneModal} // <-- add this prop
                 position={[0, 0, 5]}
                 args={[0.5]}
                 color="yellow"
