@@ -33,7 +33,7 @@ export default function Project(props: Projects) {
       if (distanceChecker() && hoverRef.current) {
         if (e.key === "f" || e.key === "F") {
           if(props.tag !== null)
-         props.openModal(meshRef.current, props.textDescription, props.tag!)
+          setTimeout(() => props.openModal(meshRef.current, props.textDescription, props.tag!), 250);
         } else if (e.key === "x" || e.key === "X") {
           props.closeModal();
         }

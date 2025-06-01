@@ -8,10 +8,6 @@ import { useGraph, useThree } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from "three";
-import { QuaternionKeyframeTrack, VectorKeyframeTrack } from 'three';
-import Debounce from '../utils/Debounce';
-import shaderMaterialTransformer from "./../../shaders/shaderMaterialTransformer"
-import { Canvas } from "@react-three/fiber";
 
 
 // Extend the props to include AnimationClip
@@ -21,7 +17,6 @@ interface ModelProps extends React.ComponentPropsWithoutRef<"group"> {
 }
 
 export default function Model(props: ModelProps) {
-  const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF("Phone/phone-transformed.glb");
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
@@ -110,7 +105,7 @@ export default function Model(props: ModelProps) {
             .fadeIn(0.5)
             .play();
             
-            props.openPhoneModal();
+            setTimeout(() => props.openPhoneModal(), 300)
           }
 
         }
@@ -126,27 +121,7 @@ export default function Model(props: ModelProps) {
     };
   }, [camera, actions, mixer])
 
-  useEffect(() => {
-    const keyDownListener = (e: KeyboardEvent) => {
-      if (e.key === "z" || e.key === "Z" ) {
-        console.log('inside func')
-        console.log(actions)
-    if (actions.openAction) {
-      console.log('inside')
-      actions.openAction.play();
-      actions.openAction.repetitions = 1;
-      mixer.stopAllAction();
-    }
-    }
-  }
-    document.addEventListener("keydown", keyDownListener);
-    return () => {
 
-      document.removeEventListener("keydown", keyDownListener);
-    };
-
-
-  })
 
   return (
     <>
@@ -163,7 +138,6 @@ export default function Model(props: ModelProps) {
       </>
   )
 }
-
 
 
 useGLTF.preload('/phone.glb')

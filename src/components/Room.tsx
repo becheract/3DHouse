@@ -287,7 +287,7 @@ function Room(props: {
 
       <Project
         tag="top"
-        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
+        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse. I was able to create a self watering garden where we were able to harvest the fruits of our labour! Literally! I really enjoy manipulating microcontrollers as I get to use my coding skills but also interact with the real world, it's a nice change of pace when just focusing on the wiring, voltage, design of the breadboard etc...."
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -347,7 +347,7 @@ function Room(props: {
 
       <Project
         tag="lower"
-        textDescription="Ontario Police College"
+        textDescription="Skyrim was the first game that I truly loved. The world building and care that bethesda put into its game blew my tiny 12 year old mind. I never felt more immerssed and paired with the power of childhood imagination really left me with an unforgettable experience. To this day it's probably my most replayed game to date. "
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}

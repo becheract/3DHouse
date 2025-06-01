@@ -37,9 +37,25 @@ body {
   color: white;
 }
 
-.radio h1{
-  font-family: "Geo, sans-serif";
+.menu{
+  position: absolute;
+  top: 92%;
+  right: 1%;
+  width: '100%';
+  display: flex;
+  height: 'full';
+  color: white;
 
+} 
+
+.menu h1 {
+    font-family: "Geo";
+   font-weight: 400;
+}
+
+.radio h1{
+  font-family: "Geo";
+  font-weight: 400;
 }
 
 .info{
@@ -61,6 +77,8 @@ body {
   height: 10px;
   border-radius: 50%;
   color: white;
+  font-family: "Geo";
+  font-weight: 400;
 }
 
 canvas {

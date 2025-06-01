@@ -42,7 +42,7 @@ const clonedObject = useMemo(() => {
     // console.log('inside dark modal')
     // console.log(currentObject.textDescription)
     const elem = document.getElementById("textDescription");
-    if (elem) appearChars(currentObject.textDescription, elem, 42);
+    if (elem) appearChars(currentObject.textDescription, elem, 20);
 
     // Cleanup function to clear text content when the modal is closed
     return () => {

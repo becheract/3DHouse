@@ -1,16 +1,5 @@
-import React, { useEffect, useState} from "react";
-import { Canvas } from "@react-three/fiber";
-import { extend } from "@react-three/fiber";
-import { EffectComposer } from "@react-three/postprocessing";
-import { Pixelation } from "@react-three/postprocessing";
-import { Suspense } from "react";
-import { Physics } from "@react-three/cannon";
-import { Debug } from "@react-three/cannon";
-import { Stats } from "@react-three/drei";
-import { Sky } from "@react-three/drei";
-import Room from "./Room";
-import Person from "./Person";
-import CubeLoader from "./CubeLoader";
+import React, { useEffect} from "react";
+
 
 interface Modal {
   openPhoneModal: () => void;
@@ -47,9 +36,7 @@ function PhoneModal(props : Modal) {
     };
   }, [props.isOpen]);
 
-  useEffect(() => {
-    console.log(props.isOpen)
-  },[props.isOpen])
+
 
   return (
     <>
@@ -60,9 +47,11 @@ function PhoneModal(props : Modal) {
       </div>
 
       <div style={controlsStyles}>
-        Controls
-        <img src="./public/Controls/controls_white.png" width={'500px'} height={'auto'}/>
+        <img src="./public/Controls/controls_white.png" width={'500px'}/>
+         
+        <p>Press the X key to close this screen</p>
       </div>
+     
     </div> 
     </>
   );

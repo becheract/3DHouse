@@ -139,7 +139,7 @@ function App() {
       >
       <BakeShadows />
         {/* allows for higer fps compared to dpr above */}
-        <AdaptiveDpr pixelated/> 
+        {/* <AdaptiveDpr pixelated/>  */}
 
         <Stats />
 
@@ -198,10 +198,16 @@ function App() {
       null}
       
       {hover ? <h1 className="interaction">Interact </h1> : null}
+      
       <div className="dot" />
 
       <div className="radio">
         <h1>Now Playing {displayName}</h1>
+      </div>
+
+
+      <div className="menu">
+        <h1>Press C to open Menu</h1>
       </div>
 
     </>
