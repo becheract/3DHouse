@@ -1,0 +1,142 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.2.69",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Cylinder.005",
+      "translation": [
+        -9.062411308288574,
+        0.10754001140594482,
+        11.417137145996094
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Cylinder.005",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "mode": 4,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 144,
+      "max": [
+        0.10245627164840698,
+        0.11830493807792664,
+        0.11830630898475647
+      ],
+      "min": [
+        -0.10245627164840698,
+        -0.1580236554145813,
+        -0.20027318596839905
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 144,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 144,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 252,
+      "type": "SCALAR",
+      "byteOffset": 0
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1728,
+      "byteOffset": 0,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1728,
+      "byteOffset": 1728,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1152,
+      "byteOffset": 3456,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 504,
+      "byteOffset": 4608,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "name": "coffee",
+      "byteLength": 5112,
+      "uri": "coffee.bin"
+    }
+  ],
+  "materials": [
+    {
+      "name": "default",
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.2.69",
+    "version": "2.0"
+  },
+  "extensionsUsed": [
+    "KHR_materials_specular"
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Bookcase_01",
+      "translation": [
+        -15.34151554107666,
+        0.5133200883865356,
+        2.852311849594116
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Bookcase_01",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Bookcase_01",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ],
+  "images": [
+    {
+      "name": "Bookcase_01",
+      "uri": "./Bookcase_img.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 126,
+      "max": [
+        0.8220592141151428,
+        1.1482418775558472,
+        0.3676965534687042
+      ],
+      "min": [
+        -0.8259212374687195,
+        -0.6975555419921875,
+        -0.41643935441970825
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 126,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 126,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 240,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1512,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1512,
+      "byteOffset": 1512,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1008,
+      "byteOffset": 3024,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 480,
+      "byteOffset": 4032,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "Bookcase_data.bin",
+      "byteLength": 4512
+    }
+  ]
+}

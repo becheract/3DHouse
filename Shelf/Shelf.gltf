@@ -1,0 +1,185 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.2.69",
+    "version": "2.0"
+  },
+  "extensionsUsed": [
+    "KHR_materials_specular"
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "Fitment_02",
+      "translation": [
+        -17.70757293701172,
+        0.8915787935256958,
+        4.191106796264648
+      ],
+      "rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Fitment_02",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Fitment_02",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "name": "Fitment_02",
+      "uri": "Fitment_02.jpg"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 116,
+      "max": [
+        0.8526649475097656,
+        0.8669743537902832,
+        0.29891014099121094
+      ],
+      "min": [
+        -0.8495750427246094,
+        -1.0647773742675781,
+        -0.2589435577392578
+      ],
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 116,
+      "type": "VEC3",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 116,
+      "type": "VEC2",
+      "byteOffset": 0
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 192,
+      "type": "SCALAR",
+      "byteOffset": 0
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1392,
+      "byteOffset": 0,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1392,
+      "byteOffset": 1392,
+      "target": 34962,
+      "byteStride": 12
+    },
+    {
+      "buffer": 0,
+      "byteLength": 928,
+      "byteOffset": 2784,
+      "target": 34962,
+      "byteStride": 8
+    },
+    {
+      "buffer": 0,
+      "byteLength": 384,
+      "byteOffset": 3712,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "buffers": [
+    {
+      "name": "Shelf",
+      "byteLength": 4096,
+      "uri": "Shelf.bin"
+    }
+  ]
+}
