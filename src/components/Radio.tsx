@@ -28,10 +28,10 @@ function Sound() {
   const [listener] = useState(() => new THREE.AudioListener());
   const indexRef = useRef(0);
   const radio = useRef<EloiBeats[]>([
-    { name: "mirage", url: "../../public/Radio/mirage.mp3" },
-    { name: "luvr roq", url: "../../public/Radio/luvr_roq_2k252.mp3" },
-    { name: "ok ok ok", url: "../../public/Radio/ok_ok_ok.mp3" },
-    { name: "adidas girl", url: "../../public/Radio/adidas_girl_2k25update.mp3" },
+    { name: "mirage", url: "/Radio/mirage.mp3" },
+    { name: "luvr roq", url: "/Radio/luvr_roq_2k252.mp3" },
+    { name: "ok ok ok", url: "/Radio/ok_ok_ok.mp3" },
+    { name: "adidas girl", url: "/Radio/adidas_girl_2k25update.mp3" },
   ]).current;
 
 
