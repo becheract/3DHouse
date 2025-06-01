@@ -76,8 +76,7 @@ export default function Model(props: ModelProps) {
 
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
-      
-      if (e.key === "c" || e.key === "C" ) {
+      if (e.key === "g" || e.key === "G" ) {
         if(phoneRef.current !== null){
           phoneRef.current.visible = true
           // Set the phone's position in front of the camera
@@ -107,7 +106,6 @@ export default function Model(props: ModelProps) {
             
             setTimeout(() => props.openPhoneModal(), 300)
           }
-
         }
         
       }

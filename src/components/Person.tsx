@@ -117,7 +117,7 @@ const BaseCharacter = (props: BaseCharacterProps) => {
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
  
-      if (e.key === "Control" ) {
+      if (e.key === "c" || e.key === "C") {
        if (isCrouching == false) {
           console.log('crouch')
           setIsCrouching(true)
