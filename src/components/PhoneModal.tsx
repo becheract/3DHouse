@@ -1,5 +1,5 @@
 import React, { useEffect} from "react";
-import image from "../assets/control.png"
+import image from "../../public/Controls/control.png"
 
 interface Modal {
   openPhoneModal: () => void;
