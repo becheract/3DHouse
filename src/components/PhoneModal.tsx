@@ -1,5 +1,5 @@
 import React, { useEffect} from "react";
-
+import image from "../assets/control.png"
 
 interface Modal {
   openPhoneModal: () => void;
@@ -47,7 +47,7 @@ function PhoneModal(props : Modal) {
       </div>
 
       <div style={controlsStyles}>
-        <img src="./assets/control.png" width={'500px'}/>
+        <img src={image} width={'500px'}/>
          
         <p>Press the X key to close this screen</p>
       </div>
