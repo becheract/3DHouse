@@ -27,12 +27,13 @@ function Sound() {
   const { camera } = useThree();
   const [listener] = useState(() => new THREE.AudioListener());
   const indexRef = useRef(0);
-  const radio = useRef<EloiBeats[]>([
-    { name: "mirage", url: "/Radio/mirage.mp3" },
-    { name: "luvr roq", url: "/Radio/luvr_roq_2k252.mp3" },
-    { name: "ok ok ok", url: "/Radio/ok_ok_ok.mp3" },
-    { name: "adidas girl", url: "/Radio/adidas_girl_2k25update.mp3" },
-  ]).current;
+const radio = useRef<EloiBeats[]>([
+  { name: "mirage", url: `${import.meta.env.BASE_URL}Radio/mirage.mp3` },
+  { name: "luvr roq", url: `${import.meta.env.BASE_URL}Radio/luvr_roq_2k252.mp3` },
+  { name: "ok ok ok", url: `${import.meta.env.BASE_URL}Radio/ok_ok_ok.mp3` },
+  { name: "adidas girl", url: `${import.meta.env.BASE_URL}Radio/adidas_girl_2k25update.mp3` },
+]).current;
+
 
 
   const audioLoader = useRef(new THREE.AudioLoader()).current;
