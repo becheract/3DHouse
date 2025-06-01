@@ -4,7 +4,6 @@ import { Canvas, extend,  } from "@react-three/fiber";
 import {
   PointerLockControls,
   Stats,
-  AdaptiveDpr,
   BakeShadows
 } from "@react-three/drei";
 import Room from "./components/Room";
@@ -124,10 +123,8 @@ function App() {
 
   return (
     <>
-    {/* <indexContext.Provider value={index}> */}
       <Canvas
         performance={{ min: 0.5 }}
-        // dpr={[4, 138]}
         shadows
         id={"canvas"}
         tabIndex={0}
@@ -137,9 +134,6 @@ function App() {
         }}
       >
       <BakeShadows />
-        {/* allows for higer fps compared to dpr above */}
-        {/* <AdaptiveDpr pixelated/>  */}
-
         <Stats />
 
 
