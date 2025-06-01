@@ -199,7 +199,7 @@ function App() {
 
 
       <div className="menu">
-        <h1>Press C to open Menu</h1>
+        <h1>Press G to open Menu</h1>
       </div>
 
     </>
