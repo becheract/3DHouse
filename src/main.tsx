@@ -19,7 +19,6 @@ import {
 import { useState, useEffect} from "react";
 import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
-
 import HeadBob from "./utils/headbob.tsx";
 import PhoneModal from "./components/PhoneModal.tsx";
 
@@ -88,7 +87,7 @@ function App() {
       document.removeEventListener("keydown", keyDownListener);
     };
   }, []);
-  
+
 
 
   // Open modal when cube is clicked
@@ -134,7 +133,7 @@ function App() {
         }}
       >
       <BakeShadows />
-        <Stats />
+        {/* <Stats /> */}
 
 
         <EffectComposer>

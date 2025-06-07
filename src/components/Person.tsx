@@ -70,47 +70,44 @@ const BaseCharacter = (props: BaseCharacterProps) => {
 
 
   useFrame((state) => {
+    // Always update the camera to follow the player
+    const spherePos = new THREE.Vector3();
+    sphereRef.current?.getWorldPosition(spherePos);
+    const cameraHeight = isCrouching ? 0.8 : 1.5;
+    camera.position.set(spherePos.x, spherePos.y + cameraHeight, spherePos.z);
+
+    // Only skip movement input if modal/phone is open
     if (props.isOpen || props.isPhoneOpen) {
-      // Modal or phone is open, lock movement
       return;
-    }else if (props.isOpen == false) {
-      const delta = state.clock.getElapsedTime() - lastTime;
-      if (delta > 1 / fps) {
-        lastTime = state.clock.getElapsedTime();
+    }
 
-        const spherePos = new THREE.Vector3();
-        sphereRef.current?.getWorldPosition(spherePos);
+    const delta = state.clock.getElapsedTime() - lastTime;
+    if (delta > 1 / fps) {
+      lastTime = state.clock.getElapsedTime();
 
-        // Update the camera to follow the player
-        const cameraHeight = isCrouching ? 0.8 : 1.5; // Lower height when crouching
+      // Calculate the movement direction based on controls (AWSD)
+      frontVector.set(0, 0, Number(backward) - Number(forward));
+      sideVector.set(Number(left) - Number(right), 0, 0);
 
-        camera.position.set(spherePos.x, spherePos.y + cameraHeight, spherePos.z);
+      // Combine direction vectors
+      direction
+        .subVectors(frontVector, sideVector)
+        .normalize()
+        .multiplyScalar(isCrouching ? CROUCH_SPEED : NORMAL_SPEED) // Adjust speed
+        .applyEuler(camera.rotation);
 
-        // Calculate the movement direction based on controls (AWSD)
-        frontVector.set(0, 0, Number(backward) - Number(forward));
-        sideVector.set(Number(left) - Number(right), 0, 0);
+      speed.fromArray(velocity.current);
 
-        // Combine direction vectors
-        direction
-          .subVectors(frontVector, sideVector)
-          .normalize()
-          .multiplyScalar(isCrouching ? CROUCH_SPEED : NORMAL_SPEED) // Adjust speed
-          .applyEuler(camera.rotation);
+      // Set velocity based on the direction
+      api.velocity.set(direction.x, velocity.current[1], direction.z);
 
-        speed.fromArray(velocity.current);
-
-        // Set velocity based on the direction
-        api.velocity.set(direction.x, velocity.current[1], direction.z);
-
-        // Jump logic
-        if (
-          jump &&
-          Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05
-        ) {
-          api.velocity.set(velocity.current[0], 5, velocity.current[2]);
-        }
+      // Jump logic
+      if (
+        jump &&
+        Math.abs(parseFloat(velocity.current[1].toFixed(2))) < 0.05
+      ) {
+        api.velocity.set(velocity.current[0], 5, velocity.current[2]);
       }
-
     }
   });
 

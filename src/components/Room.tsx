@@ -46,6 +46,7 @@ import Mario from "./Mario"
 import Keyboard from "./Keyboard.tsx"
 import Mouse from "./Mouse.tsx"
 import Backpack from "./Backpack.tsx";
+import {  useThree } from "@react-three/fiber";
 
 
 function Room(props: {
@@ -81,6 +82,8 @@ function Room(props: {
   ceilTexture.magFilter = THREE.NearestFilter;
   ceilTexture.minFilter = THREE.NearestFilter;
   ceilTexture.generateMipmaps = false;
+
+  const { camera } = useThree();
 
   useEffect(() => {
     // Set filtering for magnification (when zooming in)
@@ -146,12 +149,20 @@ function Room(props: {
 
 
   useEffect(() => {
+
+
+
     // Dispose textures when component unmounts to free memory
     return () => {
       floorTexture.dispose();
       wallTexture.dispose();
     };
   }, []);
+
+  // useEffect(() => {
+  //   console.log('INIT POSITION') 
+  //   camera.position.set(0,0,5)
+  // },[])
 
   return (
     <>
