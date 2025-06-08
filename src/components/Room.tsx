@@ -47,7 +47,9 @@ import Keyboard from "./Keyboard.tsx"
 import Mouse from "./Mouse.tsx"
 import Backpack from "./Backpack.tsx";
 import {  useThree } from "@react-three/fiber";
-
+import CD from "./CD.tsx"
+import Links from "./Links.tsx"
+import Credits from "./Credits.tsx"
 
 function Room(props: {
   handleHover: (value: boolean) => void;
@@ -83,7 +85,6 @@ function Room(props: {
   ceilTexture.minFilter = THREE.NearestFilter;
   ceilTexture.generateMipmaps = false;
 
-  const { camera } = useThree();
 
   useEffect(() => {
     // Set filtering for magnification (when zooming in)
@@ -135,11 +136,11 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
-  const [wallRef4] = useBox<THREE.Mesh>(() => ({
-    type: "Static",
-    position: [0, 5, 5.5], // front wall
-    args: [10, 10, 1],
-  }))
+  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
+  //   type: "Static",
+  //   position: [0, 5, 5.5], // front wall
+  //   args: [10, 10, 1],
+  // }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -190,10 +191,10 @@ function Room(props: {
       </mesh>
 
            {/* Static Front Wall */}
-        <mesh ref={wallRef4}>
+        {/* <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh> 
+      </mesh>  */}
 
 
       {/* Static Ceiling */}
@@ -260,6 +261,19 @@ function Room(props: {
       {/* Shelf */}
       <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
 
+      <Project
+        tag="top"
+        textDescription="test"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[-9.2,-1,-1.1]}
+      >
+      <CD scale={2.5} position={[0,-1,0]}/>
+      </Project>
+
+      <Links position={[-4.8,0,-1]} scale={1.5} rotation={[0,1.56,0]}/>
+      
         {/* Monitor */}
         <Monitor
                 //  handleHover={props.handleHover}
@@ -280,6 +294,20 @@ function Room(props: {
         >
           <Cart scale={0.05} position={[0,-0.13,0]}/>
           </Project>
+
+
+      {/* projects on shelf */}
+      <Credits
+        tag="top"
+        textDescription="Eloi Beats"
+        handleHover={props.handleHover}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        position={[-4.5,0,0]}
+        >
+          <CD  scale={2} position={[0,-0.9,0]}/>
+          </Credits>
+
 
       <Project
         tag="top"
