@@ -20,7 +20,7 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('CD/CD.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.CD_CD_0.geometry} material={materials.material} position={[0.289, 0.306, 0.438]} rotation={[-Math.PI / 2, 0, 0.348]} scale={0.06} />
+      <mesh geometry={nodes.CD_CD_0.geometry} material={materials.material} position={[0,0,0]} rotation={[-Math.PI / 2, 0, 0.348]} scale={0.06} />
     </group>
   )
 }

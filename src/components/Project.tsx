@@ -74,6 +74,7 @@ export default function Project(props: Projects) {
 
   return (
     <group ref={bodyRef}>
+      
       <mesh 
         position={props.position}
         ref={meshRef}

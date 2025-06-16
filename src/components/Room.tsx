@@ -261,7 +261,7 @@ function Room(props: {
       {/* Shelf */}
       <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
 
-      <Project
+      {/* <Project
         tag="top"
         textDescription="test"
         handleHover={props.handleHover}
@@ -270,7 +270,7 @@ function Room(props: {
         position={[-9.2,-1,-1.1]}
       >
       <CD scale={2.5} position={[0,-1,0]}/>
-      </Project>
+      </Project> */}
 
       <Links position={[-4.8,0,-1]} scale={1.5} rotation={[0,1.56,0]}/>
       
@@ -303,9 +303,9 @@ function Room(props: {
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
-        position={[-4.5,0,0]}
+        position={[-4.3,0,0]}
         >
-          <CD  scale={2} position={[0,-0.9,0]}/>
+          <CD  scale={2} position={[0,-0.15,0]}/>
           </Credits>
 
 
