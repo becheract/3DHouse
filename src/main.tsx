@@ -21,6 +21,12 @@ import DarkWindow from "./components/darkModal";
 import CubeLoader from "./components/CubeLoader";
 import HeadBob from "./utils/headbob.tsx";
 import PhoneModal from "./components/PhoneModal.tsx";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router";
+import ReactDOM from "react-dom/client";
+import CreditPage from "./components/CreditsPage.tsx"
 
 interface CurrentObject {
   ref: THREE.Mesh;
@@ -137,7 +143,7 @@ function App() {
 
 
         <EffectComposer>
-          <Pixelation granularity={6} />
+          <Pixelation granularity={4} />
 
           <Suspense fallback={<CubeLoader />}>
             <Physics >
@@ -205,5 +211,15 @@ function App() {
   );
 }
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+    },
+    { path: "/credits", 
+      element:  <CreditPage />
+    },
+  ]);
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(<RouterProvider router={router} />
+);

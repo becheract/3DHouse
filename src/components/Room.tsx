@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {  useEffect } from "react";
+import {  useEffect, useState } from "react";
 import { useLoader } from "@react-three/fiber";
 import {
   useBox,
@@ -46,10 +46,12 @@ import Mario from "./Mario"
 import Keyboard from "./Keyboard.tsx"
 import Mouse from "./Mouse.tsx"
 import Backpack from "./Backpack.tsx";
-import {  useThree } from "@react-three/fiber";
 import CD from "./CD.tsx"
 import Links from "./Links.tsx"
 import Credits from "./Credits.tsx"
+import Floppy from "./Floppy.tsx"
+import { useNavigate } from "react-router";
+
 
 function Room(props: {
   handleHover: (value: boolean) => void;
@@ -62,7 +64,7 @@ function Room(props: {
   const floorTexture = useLoader(THREE.TextureLoader, floorTextureAsset);
   const wallTexture = useLoader(THREE.TextureLoader, wallTextureAsset);
   const ceilTexture = useLoader(THREE.TextureLoader, ceilTextureAsset);
-
+  let navigate = useNavigate();
   // Configure texture wrapping and repeating
   floorTexture.wrapS = THREE.RepeatWrapping;
   floorTexture.wrapT = THREE.RepeatWrapping;
@@ -136,11 +138,11 @@ function Room(props: {
     args: [10, 10, 1],
   }));
 
-  // const [wallRef4] = useBox<THREE.Mesh>(() => ({
-  //   type: "Static",
-  //   position: [0, 5, 5.5], // front wall
-  //   args: [10, 10, 1],
-  // }))
+  const [wallRef4] = useBox<THREE.Mesh>(() => ({
+    type: "Static",
+    position: [0, 5, 5.5], // front wall
+    args: [10, 10, 1],
+  }))
 
   const [ceilingRef] = useBox<THREE.Mesh>(() => ({
     type: "Static",
@@ -150,9 +152,6 @@ function Room(props: {
 
 
   useEffect(() => {
-
-
-
     // Dispose textures when component unmounts to free memory
     return () => {
       floorTexture.dispose();
@@ -160,10 +159,11 @@ function Room(props: {
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log('INIT POSITION') 
-  //   camera.position.set(0,0,5)
-  // },[])
+
+  const openCreditsPage = () => {
+    navigate("/credits");
+  }
+
 
   return (
     <>
@@ -191,10 +191,10 @@ function Room(props: {
       </mesh>
 
            {/* Static Front Wall */}
-        {/* <mesh ref={wallRef4}>
+        <mesh ref={wallRef4}>
         <boxGeometry args={[10, 10, 1]} />
         <meshStandardMaterial color="#FCFBF4" map={wallTexture} />
-      </mesh>  */}
+      </mesh> 
 
 
       {/* Static Ceiling */}
@@ -261,24 +261,12 @@ function Room(props: {
       {/* Shelf */}
       <Shelf position={[9.9, 0.3, 23.7]} scale={1.3} rotation={[0, -1.56, 0]} />
 
-      {/* <Project
-        tag="top"
-        textDescription="test"
-        handleHover={props.handleHover}
-        openModal={props.openModal}
-        closeModal={props.closeModal}
-        position={[-9.2,-1,-1.1]}
-      >
-      <CD scale={2.5} position={[0,-1,0]}/>
-      </Project> */}
+
 
       <Links position={[-4.8,0,-1]} scale={1.5} rotation={[0,1.56,0]}/>
       
         {/* Monitor */}
         <Monitor
-                //  handleHover={props.handleHover}
-                //  openModal={props.openModal}
-                //  closeModal={props.closeModal}
         position={[0.1, 1.3, -3.7]}
         rotation={[0, 3.1, 0]}
       />
@@ -286,7 +274,9 @@ function Room(props: {
       {/* projects on shelf */}
       <Project
         tag="top"
-        textDescription="An Arduino water irragtaion project that I had worked on during the summer of 2024 for my dad's greenhouse"
+        textDescription="Although Basket buddy hasn't launched yet, I gained so much freelance and startup experience. 
+I learned to negotiate rates as a freelance web developer, I got tons of experience when it came to developing for a start up, and I was really fortunate to be able to work on this project. I hope it gets to see the light of day.
+"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -299,15 +289,25 @@ function Room(props: {
       {/* projects on shelf */}
       <Credits
         tag="top"
-        textDescription="Eloi Beats"
+        textDescription="All music credit go to Éloi"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
-        position={[-4.3,0,0]}
+        position={[-4.3,-0.05,0]}
         >
-          <CD  scale={2} position={[0,-0.15,0]}/>
-          </Credits>
+          <CD scale={2} position={[0,-0.13,0]}/>
+        </Credits>
 
+        <Credits
+        tag="top"
+        textDescription="All music credit go to Éloi"
+        handleHover={props.handleHover}
+        openModal={() => openCreditsPage()}
+        closeModal={props.closeModal}
+        position={[-4.3,0.06,0.6]}
+        >
+          <Floppy  scale={2} position={[0,0,0]}/>
+        </Credits>
 
       <Project
         tag="top"
@@ -322,8 +322,8 @@ function Room(props: {
 
     <Project
         tag="top"
-        textDescription="A redesign of my second portfolio site made using Next.js, typescript, sanity headless seo. I really put in effort when it
-        came to the design aspect."
+        textDescription="I really enjoyed the redesign process of my portfolio site, to this day I am still trying to figure out how to improve it. I learned that I enjoyed making low and high fidelity wireframes
+next.js, Server Side Rendering, using headless SEO's . Although I did rush some parts of it, I truly am proud of the site, and I will continue to improve the design."
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -334,7 +334,7 @@ function Room(props: {
 
       <Project
         tag="middle"
-        textDescription="Skyrim"
+        textDescription="I took a 2 year full stack web development course at Fanshawe college where I learned how to use front-end apps utilizing the react and angular framework, learned how to implement ui/ux concepts,  built mobile game apps using react-native and understanding physic concepts, learnt about agile and sprint methodologies. College was a turning point for me as I actually got to pursue something that I was passionate about, an experience that I lacked through high school to a degree. Sadly I didn't form any long term relationships with my peers due to the COVID-19 pandemic, but I was lucky enough to form stronger bonds with my peers from high school. I had amazing teachers who stocked my passion for learning and they always encourage us to keep pushing ourselves. "
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -346,7 +346,8 @@ function Room(props: {
 
       <Project
         tag="middle"
-        textDescription="At the police college I am a multi-media programmer"
+        textDescription="AFTER 10 MONTHS OF UNEMPLOYMENT, I FINALLY GOT A WEB DEV JOB At the Ontario Police College. I got to work in a office environment for the first time, truly cubicle heaven. I get to work on old systems coming up with creative ways at solving problems and introducing new technologies to the workflow. I get to bring in new technologies and systems when tackling problems. The current stack we work with is Drupal, php, MySQL and python. I get the chance to tackle problems in any way I see fit, having this sense of freedom allows me to decide how to best solve problems and learn.
+"
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -359,7 +360,7 @@ function Room(props: {
 
       <Project
         tag="middle"
-        textDescription="Steamlabs"
+        textDescription="My first tech job fully remote, every project was a challenge for me which helped me grow in so many ways. It was a pretty small organization but it felt like we were making huge impacts in our community and the whole of Canada. I learned how to fail at delivering tasks, I felt this was something I really took to heart as you can't always deliver and in a career and age where we are always trying to be better than our peers and ourselves this really helped me grow, knowing that it was alright to fail and to just brush the dirt off your shoulder and try again."
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -385,7 +386,7 @@ function Room(props: {
 
       <Project
           tag="lower"
-        textDescription="Fallout new vegas"
+        textDescription="I was introduced to Fallout New Vegas by my dad, I remember watching him play on our xbox 360, at that time when i saw it i didn't think anything too much of it, due to the brown colours. But as I grew older I decided to take a shot at the game, and I was in love with the depth of lore between factions and the amount of choices. Another aspect that the game contributed was a sense of community with my other friends who had played it, we would talk about what items were the best, the DLC's (thanks randy for allowing me to use your copy of the game), factions and their ideologies. As well being able to discuss the game with my dad brought us together as I was more of a indoorsman and him an outdoorsman, but being able to share our love really stuck with me to this day."
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}
@@ -397,7 +398,7 @@ function Room(props: {
       {/* projects on shelf */}
       <Project
         tag="lower"
-        textDescription="Mario Kart"
+        textDescription="Ahhh , where to start with Mario Kart. My earliest memory of this game was playing the ballon battle while my dad was having a meeting. looking back on it now it gives me a warm fuzzy feeling of nostalgia which influenced the style of this site to a degree. "
         handleHover={props.handleHover}
         openModal={props.openModal}
         closeModal={props.closeModal}

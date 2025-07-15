@@ -1,0 +1,20 @@
+body {
+  background-color: #171717;
+  color: white;
+  padding: 40px;
+  font-family: Arial;
+  text-align: center;
+  
+}
+
+.credits {
+    background-color: #0c0c0c; 
+    padding: 20px;
+}
+
+.credit_container{
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}

@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -29,8 +30,8 @@ body {
 
 .radio{
   position: absolute;
-  top: 92%;
-  left: 1%;
+  top: 89%;
+  left: 3%;
   width: '100%';
   display: flex;
   height: 'full';
@@ -39,8 +40,8 @@ body {
 
 .menu{
   position: absolute;
-  top: 92%;
-  right: 1%;
+  top: 89%;
+  right: 3%;
   width: '100%';
   display: flex;
   height: 'full';
@@ -49,8 +50,9 @@ body {
 } 
 
 .menu h1 {
-    font-family: "Geo";
-   font-weight: 400;
+  font-family: "Geo";
+  font-weight: 400;
+
 }
 
 .radio h1{
