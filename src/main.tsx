@@ -25,7 +25,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router";
-import ReactDOM from "react-dom/client";
 import CreditPage from "./components/CreditsPage.tsx"
 
 interface CurrentObject {
@@ -73,6 +72,17 @@ function App() {
   const radioName = useRef(radio[radioIndex.current].name);
   const [displayName, setDisplayName] = useState(radioName.current); // Only for UI
   
+
+  //removes highlight on body if on safari 
+  useEffect(() => {
+    let userAgentString = navigator.userAgent;
+    //-webkit-tap-highlight-color:
+    let safariAgent = userAgentString.indexOf("Safari") > -1;
+    if (safariAgent) { 
+      document.body.style.outlineStyle = 'none'
+      console.log("Safari, yeah!");
+    }
+  })
 
   useEffect(() => {
     const keyDownListener = (e: KeyboardEvent) => {
