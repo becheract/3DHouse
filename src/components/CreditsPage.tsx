@@ -1,4 +1,3 @@
-import react from "react"
 import { useNavigate } from "react-router";
 import './CreditsPage.css';
 

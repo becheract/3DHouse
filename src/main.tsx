@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import { Canvas, extend,  } from "@react-three/fiber";
 import {
   PointerLockControls,
-  Stats,
   BakeShadows
 } from "@react-three/drei";
 import Room from "./components/Room";

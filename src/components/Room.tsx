@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {  useEffect, useState } from "react";
+import {  useEffect} from "react";
 import { useLoader } from "@react-three/fiber";
 import {
   useBox,
