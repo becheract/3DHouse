@@ -5,7 +5,6 @@ Files: floppy.glb [43.21KB] > /Users/bechera/Documents/3DHouse/public/Floppy/flo
 */
 
 import * as THREE from 'three'
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
