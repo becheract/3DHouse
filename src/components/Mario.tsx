@@ -16,4 +16,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/mario-transformed.glb')
+useGLTF.preload('Mario/mario-transformed.glb')

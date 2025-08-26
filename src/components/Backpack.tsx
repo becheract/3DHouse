@@ -16,4 +16,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/Backpack-transformed.glb')
+useGLTF.preload('Backpack/Backpack-transformed.glb')

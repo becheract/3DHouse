@@ -19,4 +19,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/fanshawe-transformed.glb')
+useGLTF.preload('Fanshawe/fanshawe-transformed.glb')

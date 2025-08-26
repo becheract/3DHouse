@@ -76,4 +76,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/bicycle.glb");
+useGLTF.preload("Bike/bicycle.glb");

@@ -50,4 +50,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/plant_5.glb");
+useGLTF.preload("Plant_5/plant_5.glb");

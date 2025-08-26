@@ -16,4 +16,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/circuit-transformed.glb')
+useGLTF.preload('Circuit/circuit-transformed.glb')

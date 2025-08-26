@@ -70,4 +70,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Bookcase.glb");
+useGLTF.preload("Bookcase/Bookcase.glb");

@@ -25,4 +25,4 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/shelf.glb')
+useGLTF.preload('Links/shelf.glb')

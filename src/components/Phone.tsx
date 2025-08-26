@@ -138,4 +138,4 @@ export default function Model(props: ModelProps) {
 }
 
 
-useGLTF.preload('/phone.glb')
+useGLTF.preload('Phone/phone.glb')

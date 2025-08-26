@@ -15,4 +15,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/paint-transformed.glb')
+useGLTF.preload('paint/paint-transformed.glb')

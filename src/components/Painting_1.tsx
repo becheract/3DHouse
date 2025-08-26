@@ -41,4 +41,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/painting_1.glb");
+useGLTF.preload("Paint_1/painting_1.glb");

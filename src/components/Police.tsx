@@ -39,4 +39,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/Car5_Police-transformed.glb')
+useGLTF.preload('police/Car5_Police-transformed.glb')

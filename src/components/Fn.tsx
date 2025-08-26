@@ -16,4 +16,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/fn-transformed.glb')
+useGLTF.preload('FN/fn-transformed.glb')

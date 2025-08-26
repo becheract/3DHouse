@@ -16,4 +16,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/mouse-transformed.glb')
+useGLTF.preload('keyboard/mouse-transformed.glb')

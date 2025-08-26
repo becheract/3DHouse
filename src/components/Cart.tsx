@@ -16,4 +16,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/cart-transformed.glb')
+useGLTF.preload('Cart/cart-transformed.glb')

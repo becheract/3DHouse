@@ -42,4 +42,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/tv_table.glb");
+useGLTF.preload("TTable/tv_table.glb");

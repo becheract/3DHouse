@@ -20,4 +20,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/door-transformed.glb')
+useGLTF.preload('Door/door-transformed.glb')

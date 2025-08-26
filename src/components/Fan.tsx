@@ -57,4 +57,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/fan.glb");
+useGLTF.preload("Fan/fan.glb");

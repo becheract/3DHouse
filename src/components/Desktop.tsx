@@ -40,4 +40,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/desktop-2-transformed.glb')
+useGLTF.preload('desktop/desktop-2-transformed.glb')

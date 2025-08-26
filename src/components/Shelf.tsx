@@ -43,4 +43,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Shelf.glb");
+useGLTF.preload("Shelf/Shelf.glb");

@@ -16,4 +16,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/skyrim-transformed.glb')
+useGLTF.preload('Skyrim/skyrim-transformed.glb')

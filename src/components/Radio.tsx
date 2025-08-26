@@ -141,6 +141,6 @@ export default function Model({ handleHover: propHover, ...props }: ModelProps) 
   );
 }
 
-useGLTF.preload("/radio.glb");
+useGLTF.preload("Radio/radio.glb");
 
 

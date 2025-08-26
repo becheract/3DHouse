@@ -26,4 +26,4 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/floppy-transformed.glb')
+useGLTF.preload('Floppy/floppy-transformed.glb')

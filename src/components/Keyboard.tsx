@@ -15,4 +15,4 @@ export default function Model(props : JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/keyboard-transformed.glb')
+useGLTF.preload('keyboard/keyboard-transformed.glb')

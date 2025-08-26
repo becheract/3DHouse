@@ -82,4 +82,4 @@ export default function Model(props: Computer) {
 
 
 
-useGLTF.preload("/monitor.glb");
+useGLTF.preload("Monitor/monitor.glb");

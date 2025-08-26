@@ -46,4 +46,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/garbage.glb");
+useGLTF.preload("Garbage/garbage.glb");

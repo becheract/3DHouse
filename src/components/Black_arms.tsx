@@ -163,4 +163,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   )
 }
 
-useGLTF.preload('/black_arms-transformed.glb')
+useGLTF.preload('Arms/black_arms-transformed.glb')

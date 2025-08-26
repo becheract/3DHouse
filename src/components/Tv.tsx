@@ -91,4 +91,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/tv.glb");
+useGLTF.preload("TV/tv.glb");

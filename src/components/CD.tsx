@@ -25,4 +25,4 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/CD.glb')
+useGLTF.preload('CD/CD.glb')

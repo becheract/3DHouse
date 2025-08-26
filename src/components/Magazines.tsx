@@ -37,4 +37,4 @@ export default function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/magazines.glb");
+useGLTF.preload("Magazines/magazines.glb");
