@@ -222,7 +222,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/3DHouse",
       element: <App />,
     },
     { path: "/credits", 
